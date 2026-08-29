@@ -777,6 +777,18 @@ function renderTiles(sn) {
 }
 
 /* ---------- render: formation ---------- */
+/**
+ * Picking a coach from the diagram and picking it from the table have to do
+ * the same thing, or the two disagree about what is selected. Both go here.
+ */
+function selectCoach(sn, ix) {
+  state.coach = ix;
+  renderFormation(sn);
+  renderCoach(sn);
+  writeHash();
+}
+
+
 function renderFormation(sn) {
   const byUnit = new Map();
   sn.coaches.forEach((c, ix) => {
@@ -801,7 +813,7 @@ function renderFormation(sn) {
   }
   document.getElementById('formation').innerHTML = html;
   document.getElementById('formation').querySelectorAll('.car').forEach((b) =>
-    b.addEventListener('click', () => { state.coach = +b.dataset.ix; renderCoach(sn); writeHash(); }));
+    b.addEventListener('click', () => selectCoach(sn, +b.dataset.ix)));
   document.getElementById('rampsteps').innerHTML =
     SEQ.map((v) => `<i style="background:var(${v})"></i>`).join('');
 
@@ -817,8 +829,7 @@ function renderFormation(sn) {
     '<th>Seats</th><th>Std</th><th>1st</th><th>Occupied</th><th>Empty</th><th>Occupancy</th></tr></thead>' +
     `<tbody>${rows}</tbody>`;
   document.getElementById('coachtable').querySelectorAll('tbody tr').forEach((tr) =>
-    tr.addEventListener('click', () => { state.coach = +tr.dataset.ix; renderCoach(sn); writeHash();
-      renderFormation(sn); }));
+    tr.addEventListener('click', () => selectCoach(sn, +tr.dataset.ix)));
 }
 
 /* ---------- render: seat grid ---------- */
