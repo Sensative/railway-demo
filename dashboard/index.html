@@ -269,7 +269,7 @@ table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
 th, td { padding: 7px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--hairline); }
 th:first-child, td:first-child, th.l, td.l { text-align: left; }
 thead th {
-  position: sticky; top: 0; background: var(--surface); z-index: 2;
+  position: sticky; top: 0; background: var(--surface); z-index: 2; line-height: 1.25;
   font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;
   color: var(--ink-muted); font-weight: 600; border-bottom: 1px solid var(--rule);
 }
@@ -298,6 +298,10 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
 :root[data-theme="dark"] .segb[aria-pressed="true"],
 :root:not([data-theme="light"]) .segb[aria-pressed="true"] { color: #0b0f11; }
 @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .segb[aria-pressed="true"] { color: #fff; } }
+select#dcsel {
+  font: inherit; font-size: 12px; padding: 4px 8px; border-radius: 6px;
+  border: 1px solid var(--rule); background: var(--surface-2); color: var(--ink); cursor: pointer;
+}
 .hgroup { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-left: auto; }
 .chartbox { padding: 6px 14px 14px; position: relative; }
 .chart { width: 100%; display: block; touch-action: none; }
@@ -318,6 +322,36 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
 .tip dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; }
 .tip i { width: 9px; height: 3px; border-radius: 2px; display: block; }
 
+.viewnav { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.slope { width: 100%; display: block; }
+.moved { font-weight: 600; }
+.moved.up { color: var(--series-occ); }
+.moved.down { color: var(--series-sold); }
+.moved.flat { color: var(--ink-muted); font-weight: 400; }
+
+.actgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1px;
+  background: var(--hairline); border-bottom: 1px solid var(--hairline); }
+.actsum { background: var(--surface); padding: 13px 14px; cursor: pointer; border: 0; text-align: left;
+  font: inherit; color: inherit; border-top: 3px solid transparent; }
+.actsum:hover { background: var(--surface-2); }
+.actsum[aria-pressed="true"] { background: var(--accent-soft); border-top-color: var(--accent); }
+.actsum .n { font-family: var(--cond); font-size: 30px; font-weight: 700; line-height: 1.1; }
+.actsum .t { font-size: 13px; font-weight: 600; }
+.actsum .w { font-size: 11.5px; color: var(--ink-2); margin-top: 3px; }
+.rule { font-size: 12px; color: var(--ink-2); padding: 12px 14px; background: var(--surface-2);
+  border-bottom: 1px solid var(--hairline); }
+
+.fx { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px;
+  background: var(--hairline); border-bottom: 1px solid var(--hairline); }
+.fx .cell { background: var(--surface); padding: 12px 14px; }
+.fx .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); font-weight: 600; }
+.fx .v { font-family: var(--cond); font-size: 25px; font-weight: 700; line-height: 1.15; margin-top: 2px;
+  font-variant-numeric: tabular-nums; }
+.fx .s { font-size: 11.5px; color: var(--ink-2); }
+.up { color: var(--series-occ); }
+.down { color: var(--series-sold); }
+.note { font-size: 11.5px; color: var(--ink-2); background: var(--surface-2);
+  border-left: 3px solid var(--rule); border-radius: 0 5px 5px 0; padding: 8px 11px; margin: 12px 14px 14px; }
 .footnote {
   padding: 14px clamp(12px, 3vw, 28px) 0; max-width: 76ch;
   font-size: 12px; color: var(--ink-muted); line-height: 1.6;
@@ -330,7 +364,14 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
 <div class="masthead">
   <h1>Seat usage by route, train and coach</h1>
   <span class="sub">Northbank Rail &middot; SeatSense measured occupancy</span>
-  <span class="tenant" id="tenant"></span>
+  <span class="viewnav">
+    <span class="seg" id="viewnav" role="group" aria-label="View">
+      <button class="segb" type="button" data-view="train" aria-pressed="true">Train</button>
+      <button class="segb" type="button" data-view="rank" aria-pressed="false">Sold vs full</button>
+      <button class="segb" type="button" data-view="actions" aria-pressed="false">Actions</button>
+    </span>
+    <span class="tenant" id="tenant"></span>
+  </span>
 </div>
 
 <div class="shell">
@@ -355,6 +396,7 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
   </div>
 
   <div class="main">
+   <div id="view-train">
     <section class="panel" style="margin-bottom:14px">
       <div class="identity" id="identity"></div>
       <div class="tiles" id="tiles"></div>
@@ -407,6 +449,16 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
       </div>
     </section>
 
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="fxhead">What the recalibrated forecast earned on this train</h2>
+        <span class="hint">Against the per-departure counterfactual</span>
+      </header>
+      <div class="fx" id="fx"></div>
+      <div class="chartbox"><svg class="chart" id="fxchart" role="img" aria-labelledby="fxhead"></svg></div>
+      <div class="note" id="fxnote"></div>
+    </section>
+
     <section class="panel">
       <header><h2 id="routehead">All departures</h2><span class="hint">Click a row to open that train</span></header>
       <div class="tablewrap" style="max-height:520px; overflow-y:auto">
@@ -415,6 +467,43 @@ td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px;
         </table>
       </div>
     </section>
+   </div>
+
+   <div id="view-rank" hidden>
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="rankhead">Sold versus actually full</h2>
+        <span class="hgroup">
+          <span class="hint">Click a departure to open it</span>
+          <select id="dcsel" aria-label="Demand class"></select>
+        </span>
+      </header>
+      <div class="rule" id="rankrule"></div>
+      <div class="chartbox"><svg class="slope" id="slope" role="img" aria-labelledby="rankhead"></svg></div>
+      <div class="tablewrap">
+        <table id="ranktable">
+          <caption class="vh">Departures ranked by tickets sold and by measured cabin factor</caption>
+        </table>
+      </div>
+    </section>
+   </div>
+
+   <div id="view-actions" hidden>
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="acthead">What to do next</h2>
+        <span class="hint" id="actwindow"></span>
+      </header>
+      <div class="actgrid" id="actgrid"></div>
+      <div class="rule" id="actrule"></div>
+      <div class="tablewrap" style="max-height:620px; overflow-y:auto">
+        <table id="acttable">
+          <caption class="vh">Departures with a recommended next action, ranked</caption>
+        </table>
+      </div>
+      <div class="note" id="actnote"></div>
+    </section>
+   </div>
   </div>
 </div>
 
@@ -493,6 +582,46 @@ function snapshot(serviceId, date) {
   };
 }
 
+const r2 = (x) => Math.round(x * 100) / 100;
+const r3 = (x) => Math.round(x * 1000) / 1000;
+const growth3 = (a, b) => (a ? r3((b / a - 1) * 100) : null);
+
+/**
+ * Totals for one departure over a window. Mirrors aggregate() in dataset.mjs,
+ * including the counterfactual - what the same booking requests would have
+ * earned under 2025's forecast quality, same demand, same fares, same EMSRb.
+ */
+function windowAgg(id, { weekdayOnly = false, fromMonth = 1, toMonth = 12 } = {}) {
+  const svc = SVC[id], d = D.daily[id];
+  let departures = 0, sold = 0, occ = 0, ghost = 0, rev = 0, cfRev = 0, cfSold = 0, away = 0, closed = 0;
+  for (let i = 0; i < D.dates.length; i++) {
+    if (d.sold[i] === null) continue;
+    const m = +D.dates[i].slice(5, 7);
+    if (m < fromMonth || m > toMonth) continue;
+    if (weekdayOnly && D.dayType[i] !== 'weekday') continue;
+    departures++; sold += d.sold[i]; occ += d.occ[i]; ghost += d.ghost[i];
+    rev += d.rev[i]; cfRev += d.cfRev[i]; cfSold += d.cfSold[i];
+    away += d.away[i]; closed += d.closed[i];
+  }
+  if (!departures) return null;
+  const seats = departures * svc.seats;
+  const assumed = r1((sold / seats) * 100);
+  const cabin = r1((occ / seats) * 100);
+  return {
+    svc, departures, seats, sold, occ, ghost, away,
+    rev: r2(rev), cfRev: r2(cfRev), cfSold,
+    closedPct: r1((closed / departures) * 100),
+    assumed, cabin, overstatement: r1(assumed - cabin),
+    avgFare: r2(rev / sold),
+    uplift: r2(rev - cfRev),
+    upliftPct: growth3(cfRev, rev),
+    ticketsUpliftPct: growth3(cfSold, sold),
+    ghostPerDep: r1(ghost / departures),
+    awayPerDep: r1(away / departures),
+    revPerWeekdayYear: (rev / departures) * 253,
+  };
+}
+
 /* ---------- formatting ---------- */
 const nf = new Intl.NumberFormat('en-GB');
 const gbp0 = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
@@ -518,6 +647,9 @@ const state = {
     : D.dates.find((d, i) => D.dayType[i] === 'weekday') || D.dates[0],
   coach: 0,
   weekdaysOnly: true,
+  view: 'train',
+  dc: 'peak_core',
+  action: 'all',
   sort: { key: 'time', dir: 1 },
 };
 
@@ -806,7 +938,13 @@ function renderChart(sn) {
     `${svc.id} ${svc.time} \u2014 sold versus occupied, ` +
     `${weekdaysOnly ? 'weekdays' : 'all days'} from ` +
     `${shortDate(D.coverage.from)} to ${shortDate(D.coverage.to)}`;
-  document.querySelectorAll('#dayfilter .segb').forEach((b) => {
+  document.querySelectorAll('#viewnav .segb').forEach((b) =>
+  b.addEventListener('click', () => setView(b.dataset.view)));
+document.getElementById('dcsel').addEventListener('change', (e) => {
+  state.dc = e.target.value;
+  renderRank();
+});
+document.querySelectorAll('#dayfilter .segb').forEach((b) => {
     b.setAttribute('aria-pressed', String((b.dataset.v === 'wd') === weekdaysOnly));
     b.disabled = !selIsWeekday;
     b.title = selIsWeekday ? '' : 'Showing all days: ' + shortDate(sn.date) + ' is not a weekday';
@@ -912,6 +1050,299 @@ function renderRouteTable() {
     tr.addEventListener('click', () => { state.service = tr.dataset.svc; state.coach = 0; renderAll(); }));
 }
 
+
+/* ---------- what the recalibrated forecast earned on this train ---------- */
+const signedGbp = (n) => (n >= 0 ? '+' : '-') + gbp0.format(Math.abs(n));
+const signedPct = (n) => (n >= 0 ? '+' : '') + n.toFixed(3) + '%';
+
+function renderForecastEffect(sn) {
+  const a = windowAgg(sn.svc.id);
+  const dir = a.uplift >= 0 ? 'up' : 'down';
+  document.getElementById('fx').innerHTML = [
+    { k: 'Revenue, observed', v: gbp0.format(a.rev), s: nf.format(a.departures) + ' departures' },
+    { k: 'Counterfactual', v: gbp0.format(a.cfRev), s: '2025-quality forecasts' },
+    { k: 'Attributable', v: signedGbp(a.uplift), s: 'over ' + shortDate(D.coverage.from) + ' to ' + shortDate(D.coverage.to), cls: dir },
+    { k: 'Attributable share', v: signedPct(a.upliftPct), s: 'of this departure\u2019s revenue', cls: dir },
+    { k: 'Tickets', v: signedPct(a.ticketsUpliftPct),
+      s: nf.format(Math.abs(a.sold - a.cfSold)) + (a.sold >= a.cfSold ? ' more' : ' fewer') + ' seats sold',
+      cls: a.sold >= a.cfSold ? 'up' : 'down' },
+  ].map((x) => `<div class="cell"><div class="k">${x.k}</div>` +
+    `<div class="v ${x.cls || ''}">${x.v}</div><div class="s">${x.s}</div></div>`).join('');
+
+  // Cumulative attributable revenue, day by day.
+  const d = D.daily[sn.svc.id];
+  const pts = [];
+  let run = 0;
+  D.dates.forEach((date, i) => {
+    if (d.sold[i] === null) return;
+    run += d.rev[i] - d.cfRev[i];
+    pts.push({ date, v: run });
+  });
+  const svg = document.getElementById('fxchart');
+  const W = svg.clientWidth || 900, H = 170;
+  const m = { t: 10, r: 14, b: 24, l: 74 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  const lo = Math.min(0, ...pts.map((q) => q.v)), hi = Math.max(0, ...pts.map((q) => q.v));
+  const span = hi - lo || 1;
+  const x = (k) => m.l + (pts.length === 1 ? iw / 2 : (k / (pts.length - 1)) * iw);
+  const y = (v) => m.t + ih - ((v - lo) / span) * ih;
+  const y0 = y(0);
+  const line = pts.map((q, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(q.v).toFixed(1)).join(' ');
+  const area = line + ` L${x(pts.length - 1).toFixed(1)} ${y0.toFixed(1)} L${x(0).toFixed(1)} ${y0.toFixed(1)} Z`;
+  const gbpAxis = (v) => (Math.abs(v) >= 1000 ? (v / 1000).toFixed(0) + 'k' : v.toFixed(0));
+  let months = '', lastM = '';
+  pts.forEach((q, k) => {
+    const mo = q.date.slice(0, 7);
+    if (mo !== lastM) {
+      lastM = mo;
+      months += `<text x="${x(k)}" y="${H - 5}" fill="var(--ink-muted)" font-size="10.5" text-anchor="middle">` +
+        new Date(q.date + 'T12:00:00Z').toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }) + '</text>';
+    }
+  });
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+  svg.innerHTML =
+    `<defs>` +
+      `<clipPath id="fxpos"><rect x="0" y="${m.t}" width="${W}" height="${Math.max(0, y0 - m.t)}"/></clipPath>` +
+      `<clipPath id="fxneg"><rect x="0" y="${y0}" width="${W}" height="${Math.max(0, m.t + ih - y0)}"/></clipPath>` +
+    `</defs>` +
+    `<path d="${area}" fill="var(--series-occ)" opacity="0.16" clip-path="url(#fxpos)"/>` +
+    `<path d="${area}" fill="var(--series-sold)" opacity="0.16" clip-path="url(#fxneg)"/>` +
+    `<line x1="${m.l}" x2="${W - m.r}" y1="${y0}" y2="${y0}" stroke="var(--rule)" stroke-width="1"/>` +
+    `<text x="${m.l - 8}" y="${y0 + 4}" text-anchor="end" font-size="10.5" fill="var(--ink-muted)">GBP 0</text>` +
+    (y0 - y(hi) > 14 ? `<text x="${m.l - 8}" y="${y(hi) + 9}" text-anchor="end" font-size="10.5" fill="var(--ink-muted)">${gbpAxis(hi)}</text>` : '') +
+    (y(lo) - y0 > 14 ? `<text x="${m.l - 8}" y="${y(lo) - 2}" text-anchor="end" font-size="10.5" fill="var(--ink-muted)">${gbpAxis(lo)}</text>` : '') +
+    `<path d="${line}" fill="none" stroke="var(--${dir === 'up' ? 'series-occ' : 'series-sold'})" stroke-width="2" stroke-linejoin="round"/>` +
+    `<circle cx="${x(pts.length - 1)}" cy="${y(run)}" r="4" fill="var(--${dir === 'up' ? 'series-occ' : 'series-sold'})"/>` +
+    months;
+
+  document.getElementById('fxnote').innerHTML =
+    `Cumulative attributable revenue: observed minus the counterfactual, day by day. The counterfactual is ` +
+    `the same booking requests, the same fare ladder and the same EMSRb controls with only the 2025 forecast ` +
+    `error restored \u2014 so this is what forecast quality was worth on this departure, not a fare rise and not ` +
+    `market growth. It can be negative: even a halved error is an error, and on some departures the 2026 one ` +
+    `points the wrong way. Revenue and tickets can also move in opposite directions: on a departure whose ` +
+    `protection was restored, EMSRb holds seats back for the top of the ladder, so it sells fewer seats for ` +
+    `more money.`;
+}
+
+/* ---------- sold versus actually full ---------- */
+function rankRows(month, dc, routeId) {
+  const rows = D.services
+    .filter((s) => s.dc === dc && (routeId === 'ALL' || s.route === routeId))
+    .map((s) => windowAgg(s.id, { weekdayOnly: true, fromMonth: month, toMonth: month }))
+    .filter(Boolean);
+  const bySold = [...rows].sort((a, b) => b.assumed - a.assumed);
+  const byCabin = [...rows].sort((a, b) => b.cabin - a.cabin);
+  const ix = (arr, id) => arr.findIndex((q) => q.svc.id === id);
+  return byCabin.map((r) => ({
+    ...r,
+    rankSold: ix(bySold, r.svc.id) + 1,
+    rankCabin: ix(byCabin, r.svc.id) + 1,
+    change: ix(bySold, r.svc.id) - ix(byCabin, r.svc.id),
+  }));
+}
+
+function renderRank() {
+  const sel = document.getElementById('dcsel');
+  if (!sel.options.length) {
+    sel.innerHTML = Object.entries(D.demandClassLabels)
+      .map(([k, v]) => `<option value="${k}">${v}</option>`).join('');
+    sel.value = state.dc;
+  }
+  const month = +state.date.slice(5, 7);
+  const monthName = new Date(state.date + 'T12:00:00Z')
+    .toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  const rows = rankRows(month, state.dc, state.route);
+  const scope = `${D.demandClassLabels[state.dc]}, ` +
+    `${state.route === 'ALL' ? 'all routes' : state.route} \u00b7 ${monthName} weekdays`;
+  document.getElementById('rankhead').textContent = 'Sold versus actually full \u2014 ' + scope;
+
+  if (rows.length < 2) {
+    document.getElementById('rankrule').textContent =
+      'Fewer than two departures match this demand class and route, so there is no ranking to compare.';
+    document.getElementById('slope').innerHTML = '';
+    document.getElementById('ranktable').innerHTML = '';
+    return;
+  }
+  const soldSpread = r1(Math.max(...rows.map((r) => r.assumed)) - Math.min(...rows.map((r) => r.assumed)));
+  const cabinSpread = r1(Math.max(...rows.map((r) => r.cabin)) - Math.min(...rows.map((r) => r.cabin)));
+  const moved = rows.filter((r) => r.change !== 0).length;
+  const worst = [...rows].sort((a, b) => b.overstatement - a.overstatement)[0];
+  document.getElementById('rankrule').innerHTML =
+    `Ticket sales spread these ${rows.length} departures over <b>${soldSpread} points</b>; measured occupancy ` +
+    `spreads them over <b>${cabinSpread}</b>, and <b>${moved} of ${rows.length}</b> change rank between the two ` +
+    `lists. Widest gap: <b>${worst.svc.id}</b> at ${worst.assumed}% sold but ${worst.cabin}% occupied ` +
+    `(${worst.overstatement} points, no-show rate ${worst.svc.noShow}%). Fare and capacity decisions are made ` +
+    `on the ranking, so pricing off the left-hand list aims the money at the wrong train.`;
+
+  // Slope chart: rank by tickets sold on the left, by measured occupancy on the right.
+  const svg = document.getElementById('slope');
+  const W = svg.clientWidth || 900;
+  const rowH = 30, top = 34;
+  const H = top + rows.length * rowH + 12;
+  const lx = Math.min(230, W * 0.3), rx = W - Math.min(230, W * 0.3);
+  const y = (rank) => top + (rank - 1) * rowH + rowH / 2;
+  const cls = (c) => (c > 0 ? 'series-occ' : c < 0 ? 'series-sold' : 'rule');
+  let g = '';
+  for (const r of rows) {
+    const col = `var(--${cls(r.change)})`;
+    g += `<g data-svc="${r.svc.id}" style="cursor:pointer">` +
+      `<rect x="0" y="${y(Math.min(r.rankSold, r.rankCabin)) - rowH / 2}" width="${W}" height="${rowH}" fill="transparent"/>` +
+      `<line x1="${lx}" y1="${y(r.rankSold)}" x2="${rx}" y2="${y(r.rankCabin)}" stroke="${col}" stroke-width="2" opacity="0.85"/>` +
+      `<circle cx="${lx}" cy="${y(r.rankSold)}" r="4" fill="${col}"/>` +
+      `<circle cx="${rx}" cy="${y(r.rankCabin)}" r="4" fill="${col}"/>` +
+      `<text x="${lx - 10}" y="${y(r.rankSold) + 4}" text-anchor="end" font-size="12" fill="var(--ink)">` +
+        `${r.rankSold}. ${r.svc.id} ${r.assumed}%</text>` +
+      `<text x="${rx + 10}" y="${y(r.rankCabin) + 4}" font-size="12" fill="var(--ink)">` +
+        `${r.rankCabin}. ${r.svc.id} ${r.cabin}%</text></g>`;
+  }
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+  svg.innerHTML =
+    `<text x="${lx - 10}" y="18" text-anchor="end" font-size="10.5" font-weight="600" ` +
+      `fill="var(--ink-muted)" letter-spacing="0.06em">RANKED BY TICKETS SOLD</text>` +
+    `<text x="${rx + 10}" y="18" font-size="10.5" font-weight="600" fill="var(--ink-muted)" ` +
+      `letter-spacing="0.06em">RANKED BY MEASURED OCCUPANCY</text>` + g;
+  svg.onclick = (ev) => {
+    const t = ev.target.closest('[data-svc]');
+    if (!t) return;
+    state.service = t.dataset.svc;
+    state.route = SVC[state.service].route;
+    state.coach = 0;
+    setView('train');
+    renderAll();
+  };
+
+  const body = rows.map((r) =>
+    `<tr class="click" data-svc="${r.svc.id}"><td class="l"><b>${r.svc.time}</b></td>` +
+    `<td class="l mono">${r.svc.id}</td><td class="l">${r.svc.route}</td>` +
+    `<td>${r.rankSold}</td><td>${r.rankCabin}</td>` +
+    `<td class="moved ${r.change > 0 ? 'up' : r.change < 0 ? 'down' : 'flat'}">` +
+      `${r.change === 0 ? '\u2013' : (r.change > 0 ? '+' : '') + r.change}</td>` +
+    `<td>${r.assumed}%</td><td>${r.cabin}%</td><td>${r.overstatement}</td>` +
+    `<td>${r.svc.noShow}%</td><td>${nf.format(r.ghostPerDep)}</td><td>${r.closedPct}%</td></tr>`).join('');
+  document.getElementById('ranktable').innerHTML =
+    '<thead><tr><th class="l">Dep</th><th class="l">Service</th><th class="l">Route</th>' +
+    '<th>Rank sold</th><th>Rank full</th><th>Move</th><th>Sold</th><th>Occupied</th>' +
+    '<th>Gap (pp)</th><th>No-show</th><th>Ghosts/dep</th><th>Sold out</th></tr></thead>' +
+    `<tbody>${body}</tbody>`;
+  document.getElementById('ranktable').querySelectorAll('tbody tr').forEach((tr) =>
+    tr.addEventListener('click', () => {
+      state.service = tr.dataset.svc; state.route = SVC[state.service].route; state.coach = 0;
+      setView('train'); renderAll();
+    }));
+}
+
+/* ---------- what to do next ---------- */
+const ACTIONS = {
+  lengthen_the_train: {
+    label: 'Lengthen the train',
+    rule: 'Selling out on 25% or more of weekdays with a measured cabin factor of 80%+ \u2014 the forecasts are ' +
+      'honest now and the train is genuinely full. Revenue management allocates seats, it cannot create them: ' +
+      'the answer is more seats, and for the first time the occupancy record can size the case.',
+  },
+  recalibrate_the_forecast: {
+    label: 'Recalibrate the forecast',
+    rule: 'A residual demand-forecast error of 8% or more on a constrained departure. The paper prices errors ' +
+      'like this at 1-2% of the departure\u2019s revenue; the fix is the same recalibration that produced the ' +
+      '2026 gain, one more turn of the crank.',
+  },
+  open_more_advance: {
+    label: 'Open more Advance',
+    rule: 'Assumed load factor at or below 50%: the booking limits are rationing nothing, seats travel empty ' +
+      'and unsold. Opening the bottom of the ladder wider costs no protected seat here \u2014 measured ' +
+      'occupancy is what proves the room is really there.',
+  },
+};
+const ACTION_ORDER = ['lengthen_the_train', 'recalibrate_the_forecast', 'open_more_advance'];
+
+function actionCandidates() {
+  const out = [];
+  for (const svc of D.services) {
+    const a = windowAgg(svc.id, { weekdayOnly: true, fromMonth: 1, toMonth: 8 });
+    if (!a) continue;
+    const residual = Math.abs(svc.fe26);
+    let action = null;
+    if (a.closedPct >= 25 && a.cabin >= 80) action = 'lengthen_the_train';
+    else if (residual >= 8 && ['peak_core', 'evening_peak'].includes(svc.dc)) action = 'recalibrate_the_forecast';
+    else if (a.assumed <= 50) action = 'open_more_advance';
+    if (!action) continue;
+    out.push({
+      ...a, action, residual,
+      indicative: action === 'recalibrate_the_forecast'
+        ? r2(a.revPerWeekdayYear * 0.01 * (residual / 25)) : 0,
+    });
+  }
+  out.sort((a, b) =>
+    ACTION_ORDER.indexOf(a.action) - ACTION_ORDER.indexOf(b.action) ||
+    Math.abs(b.indicative) - Math.abs(a.indicative));
+  return out;
+}
+
+function renderActions() {
+  const all = actionCandidates();
+  const counts = {};
+  for (const c of all) counts[c.action] = (counts[c.action] || 0) + 1;
+  document.getElementById('actwindow').textContent =
+    '1 January - 31 August 2026, weekdays \u00b7 ' + all.length + ' of ' + D.services.length + ' departures';
+
+  document.getElementById('actgrid').innerHTML = ACTION_ORDER.map((k) =>
+    `<button class="actsum" type="button" data-act="${k}" aria-pressed="${state.action === k}">` +
+    `<div class="n">${counts[k] || 0}</div><div class="t">${ACTIONS[k].label}</div>` +
+    `<div class="w">${k === 'recalibrate_the_forecast'
+      ? gbp0.format(all.filter((c) => c.action === k).reduce((a, c) => a + c.indicative, 0)) + ' indicative a year'
+      : 'no money attached \u2014 a capacity or quota call'}</div></button>`).join('') +
+    `<button class="actsum" type="button" data-act="all" aria-pressed="${state.action === 'all'}">` +
+    `<div class="n">${all.length}</div><div class="t">All candidates</div>` +
+    `<div class="w">ranked, capacity first</div></button>`;
+  document.getElementById('actgrid').querySelectorAll('.actsum').forEach((b) =>
+    b.addEventListener('click', () => { state.action = b.dataset.act; renderActions(); }));
+
+  document.getElementById('actrule').innerHTML = state.action === 'all'
+    ? 'Ranked by action priority \u2014 capacity first, then forecast residuals, then quota openings.'
+    : `<b>${ACTIONS[state.action].label}.</b> ${ACTIONS[state.action].rule}`;
+
+  const rows = state.action === 'all' ? all : all.filter((c) => c.action === state.action);
+  const body = rows.map((c) =>
+    `<tr class="click" data-svc="${c.svc.id}" aria-current="${state.service === c.svc.id}">` +
+    `<td class="l"><b>${c.svc.time}</b></td><td class="l mono">${c.svc.id}</td>` +
+    `<td class="l">${D.demandClassLabels[c.svc.dc]}</td>` +
+    `<td class="l">${ACTIONS[c.action].label}</td>` +
+    `<td>${c.assumed}%</td><td>${c.cabin}%</td><td>${c.closedPct}%</td>` +
+    `<td>${c.awayPerDep > 0 ? `<span class="flag crit">${c.awayPerDep}</span>` : '0'}</td>` +
+    `<td>${c.ghostPerDep}</td><td>${c.svc.fe26}%</td>` +
+    `<td>${c.indicative ? gbp0.format(c.indicative) : '\u2013'}</td></tr>`).join('');
+  document.getElementById('acttable').innerHTML =
+    '<thead><tr><th class="l">Dep</th><th class="l">Service</th>' +
+    '<th class="l">Demand</th><th class="l">Action</th><th>Sold</th><th>Occupied</th>' +
+    '<th>Sold out</th><th>Refused<br>per dep</th><th>Ghosts<br>per dep</th>' +
+    '<th>Residual<br>error</th><th>Indicative<br>per year</th></tr></thead>' + `<tbody>${body}</tbody>`;
+  document.getElementById('acttable').querySelectorAll('tbody tr').forEach((tr) =>
+    tr.addEventListener('click', () => {
+      state.service = tr.dataset.svc; state.route = SVC[state.service].route; state.coach = 0;
+      setView('train'); renderAll();
+    }));
+
+  document.getElementById('actnote').innerHTML =
+    `Indicative money is attached only to <b>recalibrate the forecast</b>, scaled from the paper\u2019s finding ` +
+    `that a 25% forecast error costs 1-2% of revenue on a constrained departure, at a conservative 1% pro rata. ` +
+    `The capacity and quota rows carry no money on purpose: the honest number there is the occupancy record ` +
+    `itself. What is <b>not</b> on this list is releasing or reselling no-show seats, and overselling \u2014 ` +
+    `neither is available to an operator selling reserved seats, which is why the levers are forecast quality, ` +
+    `booking limits and rolling stock.`;
+}
+
+/* ---------- views ---------- */
+function setView(v) {
+  state.view = v;
+  for (const name of ['train', 'rank', 'actions']) {
+    document.getElementById('view-' + name).hidden = name !== v;
+  }
+  document.querySelectorAll('#viewnav .segb').forEach((b) =>
+    b.setAttribute('aria-pressed', String(b.dataset.view === v)));
+}
+
 /* ---------- orchestration ---------- */
 function renderAll() {
   const sn = snapshot(state.service, state.date);
@@ -930,10 +1361,19 @@ function renderAll() {
   renderFormation(sn);
   renderCoach(sn);
   renderChart(sn);
+  renderForecastEffect(sn);
   renderRouteTable();
+  renderRank();
+  renderActions();
   writeHash();
 }
 
+document.querySelectorAll('#viewnav .segb').forEach((b) =>
+  b.addEventListener('click', () => setView(b.dataset.view)));
+document.getElementById('dcsel').addEventListener('change', (e) => {
+  state.dc = e.target.value;
+  renderRank();
+});
 document.querySelectorAll('#dayfilter .segb').forEach((b) =>
   b.addEventListener('click', () => {
     state.weekdaysOnly = b.dataset.v === 'wd';
@@ -959,7 +1399,11 @@ document.addEventListener('keydown', (e) => {
 let rt;
 addEventListener('resize', () => {
   clearTimeout(rt);
-  rt = setTimeout(() => { const sn = snapshot(state.service, state.date); if (sn) renderChart(sn); }, 150);
+  rt = setTimeout(() => {
+    const sn = snapshot(state.service, state.date);
+    if (sn) { renderChart(sn); renderForecastEffect(sn); }
+    renderRank();
+  }, 150);
 });
 
 document.getElementById('tenant').innerHTML =

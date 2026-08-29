@@ -398,6 +398,29 @@ SeatSense node, with that node's battery, signal and firmware. Selecting a coach
 draws its seats. The plot underneath runs the whole window day by day, sold
 against occupied, with the gap between the two lines being the ghost seats.
 
+Two more views sit behind the switcher in the masthead.
+
+**Sold vs full** ranks a demand class twice - once by tickets sold, once by
+measured occupancy - and draws the departures that change place between the two
+lists. In August's morning peak core, ticket sales spread the eight departures
+over 8.7 points and measured occupancy spreads them over 11.1, and seven of the
+eight move. Fare and capacity decisions are made on the ranking, so this is the
+screen that says why measuring is worth anything.
+
+**Actions** is the worklist: the 36 departures with a clear next move, split 8
+lengthen-the-train, 9 recalibrate-the-forecast and 19 open-more-Advance, ranked
+capacity first. Only the recalibration rows carry indicative money, scaled from
+the paper; the capacity rows deliberately carry none.
+
+On the train view, the panel under the day-by-day plot gives that departure's
+counterfactual - what the same booking requests would have earned under
+2025-quality forecasts - as a cumulative curve over the window. NBR1-0711 earns
++GBP 63,559 (+2.36%) on 6,580 *fewer* seats, because its protection was
+restored; NBR1-0741, thirty minutes later, is attributable-negative at
+-GBP 13,745, because even a halved error is an error. Summed over all 58
+departures the panel comes to GBP 639,737, the same 0.816% the attribution tool
+reports.
+
 Open it by double-clicking the file, or serve the directory
 (`npx serve dashboard`). It needs no MCP server and no build step; the data is
 already inside it.
@@ -415,9 +438,13 @@ Rebuild after changing the data or the template:
 node src/build-dashboard.mjs
 ```
 
-The per-coach split is the same code as `seatsenseSnapshot` in `src/dataset.mjs`,
-so the page and the `seatsense_snapshot` tool always agree - if you change one,
-change the other.
+The page re-implements four things the MCP tools also compute - the per-coach
+split from `seatsenseSnapshot`, the window aggregate from `aggregate`, the two
+rankings from `fullnessRanking` and the triage rules from `repricingCandidates`.
+They are checked against `src/dataset.mjs` rather than trusted: 464
+departure-days coach by coach, 232 ranking rows over four months and five demand
+classes, and all 36 candidates in tool order, with zero mismatches. If you change
+a rule in `dataset.mjs`, change it here too.
 
 ## The 14 tools
 
