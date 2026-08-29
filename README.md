@@ -11,16 +11,63 @@ no API keys. Node 20+ is the only requirement.
 
 ---
 
-## Snabbstart (svenska)
+## Kom igång med SeatSense-demon (svenska)
+
+Två sätt att köra: **webbklienten** (noll installation, allt körs i molnet)
+eller **lokalt i terminalen** (offline-säkert på mässgolvet).
+
+### Väg A - webbklienten (claude.ai/code)
+
+Sessionen får en egen molncontainer som klonar repot. `.mcp.json` i repo-roten
+plockas upp automatiskt och yggio-servern startar utan någon dialog - Node
+finns förinstallerat. Enda kravet på plats är nätverk till claude.ai.
+
+1. **Koppla GitHub.** Första gången du öppnar
+   [claude.ai/code](https://claude.ai/code) får du *"Sign in with GitHub"* -
+   logga in med ett GitHub-konto som ser det här repot (det är privat). Går
+   även att göra i efterhand under **Settings → Connectors → GitHub** på
+   claude.ai.
+2. **Starta en session på repot.** Klicka på repoväljaren under textrutan och
+   välj **Sensative/railway-demo**, branch `main` (default). Funkar även i
+   Claude-appen på mobilen (iOS/Android) via Code-fliken.
+3. **Verifiera.** Skriv *"Kör node src/selftest.mjs"* som första meddelande -
+   ska sluta med `All checks passed - the demo is ready`. Fråga sedan
+   *"What data do you have?"* och godkänn om den ber om lov att använda ett
+   yggio-verktyg.
+
+Mässvarning: webbvägen står och faller med uppkopplingen på plats. Sviktar
+wifi:t är Väg B helt offline (bortsett från Claude själv).
+
+### Väg B - lokalt i terminalen (Claude Code CLI)
+
+Kräver Node 20+ och Claude Code - har du det inte:
+`curl -fsSL https://claude.ai/install.sh | bash` (macOS/Linux; alternativt
+`npm install -g @anthropic-ai/claude-code`), kör sedan `claude` en gång och
+logga in.
 
 ```bash
-cd railway-demo              # repo-roten - allt ligger här
+git clone https://github.com/Sensative/railway-demo.git
+cd railway-demo
 node src/selftest.mjs        # pre-flight: anropar alla 14 verktyg, ska ge "All checks passed"
 claude                       # starta Claude i den här katalogen - .mcp.json kopplar in fejk-Yggio
 ```
 
-Svara **ja** när Claude frågar om den får använda MCP-servern `yggio`.
-Fråga sedan: *"What data do you have?"* och följ `DEMO-SCRIPT.md`.
+Svara **ja** när Claude Code frågar om du litar på mappen och om MCP-servern
+`yggio` får användas. Kolla med `/mcp` att yggio är connected med 14 verktyg,
+och fråga sedan *"What data do you have?"* - svaret ska vara Northbank
+Rail-siffror ur datasetet, inte allmänbildning.
+
+### Felsökning
+
+| Problem | Åtgärd |
+|---|---|
+| Webben: repot syns inte i väljaren | Fel eller inget GitHub-konto kopplat - **Settings → Connectors**. På Team/Enterprise kan en ägare behöva aktivera GitHub-connectorn i admininställningarna. |
+| Webben: inga yggio-svar | Be Claude *"list your yggio tools"*. Saknas de: starta en ny session på repot; hjälper inte det, kör Väg B. |
+| CLI: Claude ser inga yggio-verktyg | Fel katalog, eller så nekades servern vid första frågan. Stå i repo-roten, kör `claude mcp reset-project-choices` och starta `claude` igen. |
+| CLI: självtestet failar | Nästan alltid Node-versionen - det krävs 20+. `node --version`. |
+
+Följ sedan `DEMO-SCRIPT.md` - körschema, fallgropar och räddningar.
+`CLAUDE.md` läses av Claude automatiskt, både på webben och i CLI:t.
 
 ---
 
