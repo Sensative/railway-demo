@@ -209,6 +209,11 @@ h1, h2, h3 { font-family: var(--cond); margin: 0; text-wrap: balance; letter-spa
 .tile .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); font-weight: 600; }
 .tile .v { font-family: var(--cond); font-size: 27px; font-weight: 700; line-height: 1.15; margin-top: 2px; font-variant-numeric: tabular-nums; }
 .tile .s { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tile .k .est, th .est {
+  display: inline-block; margin-left: 5px; padding: 0 4px; border-radius: 3px;
+  background: var(--surface-2); border: 1px solid var(--rule);
+  color: var(--ink-muted); font-size: 9px; letter-spacing: 0.06em; cursor: help;
+}
 .tile.accent .v { color: var(--accent); }
 .tile.warn .v { color: var(--serious); }
 .tile.crit .v { color: var(--critical); }
@@ -759,6 +764,8 @@ function renderIdentity(sn) {
     `</span>`;
 }
 
+const MODELLED = '<span class="est" title="Not measured. A walk-up who finds no seat simply leaves, so nobody counts them: this is the revenue-management model\u2019s own unconstrained demand. What is observed is that the cabin closed.">MODELLED</span>';
+
 function renderTiles(sn) {
   const s = sn.svc;
   const t = [
@@ -767,7 +774,8 @@ function renderTiles(sn) {
     { k: 'Seats occupied', v: nf.format(sn.occupied), s: 'measured by ' + s.coaches + ' nodes', cls: 'accent' },
     { k: 'Cabin factor', v: pct(sn.cabin), s: 'ticket system said ' + pct(sn.assumed), cls: 'accent' },
     { k: 'Ghost seats', v: nf.format(sn.ghost), s: gbp0.format(sn.ghostValue) + ' paid, travelled empty', cls: 'warn' },
-    { k: 'Walk-ups refused', v: nf.format(sn.away), s: sn.away > 0 ? 'no Standard seat left' : 'none turned away',
+    { k: 'Walk-ups refused' + MODELLED, v: nf.format(sn.away),
+      s: sn.away > 0 ? 'no Standard seat left' : 'none turned away',
       cls: sn.away > 0 ? 'crit' : 'ok' },
     { k: 'Revenue', v: gbp0.format(sn.revenue), s: gbp0.format(sn.fare) + ' average fare' },
   ];
@@ -1058,7 +1066,7 @@ const COLS = [
   { key: 'cabin', label: 'Cabin factor', get: (r) => r.cabin,
     cell: (r) => `<span class="swatch" style="background:var(${seqVar(r.cabin)})"></span>${r.cabin.toFixed(1)}%` },
   { key: 'ghost', label: 'Ghosts', get: (r) => r.ghost, cell: (r) => nf.format(r.ghost) },
-  { key: 'away', label: 'Refused', get: (r) => r.away,
+  { key: 'away', label: 'Refused' + MODELLED, get: (r) => r.away,
     cell: (r) => r.away > 0 ? `<span class="flag crit">${nf.format(r.away)}</span>` : '0' },
   { key: 'revenue', label: 'Revenue', get: (r) => r.revenue, cell: (r) => gbp0.format(r.revenue) },
 ];
@@ -1369,7 +1377,7 @@ function renderActions() {
   document.getElementById('acttable').innerHTML =
     '<thead><tr><th class="l">Dep</th><th class="l">Service</th>' +
     '<th class="l">Demand</th><th class="l">Action</th><th>Sold</th><th>Occupied</th>' +
-    '<th>Sold out</th><th>Refused<br>per dep</th><th>Ghosts<br>per dep</th>' +
+    '<th>Sold out</th><th>Refused<br>per dep' + MODELLED + '</th><th>Ghosts<br>per dep</th>' +
     '<th>Residual<br>error</th><th>Indicative<br>per year</th></tr></thead>' + `<tbody>${body}</tbody>`;
   document.getElementById('acttable').querySelectorAll('tbody tr').forEach((tr) =>
     tr.addEventListener('click', () => {
@@ -1476,8 +1484,12 @@ document.getElementById('footnote').innerHTML =
   `${D.coverage.from} to ${D.coverage.to} only. Cabin factor is measured occupancy over seats; the ` +
   `ticket system&rsquo;s own figure counts every no-show as a passenger on board. Ghost seats are paid ` +
   `for and travelled empty &mdash; a measurement, not recoverable inventory: the seat still belongs to ` +
-  `its buyer and Northbank Rail may not oversell. Walk-ups refused are Anytime Standard requests turned ` +
-  `away with no Standard seat left. Northbank Rail is fictional and this data synthetic.`;
+  `its buyer and Northbank Rail may not oversell. <b>Walk-ups refused is modelled, not measured.</b> ` +
+  `It counts Anytime Standard requests arriving at a full Standard cabin \u2014 but a walk-up who finds ` +
+  `no seat simply leaves, so no system counts them. It is the revenue-management model\u2019s ` +
+  `unconstrained demand; what an operator really observes is that the cabin closed, and estimates the ` +
+  `rest by unconstraining censored sales or from search and ticket-machine logs. SeatSense does not ` +
+  `change this: it measures occupancy, not refused demand. Northbank Rail is fictional and this data synthetic.`;
 
 restore();
 renderAll();

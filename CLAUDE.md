@@ -131,6 +131,14 @@ units and was never rationed. Say that before someone finds it.
   occupancy **per coach**, so "which seats were sat in" is not something the
   data answers, and the seat plan in the dashboard shows the measured count
   against the real seats, not identified ones. Say so if asked.
+- **`passengers_turned_away` is modelled, not measured.** A walk-up who finds
+  no seat leaves, and no system counts them - it is the RM model's own
+  unconstrained demand. If asked how we know, say so: what is observed is that
+  the cabin closed. A real operator estimates the rest by unconstraining
+  censored sales, or measures a proxy from journey-planner, app and
+  ticket-machine searches that returned no availability. **SeatSense does not
+  fix this** - it measures occupancy, not refused demand. Refusals fell 75.9 to
+  50.0 because protection was restored, not because they became visible.
 - A **ghost seat** is a seat paid for that travelled empty. It is a
   measurement, not recoverable inventory. Say so when you use the term.
 - Be straight about the residuals: **31.6% of peak-core weekdays still sell

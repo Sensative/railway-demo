@@ -526,6 +526,14 @@ The knobs worth knowing, all in `src/model.mjs`:
 - The one place the demo estimates 2025 occupancy is `ticket_data_blind_spot`,
   where it is flagged `inference: true`, states its method and 9-12% no-show
   range, and gives a range rather than a point figure.
+- **`demand_turned_away` is the one headline figure that is modelled rather
+  than observed.** It counts top-class requests the simulation created and
+  then refused at a full cabin. No real system sees a walk-up who leaves
+  without asking, which is exactly why the 2025 forecasts under-counted these
+  departures. An operator observes that sales closed and estimates the rest by
+  unconstraining censored demand, or measures a proxy from search and
+  ticket-machine logs. SeatSense does not make it observable - it measures
+  occupancy, not refused demand. The dashboard marks it MODELLED.
 - No sensor price is in the repo. `seatsense_attribution` computes payback
   only from a `cost_per_coach_gbp` you supply at the time.
 - Every service runs every day in this model, with weekend and bank-holiday
