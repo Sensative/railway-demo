@@ -398,7 +398,7 @@ SeatSense node, with that node's battery, signal and firmware. Selecting a coach
 draws its seats. The plot underneath runs the whole window day by day, sold
 against occupied, with the gap between the two lines being the ghost seats.
 
-Two more views sit behind the switcher in the masthead.
+Three more views sit behind the switcher in the masthead.
 
 **Sold vs full** ranks a demand class twice - once by tickets sold, once by
 measured occupancy - and draws the departures that change place between the two
@@ -412,14 +412,15 @@ lengthen-the-train, 9 recalibrate-the-forecast and 19 open-more-Advance, ranked
 capacity first. Only the recalibration rows carry indicative money, scaled from
 the paper; the capacity rows deliberately carry none.
 
-On the train view, the panel under the day-by-day plot gives that departure's
-counterfactual - what the same booking requests would have earned under
-2025-quality forecasts - as a cumulative curve over the window. NBR1-0711 earns
-+GBP 63,559 (+2.36%) on 6,580 *fewer* seats, because its protection was
-restored; NBR1-0741, thirty minutes later, is attributable-negative at
--GBP 13,745, because even a halved error is an error. Summed over all 58
-departures the panel comes to GBP 639,737, the same 0.816% the attribution tool
-reports.
+**Business case** is quarantined on purpose, and is the only screen here that
+mentions 2025. It gives one departure's counterfactual - what the same booking
+requests would have earned under 2025-quality forecasts - as a cumulative curve
+over the window. NBR1-0711 earns +GBP 63,559 (+2.36%) on 6,580 *fewer* seats,
+because its protection was restored; NBR1-0741, thirty minutes later, is
+attributable-negative at -GBP 13,745, because even a halved error is an error.
+Summed over all 58 departures it comes to GBP 639,737, the same 0.816% the
+attribution tool reports. Everything outside this view is measured 2026 seat
+occupancy set against what the ticket system sold - no year comparison.
 
 Open it by double-clicking the file, or serve the directory
 (`npx serve dashboard`). It needs no MCP server and no build step; the data is

@@ -369,6 +369,7 @@ select#dcsel {
       <button class="segb" type="button" data-view="train" aria-pressed="true">Train</button>
       <button class="segb" type="button" data-view="rank" aria-pressed="false">Sold vs full</button>
       <button class="segb" type="button" data-view="actions" aria-pressed="false">Actions</button>
+      <button class="segb" type="button" data-view="case" aria-pressed="false">Business case</button>
     </span>
     <span class="tenant" id="tenant"></span>
   </span>
@@ -449,16 +450,6 @@ select#dcsel {
       </div>
     </section>
 
-    <section class="panel" style="margin-bottom:14px">
-      <header>
-        <h2 id="fxhead">What the recalibrated forecast earned on this train</h2>
-        <span class="hint">Against the per-departure counterfactual</span>
-      </header>
-      <div class="fx" id="fx"></div>
-      <div class="chartbox"><svg class="chart" id="fxchart" role="img" aria-labelledby="fxhead"></svg></div>
-      <div class="note" id="fxnote"></div>
-    </section>
-
     <section class="panel">
       <header><h2 id="routehead">All departures</h2><span class="hint">Click a row to open that train</span></header>
       <div class="tablewrap" style="max-height:520px; overflow-y:auto">
@@ -502,6 +493,24 @@ select#dcsel {
         </table>
       </div>
       <div class="note" id="actnote"></div>
+    </section>
+   </div>
+
+   <div id="view-case" hidden>
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="fxhead">What the recalibrated forecast earned on this train</h2>
+        <span class="hint">The only year-on-year screen here</span>
+      </header>
+      <div class="rule">
+        This is the commercial case, not the seat record. Everything else in this dashboard is what
+        SeatSense measured in 2026 set against what the ticket system sold. This one screen asks a
+        different question - what the same booking requests would have earned under 2025-quality
+        forecasts - and it is the only place a 2025 number appears.
+      </div>
+      <div class="fx" id="fx"></div>
+      <div class="chartbox"><svg class="chart" id="fxchart" role="img" aria-labelledby="fxhead"></svg></div>
+      <div class="note" id="fxnote"></div>
     </section>
    </div>
   </div>
@@ -1336,11 +1345,17 @@ function renderActions() {
 /* ---------- views ---------- */
 function setView(v) {
   state.view = v;
-  for (const name of ['train', 'rank', 'actions']) {
+  for (const name of ['train', 'rank', 'actions', 'case']) {
     document.getElementById('view-' + name).hidden = name !== v;
   }
   document.querySelectorAll('#viewnav .segb').forEach((b) =>
     b.setAttribute('aria-pressed', String(b.dataset.view === v)));
+  // A hidden container measures 0 wide, so anything drawn to a measured width
+  // has to be drawn again once its view is actually on screen.
+  const sn = snapshot(state.service, state.date);
+  if (v === 'train' && sn) renderChart(sn);
+  if (v === 'rank') renderRank();
+  if (v === 'case' && sn) renderForecastEffect(sn);
 }
 
 /* ---------- orchestration ---------- */
