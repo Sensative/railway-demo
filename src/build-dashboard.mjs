@@ -15,6 +15,7 @@ const meta = read('data/operator.json');
 const services = read('data/services.json');
 const rows2026 = read('data/daily-2026.json');
 const devices = read('data/devices.json');
+const seatmaps = read('data/seatmaps.json');
 
 const routes = meta.routes ?? meta.operator?.routes ?? null;
 if (!routes) throw new Error('routes not found in operator.json: ' + Object.keys(meta));
@@ -39,6 +40,7 @@ const svcOut = services.map((s) => ({
   to: s.destination,
   dc: s.demand_class,
   formation: s.formation,
+  unitType: s.unit_type,
   units: s.formation_units,
   coaches: s.coaches,
   seats: s.seats,
@@ -109,6 +111,17 @@ const routeOut = routes.map((r) => ({
   anytime: r.anytime_standard_fare_gbp,
 }));
 
+// Seat inventory, compact: [number, cabin, row, side, position] per coach.
+const seatOut = {};
+for (const [type, m] of Object.entries(seatmaps.unit_types)) {
+  seatOut[type] = {
+    layout: m.layout,
+    byCoach: Object.fromEntries(Object.entries(m.by_coach).map(([c, ss]) => [c,
+      ss.map((x) => [x.number, x.cabin === 'first' ? 'f' : 's', x.row, x.side,
+        x.position === 'window' ? 'w' : 'a'])])),
+  };
+}
+
 const payload = {
   tenant: meta.yggio_tenant ?? 'northbank-rail-prod',
   operator: 'Northbank Rail',
@@ -120,6 +133,9 @@ const payload = {
   services: svcOut,
   daily,
   devices: dev,
+  seatmaps: seatOut,
+  seatFleet: seatmaps.fleet,
+  seatNote: seatmaps.measurement_note,
   demandClassLabels: {
     peak_core: 'Morning peak core',
     peak_shoulder: 'Peak shoulder',
@@ -134,5 +150,5 @@ const out = tpl.replace('"__DATA__"', JSON.stringify(payload));
 writeFileSync(join(root, 'dashboard/index.html'), out);
 console.log(
   `dashboard/index.html written - ${svcOut.length} services, ${dates.length} days, ` +
-    `${Object.keys(dev).length} nodes, ${(out.length / 1e6).toFixed(2)} MB`,
+    `${Object.keys(dev).length} nodes, ${seatmaps.fleet.seats} seats, ${(out.length / 1e6).toFixed(2)} MB`,
 );

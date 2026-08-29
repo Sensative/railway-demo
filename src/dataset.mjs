@@ -21,6 +21,7 @@ const OPERATOR_PILOT = META.operator.seatsense.pilot;
 const SERVICES = load('services.json');
 const DEVICES = load('devices.json');
 const PRICING = load('pricing.json');
+const SEATMAPS = load('seatmaps.json');
 const ROWS = { 2025: load('daily-2025.json'), 2026: load('daily-2026.json') };
 
 const SVC = Object.fromEntries(SERVICES.map((s) => [s.service_id, s]));
@@ -1102,6 +1103,68 @@ export function ticketDataBlindSpot({ demand_class = 'peak_core', month } = {}) 
 // ---------------------------------------------------------------------------
 // Yggio device surface
 // ---------------------------------------------------------------------------
+
+/**
+ * The seat inventory: which numbered seats a coach actually has.
+ *
+ * This is what the fleet is built from, not what SeatSense measured. Occupancy
+ * is reported per coach, so this answers "which seats exist and where are
+ * they", not "which of them were sat in" - keep the two apart when answering.
+ */
+export function seatMap({ unit_type, service_id, coach } = {}) {
+  let type = unit_type;
+  let svc = null;
+  if (service_id) {
+    svc = SVC[service_id];
+    if (!svc) return { error: `Unknown service_id "${service_id}".` };
+    type = svc.unit_type;
+  }
+  if (!type) {
+    return {
+      fleet: SEATMAPS.fleet,
+      unit_types: Object.fromEntries(Object.entries(SEATMAPS.unit_types).map(([k, v]) => [k, {
+        label: v.label, coaches: v.coaches, seats_total: v.seats_total,
+        seats_standard: v.seats_standard, seats_first: v.seats_first, layout: v.layout,
+        seats_per_coach: Object.fromEntries(Object.entries(v.by_coach).map(([c, ss]) => [c, ss.length])),
+      }])),
+      note: SEATMAPS.note,
+      measurement_note: SEATMAPS.measurement_note,
+      narrative: `${SEATMAPS.fleet.units} units, ${SEATMAPS.fleet.coaches} coaches, ${SEATMAPS.fleet.seats.toLocaleString('en-GB')} numbered seats across ${SEATMAPS.fleet.distinct_layouts} layouts (${Object.entries(SEATMAPS.fleet.numbered_places_per_layout).map(([k, v]) => `${k} ${v}`).join(', ')}). Pass unit_type or service_id, and optionally coach, for the seats themselves.`,
+    };
+  }
+  const map = SEATMAPS.unit_types[type];
+  if (!map) return { error: `Unknown unit_type "${type}". Known: ${Object.keys(SEATMAPS.unit_types).join(', ')}.` };
+  if (coach) {
+    const letter = String(coach).toUpperCase();
+    const seats = map.by_coach[letter];
+    if (!seats) return { error: `${type} has no coach ${letter}. Coaches: ${map.coaches.join(', ')}.` };
+    const std = seats.filter((x) => x.cabin === 'standard').length;
+    const first = seats.length - std;
+    return {
+      unit_type: type, label: map.label, coach: letter,
+      seats: seats.length, seats_standard: std, seats_first: first,
+      rows: seats.at(-1).row, layout: map.layout,
+      seat_list: seats,
+      measurement_note: SEATMAPS.measurement_note,
+      narrative: `${map.label} coach ${letter}: ${seats.length} numbered seats (${std} Standard, ${first} First) over ${seats.at(-1).row} rows, ${letter}1 to ${seats.at(-1).seat}. Standard is ${map.layout.standard}, First ${map.layout.first}. Which of them were occupied is a per-coach count, not a per-seat one.`,
+    };
+  }
+  return {
+    unit_type: type, label: map.label, coaches: map.coaches,
+    seats_total: map.seats_total, seats_standard: map.seats_standard, seats_first: map.seats_first,
+    layout: map.layout,
+    by_coach: Object.fromEntries(Object.entries(map.by_coach).map(([c, ss]) => [c, {
+      seats: ss.length,
+      seats_standard: ss.filter((x) => x.cabin === 'standard').length,
+      seats_first: ss.filter((x) => x.cabin === 'first').length,
+      rows: ss.at(-1).row,
+      first_seat: ss[0].seat, last_seat: ss.at(-1).seat,
+    }])),
+    note: SEATMAPS.note,
+    measurement_note: SEATMAPS.measurement_note,
+    narrative: `${map.label}: ${map.coaches.length} coaches, ${map.seats_total} numbered seats (${map.seats_standard} Standard ${map.layout.standard}, ${map.seats_first} First ${map.layout.first})${svc ? `, the formation ${svc.service_id} works` : ''}. Pass coach for the seats themselves.`,
+  };
+}
 
 export function listDevices({ route_id, unit_id, status, limit = 25, offset = 0 } = {}) {
   const all = DEVICES.filter(

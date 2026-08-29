@@ -329,9 +329,90 @@ export const UNIT_TYPES = {
   },
 };
 
+/**
+ * Seat numbering for the fleet.
+ *
+ * The seat counts above come from the LNER Azuma coach layout maps; the
+ * arrangement of those seats into numbered places is this dataset's own
+ * convention, chosen to match how an Azuma is actually laid out:
+ *
+ *   - Standard is 2+2 across, First is 2+1.
+ *   - Seats are numbered from 1 within each coach, counting across the row
+ *     from the A side, then back through the train.
+ *   - On a composite coach the Standard section is numbered first, so First
+ *     class runs continuously into the all-First coach next to it.
+ *   - Rows are grouped in pairs; every other pair is a table bay, the two
+ *     rows facing each other, and the rest are airline-style facing forward.
+ *
+ * Wheelchair spaces, tip-ups and the cafe-bar counter are not seats and are
+ * not numbered - SeatSense instruments seats.
+ */
+const ACROSS = {
+  standard: [
+    { side: 'A', position: 'window' }, { side: 'A', position: 'aisle' },
+    { side: 'B', position: 'aisle' }, { side: 'B', position: 'window' },
+  ],
+  first: [
+    { side: 'A', position: 'window' }, { side: 'A', position: 'aisle' },
+    { side: 'B', position: 'window' },
+  ],
+};
+
+/** Every numbered seat in one coach of one unit type, in seat-number order. */
+export function coachSeatMap(unitTypeId, coachLetter) {
+  const unit = UNIT_TYPES[unitTypeId];
+  if (!unit) throw new Error(`Unknown unit type "${unitTypeId}"`);
+  const coach = unit.coaches.find((c) => c.letter === coachLetter);
+  if (!coach) throw new Error(`Unit ${unitTypeId} has no coach ${coachLetter}`);
+
+  const seats = [];
+  let number = 0, row = 0;
+  const section = (count, cabin) => {
+    const across = ACROSS[cabin];
+    for (let placed = 0; placed < count; ) {
+      row++;
+      const table = Math.floor((row - 1) / 2) % 2 === 0;
+      for (let k = 0; k < across.length && placed < count; k++, placed++) {
+        number++;
+        seats.push({
+          number,
+          seat: `${coachLetter}${number}`,
+          cabin,
+          row,
+          side: across[k].side,
+          position: across[k].position,
+          bay: table ? 'table' : 'airline',
+          facing: table && row % 2 === 0 ? 'backward' : 'forward',
+        });
+      }
+    }
+  };
+  section(coach.seats_standard, 'standard');
+  section(coach.seats_first, 'first');
+  return seats;
+}
+
+/** The whole fleet's seat inventory, by unit type and coach. */
+export function fleetSeatMaps() {
+  const out = {};
+  for (const [id, unit] of Object.entries(UNIT_TYPES)) {
+    out[id] = {
+      unit_type: id,
+      label: unit.label,
+      coaches: unit.coaches.map((c) => c.letter),
+      seats_total: unitSeatsTotal(id),
+      seats_standard: unitSeatsStandard(id),
+      seats_first: unitSeatsFirst(id),
+      layout: { standard: '2+2', first: '2+1' },
+      by_coach: Object.fromEntries(unit.coaches.map((c) => [c.letter, coachSeatMap(id, c.letter)])),
+    };
+  }
+  return out;
+}
+
 export const unitSeatsStandard = (t) => UNIT_TYPES[t].coaches.reduce((a, c) => a + c.seats_standard, 0);
 export const unitSeatsFirst = (t) => UNIT_TYPES[t].coaches.reduce((a, c) => a + c.seats_first, 0);
-export const unitSeatsTotal = (t) => unitSeatsStandard(t) + unitSeatsFirst(t); // AZ5 302, AZ9 589
+export const unitSeatsTotal = (t) => unitSeatsStandard(t) + unitSeatsFirst(t); // AZ5 302, AZ9 593
 
 /** Formation for a demand class: which unit type, how many coupled. */
 export const formationOf = (route, demandClass) => route.formations[demandClass];

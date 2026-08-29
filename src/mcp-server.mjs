@@ -170,6 +170,19 @@ const TOOLS = [
     handler: (a) => db.serviceHistory(a),
   },
   {
+    name: 'seat_map',
+    description: 'The seat inventory: which numbered seats a coach actually has, where they sit and which cabin they are in. Call with nothing for the fleet totals, with unit_type or service_id for a formation, and with coach for the seats themselves. This is what the fleet is built from, not what SeatSense measured - occupancy is reported per coach.',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        unit_type: str("Optional: 'AZ5' or 'AZ9'."),
+        service_id: str('Optional: a departure, e.g. NBR2-0748 - uses whatever unit type works it.'),
+        coach: str("Optional coach letter, e.g. 'C'. Returns every numbered seat in it."),
+      },
+    },
+    handler: (a) => db.seatMap(a),
+  },
+  {
     name: 'yggio_list_iotnodes',
     description: 'The raw Yggio device view: SeatSense IoT nodes, one per instrumented coach, with their context map, install date and status. Use it for questions about the sensor estate rather than the commercial data.',
     inputSchema: {

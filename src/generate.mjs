@@ -39,7 +39,7 @@ import {
   unitSeatsStandard, unitSeatsFirst, unitSeatsTotal, formationOf, seatsFor,
   seatsForCabin, coachesFor, formationLabel, peakFormationSeats, faresFor,
   emsrbLimits, poisson, normInv, rng, hash32, jitter, lerp,
-  buildServices, round1, round2,
+  buildServices, round1, round2, fleetSeatMaps,
 } from './model.mjs';
 
 const DATA_DIR = join(dirname(fileURLToPath(import.meta.url)), '..', 'data');
@@ -398,6 +398,35 @@ const daily2025 = buildDaily('2025-01-01', '2025-12-31');
 const daily2026 = buildDaily('2026-01-01', through);
 
 const files = [
+  write('seatmaps.json', (() => {
+    const maps = fleetSeatMaps();
+    // Every seat the fleet physically has, so a coach map can be drawn and a
+    // seat named. Occupancy is still reported per coach - this is inventory.
+    const units = ROUTES.flatMap((r) => r.fleet.map((g) => ({ type: g.type, units: g.units })));
+    const fleetSeats = units.reduce((a, g) => a + g.units * unitSeatsTotal(g.type), 0);
+    const fleetUnits = units.reduce((a, g) => a + g.units, 0);
+    return {
+      generator_version: GENERATOR_VERSION,
+      note:
+        'Seat numbering for the fleet. Seat counts per coach come from the LNER Azuma coach layout maps; ' +
+        'the arrangement into numbered places is this dataset\'s convention: Standard 2+2, First 2+1, ' +
+        'numbered from 1 within each coach, Standard section first on a composite coach so First runs ' +
+        'continuously into the all-First coach beside it. Wheelchair spaces, tip-ups and the cafe-bar ' +
+        'counter are not seats and are not numbered.',
+      measurement_note:
+        'SeatSense reports occupancy per coach, one node per coach. These seat numbers are inventory, not ' +
+        'per-seat occupancy: they say which seats exist, not which of them were sat in.',
+      fleet: {
+        units: fleetUnits,
+        coaches: units.reduce((a, g) => a + g.units * UNIT_TYPES[g.type].coaches.length, 0),
+        seats: fleetSeats,
+        distinct_layouts: Object.keys(maps).length,
+        numbered_places_per_layout: Object.fromEntries(
+          Object.entries(maps).map(([k, v]) => [k, v.seats_total])),
+      },
+      unit_types: maps,
+    };
+  })()),
   write('operator.json', {
     operator: OPERATOR,
     coverage: { ...COVERAGE, end: through },

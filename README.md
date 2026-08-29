@@ -50,13 +50,13 @@ in.
 ```bash
 git clone https://github.com/Sensative/railway-demo.git
 cd railway-demo
-node src/selftest.mjs        # pre-flight check - calls all 14 tools, prints OK per tool
+node src/selftest.mjs        # pre-flight check - calls all 15 tools, prints OK per tool
 claude                       # Claude Code picks up ./.mcp.json and connects to Yggio
 ```
 
 Answer **yes** when Claude Code asks whether you trust the folder and whether
 the `yggio` MCP server from the project's `.mcp.json` may be used. Check with
-`/mcp` that yggio is connected with 14 tools, then ask
+`/mcp` that yggio is connected with 15 tools, then ask
 *"What data do you have?"* - the answer should be Northbank Rail figures from
 the dataset, not general knowledge.
 
@@ -314,7 +314,7 @@ Rail people will test these, so the tools state them:
   ┌────────────┐   MCP over stdio    ┌──────────────────┐   reads   ┌──────────┐
   │  Claude    │ ──────────────────▶ │  Yggio tenant    │ ────────▶ │ data/    │
   │  Code      │ ◀────────────────── │  mcp-server.mjs  │           │ *.json   │
-  └────────────┘   14 tools, JSON    │  + dataset.mjs   │           └──────────┘
+  └────────────┘   15 tools, JSON    │  + dataset.mjs   │           └──────────┘
                                      └──────────────────┘                ▲
                                      ┌──────────────────┐                │
    second screen ──── HTTP ─────────▶│  yggio-api.mjs   │────────────────┘
@@ -385,6 +385,7 @@ day, twice over (Standard and First cabins are separate pools):
 | `.mcp.json` | Wires the MCP server into Claude Code when it starts in this directory. |
 | `CLAUDE.md` | Tells Claude how to behave during the demo, including what not to claim. |
 | `DEMO-SCRIPT.md` | The stage script: questions, expected answers, talking points, recovery. |
+| `data/seatmaps.json` | The fleet's seat numbering: every numbered place in an AZ5 and an AZ9, by coach, with row, side, window/aisle and cabin. Inventory only - occupancy is still measured per coach. |
 | `data/*.json` | Generated data, committed so the demo needs no build step. `operator.json` carries the policies, the RM setup, the business case and a data dictionary of which fields exist in which year, and why. |
 
 ## The seat-usage dashboard
@@ -447,7 +448,7 @@ departure-days coach by coach, 232 ranking rows over four months and five demand
 classes, and all 36 candidates in tool order, with zero mismatches. If you change
 a rule in `dataset.mjs`, change it here too.
 
-## The 14 tools
+## The 15 tools
 
 | Tool | Answers |
 | --- | --- |
@@ -463,6 +464,7 @@ a rule in `dataset.mjs`, change it here too.
 | `repricing_candidates` | "What still needs attention?" - capacity cases, residual forecast errors, and quotas rationing nothing |
 | `list_services` | The timetable, Azuma formations by route and time of day, each departure's fare ladder, no-show rate and forecast errors |
 | `service_history` | Day-by-day rows for one departure |
+| `seat_map` | The seat inventory: which numbered seats a coach actually has, where they sit, which cabin. Fleet totals with no arguments; a formation with `unit_type` or `service_id`; every seat with `coach`. Inventory, not occupancy |
 | `yggio_list_iotnodes` | The SeatSense device estate as Yggio IoT nodes, seat counts per real Azuma coach |
 | `yggio_iotnode_readings` | One coach's sensor: latest values plus that day's occupancy series |
 

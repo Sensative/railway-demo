@@ -249,10 +249,16 @@ h1, h2, h3 { font-family: var(--cond); margin: 0; text-wrap: balance; letter-spa
 .seatgrid { display: flex; gap: 3px; overflow-x: auto; padding-bottom: 6px; align-items: flex-start; }
 .seatcol { display: flex; flex-direction: column; gap: 3px; }
 .seatcol .aisle { height: 9px; }
-.seat { width: 15px; height: 15px; border-radius: 3px; background: var(--seat-empty); }
+.seat { width: 16px; height: 16px; border-radius: 3px; background: var(--seat-empty); }
 .seat.on { background: var(--series-occ); }
 .seat.first { border: 1.5px solid var(--seq-7); }
 .seat.first.on { background: var(--seq-6); border-color: var(--seq-7); }
+.seatreadout {
+  margin-top: 8px; font-family: var(--mono); font-size: 11.5px; color: var(--ink-2);
+  min-height: 1.4em;
+}
+.seat { cursor: default; }
+.seat:hover { outline: 2px solid var(--accent); outline-offset: 1px; }
 .caveat {
   font-size: 11.5px; color: var(--ink-2); background: var(--surface-2);
   border-left: 3px solid var(--warning); border-radius: 0 5px 5px 0;
@@ -426,6 +432,7 @@ select#dcsel {
       <div class="seatwrap">
         <div>
           <div class="seatgrid" id="seatgrid"></div>
+          <div class="seatreadout" id="seatreadout"></div>
           <div class="caveat" id="caveat"></div>
         </div>
         <div class="node" id="node"></div>
@@ -830,32 +837,57 @@ function seatPattern(key, seats, occupied) {
 
 function renderCoach(sn) {
   const c = sn.coaches[Math.min(state.coach, sn.coaches.length - 1)];
+  const layout = D.seatmaps[sn.svc.unitType];
+  const inventory = layout ? layout.byCoach[c.coach] : null;
   document.getElementById('seathead').textContent = `Coach ${c.coach} \u2014 ${c.unit_id}`;
   document.getElementById('seathint').textContent =
     `${c.seats_occupied} of ${c.seats} seats occupied \u00b7 ${c.seats_empty} empty`;
 
   const on = seatPattern(c.device_id + sn.date, c.seats, c.seats_occupied);
-  // 2 + aisle + 2 across the coach; First seats sit at the far end of the coach.
-  const cols = Math.ceil(c.seats / 4);
+  const grid = document.getElementById('seatgrid');
+
+  if (!inventory) { grid.innerHTML = ''; return; }
+
+  // One column per row of the coach, aisle between the A and B sides.
+  const rows = new Map();
+  inventory.forEach((seat, ix) => {
+    if (!rows.has(seat[2])) rows.set(seat[2], []);
+    rows.get(seat[2]).push({ n: seat[0], cabin: seat[1], side: seat[3], pos: seat[4], ix });
+  });
+  const POS = { w: 'window', a: 'aisle' };
   let html = '';
-  for (let col = 0; col < cols; col++) {
+  for (const [row, seats] of rows) {
     html += '<div class="seatcol">';
-    for (let row = 0; row < 4; row++) {
-      const n = col * 4 + row;
-      if (row === 2) html += '<span class="aisle"></span>';
-      if (n >= c.seats) { html += '<span class="seat" style="visibility:hidden"></span>'; continue; }
-      const isFirst = n >= c.seats - c.first;
-      html += `<span class="seat${on[n] ? ' on' : ''}${isFirst ? ' first' : ''}"></span>`;
+    let sideBreak = false;
+    for (const st of seats) {
+      if (st.side === 'B' && !sideBreak) { html += '<span class="aisle"></span>'; sideBreak = true; }
+      const cabin = st.cabin === 'f' ? 'First' : 'Standard';
+      html += `<span class="seat${on[st.ix] ? ' on' : ''}${st.cabin === 'f' ? ' first' : ''}"` +
+        ` data-seat="${c.coach}${st.n}" data-info="${cabin}, row ${row}, ${st.side} side, ${POS[st.pos]}"` +
+        ` title="${c.coach}${st.n} \u2014 ${cabin}, row ${row}, ${st.side} side, ${POS[st.pos]}"></span>`;
     }
+    if (!sideBreak) html += '<span class="aisle"></span>';
     html += '</div>';
   }
-  document.getElementById('seatgrid').innerHTML = html;
+  grid.innerHTML = html;
+
+  const readout = document.getElementById('seatreadout');
+  const idle = `${inventory.length} numbered seats, ${c.coach}1 to ${c.coach}${inventory.length}` +
+    ` \u00b7 Standard ${layout.layout.standard}, First ${layout.layout.first}` +
+    ` \u00b7 point at a seat for its number`;
+  readout.textContent = idle;
+  grid.onmouseover = (ev) => {
+    const t = ev.target.closest('.seat');
+    if (t) readout.textContent = `${t.dataset.seat} \u2014 ${t.dataset.info}`;
+  };
+  grid.onmouseleave = () => { readout.textContent = idle; };
+
   document.getElementById('caveat').innerHTML =
-    `<strong>${c.seats_occupied} occupied, ${c.seats_empty} empty</strong> is measured. ` +
-    `Which seats those are is not: a SeatSense node reports occupancy for its coach, ` +
-    `so the positions above illustrate the count and are not identified seats. ` +
-    (c.first > 0 ? `The outlined block is this coach&rsquo;s ${c.first} First seats. ` : '') +
-    `Standard and First are separate pools.`;
+    `These are coach ${c.coach}\u2019s real seats: <b>${inventory.length} numbered places</b>, ` +
+    `${c.coach}1 to ${c.coach}${inventory.length}, Standard ${layout.layout.standard} and ` +
+    `First ${layout.layout.first}. <b>${c.seats_occupied} occupied, ${c.seats_empty} empty</b> is ` +
+    `measured. <b>Which</b> seats those are is not: a SeatSense node reports occupancy for its coach, ` +
+    `so the fill above shows the count against the real seat plan, not identified seats.`;
 
   const dev = D.devices[c.device_id];
   document.getElementById('node').innerHTML =
@@ -865,6 +897,7 @@ function renderCoach(sn) {
     `<dt>Unit</dt><dd>${c.unit_id}</dd>` +
     `<dt>Coach</dt><dd>${c.coach}</dd>` +
     `<dt>Seats watched</dt><dd>${c.seats}</dd>` +
+    `<dt>Seat numbers</dt><dd>${c.coach}1-${c.coach}${inventory.length}</dd>` +
     (dev ? `<dt>Status</dt><dd style="color:var(--good-text)">${dev.s}</dd>` +
       `<dt>Battery</dt><dd>${dev.b}%</dd><dt>Signal</dt><dd>${dev.r} dBm</dd>` +
       `<dt>Firmware</dt><dd>${dev.fw}</dd>` : '') +

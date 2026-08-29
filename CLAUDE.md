@@ -125,6 +125,12 @@ units and was never rationed. Say that before someone finds it.
   none from reselling no-show seats, no punctuality or complaint improvement.
   The no-show rate is identical in both years: SeatSense measures it, it does
   not prevent it.
+- **Seat numbers are inventory, not occupancy.** `seat_map` gives every
+  numbered seat in the fleet - 21,310 of them across 59 units and 343 coaches,
+  Standard 2+2 and First 2+1. It says which seats *exist*. SeatSense reports
+  occupancy **per coach**, so "which seats were sat in" is not something the
+  data answers, and the seat plan in the dashboard shows the measured count
+  against the real seats, not identified ones. Say so if asked.
 - A **ghost seat** is a seat paid for that travelled empty. It is a
   measurement, not recoverable inventory. Say so when you use the term.
 - Be straight about the residuals: **31.6% of peak-core weekdays still sell
