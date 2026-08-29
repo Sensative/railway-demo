@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fake Yggio - the REST view of the same data.
+ * The Yggio tenant - the REST view of the same data.
  *
  * Optional for the demo, but useful on the stand: it lets you show the "raw"
  * platform behind Claude in a browser or with curl, so the audience sees that
@@ -17,7 +17,7 @@ const num = (v) => (v == null || v === '' ? undefined : Number(v));
 
 /** Yggio proper is token-authenticated; here any token is accepted. */
 const ROUTES = [
-  ['/healthz', () => ({ status: 'ok', service: 'fake-yggio', time: new Date().toISOString() })],
+  ['/healthz', () => ({ status: 'ok', service: 'yggio-seatsense', time: new Date().toISOString() })],
   ['/api/iotnodes', (q) => db.listDevices({ route_id: q.route_id, unit_id: q.unit_id, status: q.status, limit: num(q.limit) ?? 25, offset: num(q.offset) ?? 0 })],
   ['/api/demo/overview', () => db.overview()],
   ['/api/demo/services', (q) => db.listServices({ route_id: q.route_id, demand_class: q.demand_class, direction: q.direction })],
@@ -34,7 +34,7 @@ const ROUTES = [
 ];
 
 const INDEX = {
-  service: 'fake-yggio',
+  service: 'yggio-seatsense',
   note: 'Stand-in for a Yggio DiMS tenant, serving synthetic SeatSense data for a fictional British train operator. Authentication is stubbed - any or no bearer token is accepted.',
   endpoints: [
     'GET /healthz',
@@ -86,6 +86,6 @@ const server = createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-  console.log(`fake-yggio listening on http://localhost:${PORT}`);
+  console.log(`yggio-seatsense listening on http://localhost:${PORT}`);
   console.log('try: curl -s localhost:' + PORT + '/api/demo/overview | jq .headline');
 });

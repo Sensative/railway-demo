@@ -1,7 +1,7 @@
 /**
  * Query layer over the generated JSON files.
  *
- * The MCP server (fake Yggio) and the REST API are both thin wrappers around
+ * The MCP server and the REST API are both thin wrappers around
  * the functions here. Every function returns pre-aggregated numbers plus a
  * short `narrative` string, so a small local model does not have to do
  * arithmetic over thousands of rows to answer a question correctly.

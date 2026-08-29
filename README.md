@@ -1,7 +1,7 @@
-# InnoTrans demo: SeatSense, a fake Yggio, and Claude
+# InnoTrans demo: SeatSense, Yggio, and Claude
 
 A self-contained trade-show demo. A visitor talks to Claude in plain English;
-Claude reads a **fake Yggio tenant** over MCP and answers with real numbers
+Claude reads a **Yggio tenant** over MCP and answers with real numbers
 from generated JSON files. The story it tells is what **SeatSense** - knowing
 whether a seat is *physically occupied* - is worth to a European train operator
 that **may not oversell**.
@@ -51,7 +51,7 @@ in.
 git clone https://github.com/Sensative/railway-demo.git
 cd railway-demo
 node src/selftest.mjs        # pre-flight check - calls all 14 tools, prints OK per tool
-claude                       # Claude Code picks up ./.mcp.json and connects to the fake Yggio
+claude                       # Claude Code picks up ./.mcp.json and connects to Yggio
 ```
 
 Answer **yes** when Claude Code asks whether you trust the folder and whether
@@ -282,7 +282,7 @@ Rail people will test these, so the tools state them:
      │  plain English
      ▼
   ┌────────────┐   MCP over stdio    ┌──────────────────┐   reads   ┌──────────┐
-  │  Claude    │ ──────────────────▶ │  fake Yggio      │ ────────▶ │ data/    │
+  │  Claude    │ ──────────────────▶ │  Yggio tenant    │ ────────▶ │ data/    │
   │  Code      │ ◀────────────────── │  mcp-server.mjs  │           │ *.json   │
   └────────────┘   14 tools, JSON    │  + dataset.mjs   │           └──────────┘
                                      └──────────────────┘                ▲
@@ -344,7 +344,7 @@ happens between them. `generate.mjs` allocates each route's whole day at once:
 | `src/model.mjs` | The whole fiction: sales policy, pricing policy, operator, network, timetable, demand classes, fares, no-show rates. Edit here to change the story. |
 | `src/generate.mjs` | Writes `data/*.json`: the day allocator, the fare solver and each 2026 departure's counterfactual. Deterministic. |
 | `src/dataset.mjs` | Query + aggregation layer. Shared by the MCP server and the REST API. |
-| `src/mcp-server.mjs` | The fake Yggio as an MCP server over stdio. Zero dependencies. |
+| `src/mcp-server.mjs` | The Yggio tenant as an MCP server over stdio. Zero dependencies. |
 | `src/yggio-api.mjs` | The same data as a Yggio-shaped REST API, for showing on a screen. |
 | `src/selftest.mjs` | Pre-flight check. Drives the MCP server the way Claude does and calls every tool. |
 | `.mcp.json` | Wires the MCP server into Claude Code when it starts in this directory. |

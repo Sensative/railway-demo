@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 /**
- * Fake Yggio - an MCP server over stdio.
+ * The Yggio tenant - an MCP server over stdio.
  *
- * This is what Claude connects to. It pretends to be the Yggio DiMS tenant of
+ * This is what Claude connects to. It emulates the Yggio DiMS tenant of
  * a British train operator: SeatSense IoT nodes plus the commercial data
  * needed to answer "what did measuring actual seat occupancy earn us?".
  *
@@ -12,7 +12,7 @@
  */
 import * as db from './dataset.mjs';
 
-const SERVER = { name: 'fake-yggio-seatsense', version: '1.0.0' };
+const SERVER = { name: 'yggio-seatsense', version: '1.0.0' };
 const PROTOCOL_FALLBACK = '2024-11-05';
 
 const str = (description) => ({ type: 'string', description });

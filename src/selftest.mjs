@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Pre-flight check: drives the fake Yggio MCP server over stdio exactly the
+ * Pre-flight check: drives the Yggio MCP server over stdio exactly the
  * way Claude Code does, calls every tool, and prints one line per tool.
  *
  *   node src/selftest.mjs
