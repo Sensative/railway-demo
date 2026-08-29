@@ -8,18 +8,92 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "early_late",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 13.78,
-    "fare_2026_target_gbp": 13.53,
-    "fare_change_pct": -1.8,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.38,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21,
+    "forecast_error_2026_pct": 15.3,
     "no_show_rate_pct": 2.8,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -33,18 +107,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21.8,
+    "forecast_error_2026_pct": -10.7,
     "no_show_rate_pct": 7.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -58,18 +236,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -26.6,
+    "forecast_error_2026_pct": 14.8,
     "no_show_rate_pct": 5.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -83,18 +365,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_core",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 24.6,
-    "fare_2026_target_gbp": 25.02,
-    "fare_change_pct": 1.7,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 95.2,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.08,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -27.2,
+    "forecast_error_2026_pct": 10.3,
     "no_show_rate_pct": 7.2,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -108,18 +494,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_core",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 24.6,
-    "fare_2026_target_gbp": 24.94,
-    "fare_change_pct": 1.4,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.08,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21.7,
+    "forecast_error_2026_pct": -9.6,
     "no_show_rate_pct": 12,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -133,18 +623,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_core",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 24.6,
-    "fare_2026_target_gbp": 25.02,
-    "fare_change_pct": 1.7,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 95.3,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.08,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -23.1,
+    "forecast_error_2026_pct": -9.5,
     "no_show_rate_pct": 7.3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -158,18 +752,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 27.3,
+    "forecast_error_2026_pct": 13.5,
     "no_show_rate_pct": 8.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -183,18 +881,122 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 28.5,
+    "forecast_error_2026_pct": 13.6,
     "no_show_rate_pct": 8.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -208,18 +1010,92 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "offpeak",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 15.25,
-    "fare_2026_target_gbp": 15.25,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.55,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21.2,
+    "forecast_error_2026_pct": -11.2,
     "no_show_rate_pct": 5.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -233,18 +1109,92 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "offpeak",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 15.25,
-    "fare_2026_target_gbp": 15.25,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.55,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -23.5,
+    "forecast_error_2026_pct": 16.9,
     "no_show_rate_pct": 4.4,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -258,18 +1208,92 @@
     "origin": "Colchester",
     "destination": "London Liverpool Street",
     "demand_class": "offpeak",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 15.25,
-    "fare_2026_target_gbp": 15.25,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.55,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 28.8,
+    "forecast_error_2026_pct": 13.3,
     "no_show_rate_pct": 4.8,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -283,18 +1307,122 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.8,
+    "forecast_error_2026_pct": -9.6,
     "no_show_rate_pct": 9.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -308,18 +1436,122 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "evening_peak",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 23.12,
-    "fare_2026_target_gbp": 23.36,
-    "fare_change_pct": 1,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 96.2,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.05,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21.8,
+    "forecast_error_2026_pct": 14.6,
     "no_show_rate_pct": 8.2,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -333,18 +1565,122 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "evening_peak",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 23.12,
-    "fare_2026_target_gbp": 23.32,
-    "fare_change_pct": 0.9,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.05,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -26.6,
+    "forecast_error_2026_pct": -10.8,
     "no_show_rate_pct": 10.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -358,18 +1694,122 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "evening_peak",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 23.12,
-    "fare_2026_target_gbp": 23.32,
-    "fare_change_pct": 0.9,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.05,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21.6,
+    "forecast_error_2026_pct": -10.8,
     "no_show_rate_pct": 10.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -383,18 +1823,122 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "peak_shoulder",
-    "seats": 480,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 21.89,
-    "fare_2026_target_gbp": 20.9,
-    "fare_change_pct": -4.5,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.66,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -26.9,
+    "forecast_error_2026_pct": -10.6,
     "no_show_rate_pct": 9.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -408,18 +1952,92 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "offpeak",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 15.25,
-    "fare_2026_target_gbp": 14.84,
-    "fare_change_pct": -2.7,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.55,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -25.5,
+    "forecast_error_2026_pct": 15.2,
     "no_show_rate_pct": 5.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -433,18 +2051,92 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "offpeak",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 15.25,
-    "fare_2026_target_gbp": 15.25,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.55,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -27.7,
+    "forecast_error_2026_pct": -16.4,
     "no_show_rate_pct": 5.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -458,18 +2150,92 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "early_late",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 13.78,
-    "fare_2026_target_gbp": 13.78,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.38,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 20.6,
+    "forecast_error_2026_pct": 9.3,
     "no_show_rate_pct": 4.7,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -483,18 +2249,92 @@
     "origin": "London Liverpool Street",
     "destination": "Colchester",
     "demand_class": "early_late",
-    "seats": 240,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 60,
-    "unit_type": "4-car, 240 seats",
-    "longest_formation_seats": 480,
-    "fare_2025_gbp": 13.78,
-    "fare_2026_target_gbp": 13.78,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.38,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 39.8
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 25.07
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 17.51
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 13.53
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 9.55
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 61.69
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 37.81
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21.4,
+    "forecast_error_2026_pct": 8.1,
     "no_show_rate_pct": 4.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -508,18 +2348,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "early_late",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 23.07,
-    "fare_2026_target_gbp": 22.68,
-    "fare_change_pct": -1.7,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.27,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -29.7,
+    "forecast_error_2026_pct": 14.1,
     "no_show_rate_pct": 2.8,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -533,18 +2447,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 22.3,
+    "forecast_error_2026_pct": 16.9,
     "no_show_rate_pct": 8.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -558,18 +2546,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.7,
+    "forecast_error_2026_pct": -12.3,
     "no_show_rate_pct": 8.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -583,18 +2645,116 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_core",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 41.2,
-    "fare_2026_target_gbp": 41.8,
-    "fare_change_pct": 1.5,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.1,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.1,
+    "forecast_error_2026_pct": 12.8,
     "no_show_rate_pct": 11.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -608,18 +2768,116 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_core",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 41.2,
-    "fare_2026_target_gbp": 41.93,
-    "fare_change_pct": 1.8,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 95.3,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.1,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21,
+    "forecast_error_2026_pct": -8.4,
     "no_show_rate_pct": 7.3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -633,18 +2891,116 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_core",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 41.2,
-    "fare_2026_target_gbp": 41.85,
-    "fare_change_pct": 1.6,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 96.3,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.1,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -29.6,
+    "forecast_error_2026_pct": 15.7,
     "no_show_rate_pct": 8.3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -658,18 +3014,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 29.6,
+    "forecast_error_2026_pct": 15.6,
     "no_show_rate_pct": 6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -683,18 +3113,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 28.4,
+    "forecast_error_2026_pct": 16.1,
     "no_show_rate_pct": 5.6,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -708,18 +3212,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "offpeak",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 25.54,
-    "fare_2026_target_gbp": 25.54,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.36,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 24.5,
+    "forecast_error_2026_pct": -16.2,
     "no_show_rate_pct": 5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -733,18 +3311,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "offpeak",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 25.54,
-    "fare_2026_target_gbp": 25.54,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.36,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -23.2,
+    "forecast_error_2026_pct": -13.5,
     "no_show_rate_pct": 4,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -758,18 +3410,92 @@
     "origin": "Peterborough",
     "destination": "London King's Cross",
     "demand_class": "offpeak",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 25.54,
-    "fare_2026_target_gbp": 25.54,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.36,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 22.8,
+    "forecast_error_2026_pct": -10.1,
     "no_show_rate_pct": 4.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -783,18 +3509,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 25.7,
+    "forecast_error_2026_pct": 11.5,
     "no_show_rate_pct": 8.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -808,18 +3608,116 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "evening_peak",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 38.73,
-    "fare_2026_target_gbp": 39.28,
-    "fare_change_pct": 1.4,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 94.5,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.06,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -26,
+    "forecast_error_2026_pct": -15.4,
     "no_show_rate_pct": 6.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -833,18 +3731,116 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "evening_peak",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 38.73,
-    "fare_2026_target_gbp": 39.24,
-    "fare_change_pct": 1.3,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 95.1,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.06,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 27,
+    "forecast_error_2026_pct": -14.8,
     "no_show_rate_pct": 7.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -858,18 +3854,116 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "evening_peak",
-    "seats": 672,
-    "formation_units": 3,
-    "coaches": 12,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 38.73,
-    "fare_2026_target_gbp": 39.1,
-    "fare_change_pct": 1,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "formation": "1 x Azuma 9-car",
+    "unit_type": "AZ9",
+    "formation_units": 1,
+    "coaches": 9,
+    "seats": 593,
+    "seats_standard": 490,
+    "seats_first": 103,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 48,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "G",
+        "seats_standard": 70,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "H",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "J",
+        "seats_standard": 84,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "K",
+        "seats_standard": 36,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "L",
+        "seats_standard": 0,
+        "seats_first": 55
+      },
+      {
+        "set": 1,
+        "letter": "M",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.06,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.7,
+    "forecast_error_2026_pct": 10.9,
     "no_show_rate_pct": 10.2,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -883,18 +3977,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "peak_shoulder",
-    "seats": 448,
-    "formation_units": 2,
-    "coaches": 8,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 36.67,
-    "fare_2026_target_gbp": 35.1,
-    "fare_change_pct": -4.3,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.78,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -21.1,
+    "forecast_error_2026_pct": 12.6,
     "no_show_rate_pct": 6.7,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -908,18 +4076,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "offpeak",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 25.54,
-    "fare_2026_target_gbp": 24.88,
-    "fare_change_pct": -2.6,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.36,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.2,
+    "forecast_error_2026_pct": -17,
     "no_show_rate_pct": 5.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -933,18 +4175,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "offpeak",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 25.54,
-    "fare_2026_target_gbp": 25.54,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.36,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 27.2,
+    "forecast_error_2026_pct": 10.7,
     "no_show_rate_pct": 5.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -958,18 +4274,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "early_late",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 23.07,
-    "fare_2026_target_gbp": 23.07,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.27,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -25,
+    "forecast_error_2026_pct": -16.2,
     "no_show_rate_pct": 2.3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -983,18 +4373,92 @@
     "origin": "London King's Cross",
     "destination": "Peterborough",
     "demand_class": "early_late",
-    "seats": 224,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 4,
-    "seats_per_coach": 56,
-    "unit_type": "4-car, 224 seats",
-    "longest_formation_seats": 672,
-    "fare_2025_gbp": 23.07,
-    "fare_2026_target_gbp": 23.07,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.27,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 64.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 40.57
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 28.34
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 21.9
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 15.46
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 99.82
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 61.18
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 29.9,
+    "forecast_error_2026_pct": 13,
     "no_show_rate_pct": 4.7,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1008,18 +4472,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "early_late",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 6.38,
-    "fare_2026_target_gbp": 6.26,
-    "fare_change_pct": -1.9,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.34,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -23.5,
+    "forecast_error_2026_pct": 8.2,
     "no_show_rate_pct": 2.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1033,18 +4571,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "peak_shoulder",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.15,
-    "fare_2026_target_gbp": 9.66,
-    "fare_change_pct": -4.9,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.52,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21,
+    "forecast_error_2026_pct": -14.1,
     "no_show_rate_pct": 6.2,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1058,18 +4670,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "peak_shoulder",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.15,
-    "fare_2026_target_gbp": 9.66,
-    "fare_change_pct": -4.9,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.52,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 20.6,
+    "forecast_error_2026_pct": 14.2,
     "no_show_rate_pct": 9.2,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1083,18 +4769,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "peak_core",
-    "seats": 408,
-    "formation_units": 2,
-    "coaches": 6,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 11.4,
-    "fare_2026_target_gbp": 11.49,
-    "fare_change_pct": 0.8,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.06,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.3,
+    "forecast_error_2026_pct": -14.4,
     "no_show_rate_pct": 9.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1108,18 +4868,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "peak_core",
-    "seats": 408,
-    "formation_units": 2,
-    "coaches": 6,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 11.4,
-    "fare_2026_target_gbp": 11.49,
-    "fare_change_pct": 0.8,
-    "competition_window": "morning_up",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
+    "formation_units": 1,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 1.06,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.7,
+    "forecast_error_2026_pct": 9.2,
     "no_show_rate_pct": 10.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1133,18 +4967,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "peak_shoulder",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.15,
-    "fare_2026_target_gbp": 9.66,
-    "fare_change_pct": -4.9,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.52,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -24.8,
+    "forecast_error_2026_pct": -12.7,
     "no_show_rate_pct": 6.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1158,18 +5066,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "offpeak",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 7.07,
-    "fare_2026_target_gbp": 6.86,
-    "fare_change_pct": -2.9,
-    "competition_window": "morning_up",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.48,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -25.8,
+    "forecast_error_2026_pct": 15.7,
     "no_show_rate_pct": 5.4,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1183,18 +5165,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "offpeak",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 7.07,
-    "fare_2026_target_gbp": 7.07,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.48,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 20.3,
+    "forecast_error_2026_pct": 12.7,
     "no_show_rate_pct": 5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1208,18 +5264,92 @@
     "origin": "Huddersfield",
     "destination": "York",
     "demand_class": "offpeak",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 7.07,
-    "fare_2026_target_gbp": 7.07,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.48,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21.8,
+    "forecast_error_2026_pct": -16.4,
     "no_show_rate_pct": 4.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1233,18 +5363,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "peak_shoulder",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.15,
-    "fare_2026_target_gbp": 9.66,
-    "fare_change_pct": -4.9,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.52,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 20.5,
+    "forecast_error_2026_pct": 13.4,
     "no_show_rate_pct": 7.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1258,18 +5462,122 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "evening_peak",
-    "seats": 408,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 6,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.72,
-    "fare_2026_target_gbp": 10.72,
-    "fare_change_pct": 0,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.85,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 24.6,
+    "forecast_error_2026_pct": 9.7,
     "no_show_rate_pct": 12.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1283,18 +5591,122 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "evening_peak",
-    "seats": 408,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 6,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.72,
-    "fare_2026_target_gbp": 10.72,
-    "fare_change_pct": 0,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 97,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.85,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 29.6,
+    "forecast_error_2026_pct": -10.2,
     "no_show_rate_pct": 11.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1308,18 +5720,122 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "evening_peak",
-    "seats": 408,
+    "formation": "2 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 2,
-    "coaches": 6,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.72,
-    "fare_2026_target_gbp": 10.72,
-    "fare_change_pct": 0,
-    "competition_window": "evening_down",
-    "priced_by": "solved per day, held just below full against a measured cabin-factor target",
-    "sold_target_pct": 96,
+    "coaches": 10,
+    "seats": 604,
+    "seats_standard": 508,
+    "seats_first": 96,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      },
+      {
+        "set": 2,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 2,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 2,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.85,
+    "demand_profile": "business",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 29.5,
+    "forecast_error_2026_pct": 10.3,
     "no_show_rate_pct": 8,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1333,18 +5849,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "peak_shoulder",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 10.15,
-    "fare_2026_target_gbp": 9.66,
-    "fare_change_pct": -4.9,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.52,
+    "demand_profile": "shoulder",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21.8,
+    "forecast_error_2026_pct": -9.2,
     "no_show_rate_pct": 6.1,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1358,18 +5948,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "offpeak",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 7.07,
-    "fare_2026_target_gbp": 6.86,
-    "fare_change_pct": -2.9,
-    "competition_window": "evening_down",
-    "priced_by": "discounted in proportion to the peak premium that day, to receive displaced demand",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.48,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 21,
+    "forecast_error_2026_pct": -9.4,
     "no_show_rate_pct": 2.9,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1383,18 +6047,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "offpeak",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 7.07,
-    "fare_2026_target_gbp": 7.07,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.48,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": -25.3,
+    "forecast_error_2026_pct": -9.6,
     "no_show_rate_pct": 3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1408,18 +6146,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "early_late",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 6.38,
-    "fare_2026_target_gbp": 6.38,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.34,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 26.7,
+    "forecast_error_2026_pct": -12.8,
     "no_show_rate_pct": 3.3,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100
@@ -1433,18 +6245,92 @@
     "origin": "York",
     "destination": "Huddersfield",
     "demand_class": "early_late",
-    "seats": 204,
+    "formation": "1 x Azuma 5-car",
+    "unit_type": "AZ5",
     "formation_units": 1,
-    "coaches": 3,
-    "seats_per_coach": 68,
-    "unit_type": "3-car, 204 seats",
-    "longest_formation_seats": 408,
-    "fare_2025_gbp": 6.38,
-    "fare_2026_target_gbp": 6.38,
-    "fare_change_pct": 0,
-    "competition_window": null,
-    "priced_by": "left unchanged - competes with nothing",
-    "sold_target_pct": null,
+    "coaches": 5,
+    "seats": 302,
+    "seats_standard": 254,
+    "seats_first": 48,
+    "coach_seats": [
+      {
+        "set": 1,
+        "letter": "A",
+        "seats_standard": 56,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "B",
+        "seats_standard": 72,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "C",
+        "seats_standard": 88,
+        "seats_first": 0
+      },
+      {
+        "set": 1,
+        "letter": "D",
+        "seats_standard": 38,
+        "seats_first": 30
+      },
+      {
+        "set": 1,
+        "letter": "E",
+        "seats_standard": 0,
+        "seats_first": 18
+      }
+    ],
+    "demand_factor": 0.34,
+    "demand_profile": "leisure",
+    "booking_classes": {
+      "standard": [
+        {
+          "id": "AS",
+          "label": "Anytime Standard",
+          "fare_gbp": 15.4
+        },
+        {
+          "id": "OP",
+          "label": "Off-Peak Return",
+          "fare_gbp": 9.7
+        },
+        {
+          "id": "A1",
+          "label": "Advance 1",
+          "fare_gbp": 6.78
+        },
+        {
+          "id": "A2",
+          "label": "Advance 2",
+          "fare_gbp": 5.24
+        },
+        {
+          "id": "A3",
+          "label": "Advance 3",
+          "fare_gbp": 3.7
+        }
+      ],
+      "first": [
+        {
+          "id": "AF",
+          "label": "Anytime First",
+          "fare_gbp": 23.87
+        },
+        {
+          "id": "F1",
+          "label": "Advance First",
+          "fare_gbp": 14.63
+        }
+      ]
+    },
+    "fares_unchanged_note": "The fare ladder is identical in 2025 and 2026. What changed is the demand forecast behind the booking limits.",
+    "rm_method": "EMSRb, booking limits re-solved at each of 15 booking checkpoints",
+    "forecast_error_2025_pct": 27.6,
+    "forecast_error_2026_pct": -12,
     "no_show_rate_pct": 3.5,
     "no_show_rate_known_from": "2026-01-01",
     "sales_cap_pct_of_seats": 100

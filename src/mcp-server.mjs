@@ -29,7 +29,7 @@ const TOOLS = [
   {
     name: 'compare_years',
     description:
-      'The main analysis tool. Compares 2025 (ticket sales only, no sensors) with 2026 (SeatSense live from 1 January) over the same calendar window. Every 2026 group also carries the revenue attributable to the repricing, measured against a per-departure counterfactual, so the SeatSense effect is separated from background market growth. Use group_by to break it down by month, route, demand_class or service.',
+      'The main analysis tool. Compares 2025 (ticket sales only, no sensors) with 2026 (SeatSense live from 1 January) over the same calendar window. Every 2026 group also carries the revenue attributable to the SeatSense-recalibrated demand forecasts, measured against a per-departure counterfactual (same demand, same fares, 2025-quality forecasts), so the SeatSense effect is separated from background market growth. Use group_by to break it down by month, route, demand_class or service.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -74,7 +74,7 @@ const TOOLS = [
   {
     name: 'morning_peak_report',
     description:
-      "The morning peak before and after, departure by departure: fares, ticket-derived load factor, measured cabin factor, ghost seats and turn-aways. Note what does not move - the peak's sold load, because those departures were already selling every seat and cannot be oversold.",
+      'The morning peak before and after, departure by departure: realised average fares (mix on an unchanged ladder), ticket-derived load factor, measured cabin factor, ghost seats and walk-ups refused. The crush departures cannot be oversold, so what moves is who is on board.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -101,7 +101,7 @@ const TOOLS = [
   {
     name: 'seatsense_attribution',
     description:
-      'For the commercial question "how much of the revenue growth is really SeatSense?". Splits the observed change into market growth and pricing effect using a per-departure counterfactual rather than a flat growth assumption, decomposes the pricing effect into price and volume, and states plainly what it does NOT claim - no revenue from overselling, none from reselling no-show seats, and no claim that ticket data misses unsold seats.',
+      'For the commercial question "how much of the revenue growth is really SeatSense?". Splits the observed change into market growth and the forecast-quality effect using a per-departure counterfactual rather than a flat growth assumption, shows where the gain lands (departures ticket data over-forecast versus under-forecast in 2025), decomposes it into class mix and volume, and states plainly what it does NOT claim - no fare rise (the ladder is identical in both years), no revenue from overselling, none from reselling no-show seats.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -113,7 +113,7 @@ const TOOLS = [
   {
     name: 'pricing_actions',
     description:
-      'The fare changes the operator made on 1 January 2026 off the back of SeatSense data, per demand class and per departure, with the realised fares and the revenue attributable to each class. Also lists what was not available to them: overselling and reselling no-show seats.',
+      "The revenue-management setup: EMSRb seat allocation over five nested booking classes (Weatherford & Belobaba, JORS 2002), the fare ladder per route (identical in both years), and what changed on 1 January 2026 - the demand forecasts behind the booking limits, recalibrated on measured occupancy from ~25% to ~12.5% error. Per demand class and per departure, with the realised class mix and the revenue attributable. Also lists what was not available: overselling and reselling no-show seats.",
     inputSchema: {
       type: 'object',
       properties: { route_id: str('Optional filter.'), demand_class: str('Optional filter.') },
@@ -123,14 +123,14 @@ const TOOLS = [
   {
     name: 'capacity_pressure',
     description:
-      "Capacity pressure counted from the data: sold-out departures, passengers turned away when sales closed, cabin factor, and what measurement changes for a capacity-planning case. Also carries the 2026 month-by-month series showing that the revenue effect appears only in the months when the peak actually sold out. Deliberately claims no service-quality improvement - the fare moves are too small to have caused one.",
+      "Capacity pressure counted from the data: sold-out departures, walk-up passengers refused at full trains, cabin factor, and what measurement changes for a capacity-planning case. Also carries the 2026 month-by-month series showing that the forecast-quality effect appears only in the months when demand met the seats. Deliberately claims no service-quality improvement.",
     inputSchema: { type: 'object', properties: { month: int('Calendar month 1-12. Defaults to the latest month with data.') } },
     handler: (a) => db.capacityPressure(a),
   },
   {
     name: 'repricing_candidates',
     description:
-      "Forward-looking: which departures still need attention, ranked, with the measured numbers and the rule behind each. Separates the departures where price has done its job and only more seats will help from the ones that fill on tickets while measurably travelling with empty seats. Answers 'what should we do next?'.",
+      "Forward-looking: which departures still need attention, ranked, with the measured numbers and the rule behind each. Separates the genuinely full departures where only more seats will help from those whose forecasts still carry a residual error worth money, and the quiet ones whose booking limits ration nothing. Answers 'what should we do next?'.",
     inputSchema: {
       type: 'object',
       properties: {
@@ -143,7 +143,7 @@ const TOOLS = [
   },
   {
     name: 'list_services',
-    description: 'The timetable: every daily departure with its route, demand class, seat count and 2025/2026 fares. Use it to find a service_id.',
+    description: 'The timetable: every daily departure with its route, demand class, Azuma formation and seat count (Standard + First), booking-class fare ladder (identical in both years), no-show rate and per-departure forecast errors. Use it to find a service_id.',
     inputSchema: {
       type: 'object',
       properties: {
@@ -221,7 +221,7 @@ function handle(msg) {
         capabilities: { tools: { listChanged: false } },
         serverInfo: SERVER,
         instructions:
-          'Yggio tenant for Northbank Rail, a fictional British train operator selling reserved seats: one ticket per seat, no overselling. 2025 has ticket sales only, which cannot see a no-show, so 2025 has no cabin factor at all; SeatSense measures actual seat occupancy from 2026-01-01. Call yggio_overview first. All money is GBP. Year-on-year figures are like-for-like over the same calendar window. When asked what SeatSense is worth, quote the attributable figure (measured against a per-departure counterfactual), not the observed year-on-year change, which includes market growth.',
+          'Yggio tenant for Northbank Rail, a fictional British train operator running Azuma trains and selling reserved seats: one ticket per seat, no overselling. Seats are allocated by an EMSRb revenue-management system (Weatherford & Belobaba, JORS 2002); the fare ladder is identical in both years, and what SeatSense changed on 2026-01-01 is the accuracy of the demand forecasts behind the booking limits (~25% error on ticket data, ~12.5% on measured occupancy). 2025 has ticket sales only, which cannot see a no-show, so 2025 has no cabin factor at all. Call yggio_overview first. All money is GBP. Year-on-year figures are like-for-like over the same calendar window. When asked what SeatSense is worth, quote the attributable figure (measured against a per-departure counterfactual), not the observed year-on-year change, which includes market growth.',
       });
     }
     case 'notifications/initialized':

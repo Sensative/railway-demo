@@ -10,11 +10,12 @@ match, the data has been regenerated with different parameters.
 
 **Three things not to get wrong on stage:**
 
-1. Observed revenue is up **2.4%**; the SeatSense number is **0.758%**. The rest
-   is market growth. Quote the small one.
-2. **The premium earns nothing** (−£3,181). The money lands on the discounted
-   departures either side. If you present this as a peak fare rise, you have
-   described the opposite of what happened.
+1. Observed revenue is up **2.4%**; the SeatSense number is **0.816%**. The
+   rest is market growth. Quote the small one.
+2. **This is not a fare rise.** The booking-class ladder is identical in both
+   years; the gain is volume - seats the old forecasts wrongly protected used
+   to fly empty *and unsold*. If someone frames it as peak fares going up,
+   send it to `where_the_gain_lands`.
 3. Nothing comes from overselling or from reselling a no-show seat.
 
 ---
@@ -32,7 +33,8 @@ Optionally on a second screen: `node src/yggio-api.mjs` at
 
 Setup line:
 
-> A British operator, reserved seats, one ticket per seat - so no overselling.
+> A British operator, Azuma fleet, reserved seats - one ticket per seat, so no
+> overselling. Seats are allocated by the standard airline RM model, EMSRb.
 > SeatSense on every coach since 1 January. Ask it anything.
 
 ---
@@ -41,168 +43,192 @@ Setup line:
 
 **Tool:** `yggio_overview`
 
-Look for: three routes, 58 daily departures, **241 SeatSense nodes**, 2025 =
-ticket sales only, 2026 = ticket sales *plus* measured cabin factor, and the
-sales policy: **one ticket per seat, overselling not permitted.**
+Look for: three routes, 58 daily departures, **343 SeatSense nodes**, 2025 =
+ticket sales only, 2026 = ticket sales *plus* measured cabin factor, the
+sales policy (**one ticket per seat, overselling not permitted**) and the RM
+model: **EMSRb, fare ladder identical in both years.**
 
 > The policy first, because it's what makes this a rail problem and not an
-> airline one.
+> airline one - and then note the model *is* the airline one. What they can't
+> copy from airlines is the overbooking.
 
 ## 2. "How big are the trains? Do they vary?"
 
 **Tool:** `list_services` (with `route_id=NBR2` for the extreme case)
 
-Look for `formations_by_route_and_demand_class`: NBR2 runs **3 units, 12 cars,
-672 seats** at 07:48 and **1 unit, 4 cars, 224 seats** at 12:18. NBR1 runs 8
-cars at peak, 4 off-peak. NBR3 runs 6 and 3.
+Look for `formations_by_route_and_demand_class`: NBR2 runs a **9-car Azuma,
+593 seats** at 07:48 and a **5-car, 302 seats** at 12:18. NBR1 couples two
+5-cars (604) at the peak. NBR3 runs the long train only in the evening.
 
-> Right-sized formations, which is why this network runs at a 67% cabin factor
-> and not the forty-odd percent you get from hauling full-length trains around
-> at eleven in the morning. It also means "how full is it" only means anything
-> if you know what was coupled up.
+> Real Azuma coach layouts, seat for seat - a 5-car is 302, a 9-car 593,
+> First and Standard separate pools. "How full is it" only means anything if
+> you know what was coupled up.
 
-## 3. "A train sold out at 100% can't take another passenger. What did that cost?"
+## 3. "What revenue-management model do you run?"
+
+**Tool:** `pricing_actions`
+
+Look for: **EMSRb** (Weatherford & Belobaba, *JORS* 2002), five nested
+booking classes per cabin - on NBR2 from **Anytime £64.40** down to
+**Advance £15.46** - 15 booking checkpoints, and the assumptions stated
+plainly: no cancellations, no buy-up, a refused request is lost.
+
+> Nothing exotic - it's the seat-allocation model out of the literature, the
+> one most airline YM systems descend from. Which matters for what's next:
+> that paper's whole point is that the model is only as good as its demand
+> forecast.
+
+## 4. "So what went wrong in 2025?"
+
+**Tool:** `ticket_data_blind_spot`
+
+Look for: the operator reported an **89.5%** load factor on weekday peak-core
+departures, sold out **34.6%** of them, refused **82.5 walk-ups a weekday** -
+and the punchline: the demand forecasts behind the booking limits were
+calibrated on ticket data, which **counts every no-show as a passenger and
+never sees a refused walk-up**. Result: **~25% mean forecast error**, per
+departure, persistent.
+
+> Revenue is booked whether you travel or not. So the forecast learned from
+> ghosts: the trains full of no-shows looked stronger than they were and got
+> over-forecast; the trains turning people away looked weaker than they were
+> and got under-forecast. The booking limits inherited both errors.
+
+## 5. "And what did SeatSense change?"
 
 **Tool:** `capacity_pressure`
 
-Look for 2025: peak core closed sales on **67.5%** of weekdays, evening peak
-**43.8%**, and **31 passengers a weekday** refused.
+Look for: the forecasts recalibrated on measured occupancy - **~25% error
+down to ~12.5%**, the fare ladder untouched - and the operational read:
+walk-ups refused on the morning peak fell from **75.9 to 50.0 a weekday**
+(-34%).
 
-> Every one of those is a fare that didn't happen. An airline absorbs them by
-> overbooking and prices the denied-boarding risk in. Selling reserved seats you
-> can't: the seat is contractually somebody's. So the only way to keep those
-> passengers is to make sure the train never fills.
+Also say the honest wrinkle before anyone finds it: the evening peak **sells
+out more often now** (21.1% → 30.9% of weekdays).
 
-## 4. "So what did they change?"
+> That last number is deliberate. Those trains used to depart with wrongly
+> protected seats - empty and unsold. Now they're sold. Under this model a
+> sell-out isn't the failure; the failure is the walk-up refused, and that's
+> what fell where it mattered.
 
-**Tool:** `pricing_actions`, then back to `capacity_pressure`
-
-Look for the principle - **"it must always be possible to travel on the
-departure you want; it may cost more"** - the parameters (target cabin factor
-**88%**, sold ceiling **97%**, premium cap **4.5%**), and the realised moves:
-peak **+1.4 to +1.8%**, shoulders **−4.5%**.
-
-Result: peak core closing sales **67.5% → 2.4%**, evening peak **43.8% →
-3.9%**, turn-aways **31.5 → 0.5 a weekday**, shoulder sold **58.0% → 62.6%**.
-
-> Under two percent on the peak. That's the whole intervention. The fare is
-> solved against each day's demand, so a quiet Tuesday in August carries no
-> premium at all.
-
-## 5. "How much is it worth?"
+## 6. "How much is it worth?"
 
 **Tool:** `seatsense_attribution`
 
-Look for: observed **+2.4%** (£1.89m) split into **£1,289,613 market growth**
-and **£596,914 SeatSense = 0.758% of total revenue**, against a business case
-of **0.75%**. Annualised **£904,307**.
+Look for: observed **+2.4%** (£1.87m) split into **£1,227,706 market growth**
+and **£639,737 SeatSense = 0.816% of total revenue**, against a business case
+of **0.75%**. Annualised **£969,183**.
 
-Then the part worth pausing on - `two_halves_of_the_policy`:
+Then the part worth pausing on - `where_the_gain_lands` and `decomposition`:
 
 | | |
 | --- | --- |
-| Premium on the departures held below full | **−£3,181** |
-| Discount on the departures either side | **+£600,095** |
+| Departures ticket data **under-forecast** (24) | **+£467,820** |
+| Departures ticket data **over-forecast** (34) | **+£171,917** |
+| Volume (tickets that could not be sold before) | **+£658,553** |
+| Class mix | -£23,977 |
 
-> The premium earns nothing. It's solved to land sales on target, so the fare it
-> adds and the volume it sheds cancel out. All the money is on the trains either
-> side - those are the seats that now get sold. The premium is the instrument;
-> the shoulder is the till. Which settles the first objection anyone raises:
-> this is not a fare rise. A fare rise would show the gain on the peak.
+> Not a fare rise - the ladder is byte-identical in both years. And not a mix
+> trick either: it's volume. Seats the old forecasts wrongly reserved used to
+> fly empty and unsold; now they carry passengers. The other half is walk-ups
+> who used to be refused and now find a protected seat.
 
-## 6. "What did the sensors cost? What's the payback?"
+## 7. "What did the sensors cost? What's the payback?"
 
 **Tool:** `seatsense_attribution` with `cost_per_coach_gbp`
 
 With no cost passed it says plainly that no sensor price is stored and reports
-**241 coaches instrumented**. Pass your own figure and it returns capex,
-payback and a five-year net. At £1,800 a coach: **£433,800 capex, payback 5.8
-months, five-year net £4.09m.**
+**343 coaches instrumented**. Pass your own figure and it returns capex,
+payback and a five-year net. At £1,800 a coach: **£617,400 capex, payback 7.6
+months, five-year net £4.23m.**
 
 > Use your own number here. The tool carries none, on purpose - and it flags
 > that the figure is capex only: no install, no connectivity, no integration.
 
-## 7. "Why do you need a sensor? The booking system knows what's sold."
+## 8. "Why do you need a sensor? The booking system knows what's sold."
 
 **Tool:** `fullness_ranking` with `month=6` - **the proof**
 
-Look for: ticket sales spread these eight peak departures across 3.6 points,
-measured occupancy across **6.2 points**, and **seven of eight change rank**.
-**NBR1-0741** goes from 4th by tickets sold to **8th** by actual fullness -
-12% of its ticket holders don't turn up.
+Look for: **seven of eight peak departures change rank** between the
+tickets-sold list and the bodies-on-board list. **NBR1-0741** is the train
+the ticket system calls fullest - **97% sold, rank 1** - and it is **third**
+by actual occupancy, because **12%** of its ticket holders don't turn up.
 
 > It does know what's sold. What it can't know is who turns up, because the
-> revenue is booked either way. And the sold-target is the occupancy target
-> *plus that departure's own no-show rate* - so you can't set it without
-> measuring.
+> revenue is booked either way. Now remember the forecasts are calibrated on
+> exactly this ranking - price and protect off the wrong list and the error
+> compounds every season.
 
-## 8. "Show me two departures where that changes the price."
+## 9. "Show me two departures where that changed the number."
 
-**Tool:** `list_services` with `route_id=NBR1`
+**Tool:** `list_services` with `route_id=NBR1`, or `compare_years group_by=service`
 
-- **NBR1-0711**: no-show **7.2%** → held to **95.2%** sold → premium **+1.7%**
-- **NBR1-0741**: no-show **12.0%** → sold to **97%** → premium **+1.4%**
+- **NBR1-0711**: no-show **7.2%**, 2025 forecast error **-27.2%** (its
+  refused walk-ups were invisible) → **2,627** turned away in the window.
+  Recalibrated: **462** refused, **+£63,559 (+2.36%)** attributable.
+- **NBR1-0741**: no-show **12.0%**, 2025 forecast error **+21.7%** - its
+  ghosts were counted as demand.
 
-> Thirty minutes apart, both 8-car, both about as sold. The one with more
-> no-shows gets the *smaller* increase, because it can safely be sold closer to
-> the cap. Ticket data would have done the exact opposite.
+> Thirty minutes apart on the same route, same ticket system, opposite
+> errors - and the direction tracks the no-show rate, which is exactly the
+> number ticket data cannot see. That correlation is the product in one
+> sentence.
 
-## 9. "Which route benefited most?"
+## 10. "Which route benefited most?"
 
 **Tool:** `compare_years` with `group_by=route`
 
 | Route | Attributable |
 | --- | --- |
-| **NBR2 Great Northern** | **0.951% (£457,630)** |
-| NBR1 Anglia Metro | 0.510% (£123,414) |
-| NBR3 Pennine Shuttle | **0.246% (£15,870)** |
+| **NBR2 Great Northern** | **1.009% (£412,747)** |
+| NBR1 Anglia Metro | 0.623% (£192,367) |
+| NBR3 Pennine Shuttle | **0.521% (£34,623)** |
 
-> NBR2 is the peakiest - twelve cars at 07:48, four at midday - so it had the
-> most rationing to fix. And say the third line before someone finds it: the
-> Pennine Shuttle earned almost nothing, because its evening peak was never
-> rationed in the first place. Where nothing is scarce, measuring it is worth
-> very little.
+> NBR2 is the peakiest - nine coaches at 07:48, five at midday - so its
+> booking limits bind hardest. And say the third line before someone finds
+> it: the Pennine Shuttle earned least because its evening peak runs two
+> units coupled and was never rationed. Where the limits never bind, a better
+> forecast earns almost nothing - the paper found exactly that.
 
-## 10. "Break it down by month."
+## 11. "Break it down by month."
 
 **Tool:** `capacity_pressure` or `compare_years group_by=month`
 
-Look for: Jan **0.11%**, Mar 1.33%, Jun **1.61%**, Aug **0.02%** - next to how
-often the peak sold out in 2025: 3%, 99%, 100%, 0%.
+Look for: June **1.31%** against August **0.64%** - tracking how hard demand
+pressed on the seats each month.
 
-> My favourite number here. The fare is solved per day, so a departure that
-> wouldn't have filled carries no premium. August earns 0.02% because in August
-> nothing was being rationed. **You only get paid for pricing a train that
-> would otherwise have refused someone.**
+> Forecast quality only pays where the booking limits bind. In a quiet month
+> every class stays open and a wrong forecast costs nothing. You get paid
+> where demand meets capacity - the paper's demand-factor result, live.
 
-Note if asked: individual months hold different numbers of working days, so use
-`revenue_pct_calendar_adjusted`. The attributable figure is immune - it compares
-each departure with itself.
+Note if asked: individual months hold different numbers of working days, so
+use `revenue_pct_calendar_adjusted`. The attributable figure is immune - it
+compares each departure with itself.
 
-## 11. "How many paid seats travelled empty on the 07:48 on 17 March?"
+## 12. "How many paid seats travelled empty on the 07:48 on 17 March?"
 
 **Tool:** `seatsense_snapshot`, `service_id=NBR2-0748`, `date=2026-03-17`
 
-Look for: **661 of 672 sold, sales still open, nobody refused**, formation
-**NBR2-U021 + U015 + U009 - twelve cars**, 616 seats occupied, cabin factor
-**91.7%** against the reported 98.4%, **45 ghost seats worth £1,907**, and the
-rear unit emptiest: **U009-D with 14 free seats of 56.**
+Look for: **593 of 593 sold - sold out, 29 walk-ups refused**, one 9-car
+Azuma (NBR2-U001), 553 seats occupied, cabin factor **93.3%** against the
+reported 100%, **40 ghost seats worth £1,848**, emptiest coach **K, 10 free
+seats of 66**.
 
-> Forty-five seats paid for and empty, and they're all in the back unit. We
-> can't sell them - they're already sold, to people who didn't come. We can't
-> oversell to cover them. What we can do is know it, and that's what set this
-> departure's price.
+> Sold out, people refused, and forty empty seats - all on the same train.
+> We can't resell them; they belong to people who didn't come. We can't
+> oversell to cover them. What we can do is know it - and now the case for
+> coupling a second unit to this diagram is a measured number, not a hunch.
 
-## 12. "What still needs attention?"
+## 13. "What still needs attention?"
 
 **Tool:** `repricing_candidates`
 
-Look for the two `lengthen_the_train` and one `premium_cap_is_binding` on
-**NBR2's evening peak** - the only place still closing sales more than 10% of
-weekdays.
+Look for the three action types: **8 x lengthen_the_train** (genuinely full,
+forecasts honest - the answer is steel), **9 x recalibrate_the_forecast**
+(residual errors still worth money - **NBR1-0741 is on this list**), **19 x
+open_more_advance** (limits rationing nothing).
 
-> Same answer a revenue meeting would reach: on this route price has done what
-> it can, and the next step is steel, not tariff. Note what's not on the list,
+> Same answer a revenue meeting would reach. And note what's not on the list,
 > because it isn't legal: overselling, and reselling the empty seats.
 
 ---
@@ -212,15 +238,24 @@ weekdays.
 - *"What was the cabin factor in 2025?"* → the tools **refuse**: `null` with an
   explanation. The best moment in the demo.
 - *"So how many actually travelled in 2025?"* → `ticket_data_blind_spot` with
-  `demand_class="all"`: 3,877,840 weekday journeys ticketed, most likely
-  **3.41-3.53 million** people, flagged `inference: true`.
+  `demand_class="all"`: 4,029,675 weekday journeys ticketed, most likely
+  **3.55-3.67 million** people, flagged `inference: true`.
+- *"Aren't you just putting peak fares up?"* → the fare ladder is identical in
+  both years, byte for byte. `where_the_gain_lands` shows the gain is volume
+  on wrongly protected seats. See question 6.
+- *"Where does the EMSRb model come from?"* → Weatherford & Belobaba, *Journal
+  of the Operational Research Society* 53 (2002). The demo re-stages its
+  forecast-accuracy experiment: 25% error versus 12.5%, same demand, same
+  fares.
+- *"Why do sell-outs go UP on the evening peak?"* → because seats that used
+  to be wrongly protected - and flew empty and unsold - are now sold. The
+  failure metric is walk-ups refused, not sell-outs. See question 5.
 - *"Couldn't you resell the empty seat mid-journey?"* → no; the reservation
   belongs to its buyer for the whole journey.
 - *"So no-shows went down?"* → no. Identical in both years by construction.
+  SeatSense measures them; it does not prevent them.
 - *"Did crowding improve?"* → `capacity_pressure` claims no service-quality
-  improvement. What improved is that almost nobody meets a closed sale.
-- *"Aren't you just putting peak fares up?"* → the premium earned −£3,181. See
-  question 5.
+  improvement, deliberately.
 - *"Show me one train over time."* → `service_history`
 - *"Are all the sensors working?"* → `yggio_list_iotnodes`
 - *"What's the legal basis in my market?"* → the demo frames it contractually
@@ -234,10 +269,11 @@ weekdays.
   each headline.
 - **The model quotes 2.4% as the SeatSense figure** - ask "how much of that is
   attributable rather than market growth?"
-- **The model says the peak premium earned the money** - ask it for
-  `two_halves_of_the_policy`.
+- **The model calls it a fare rise** - ask it for `where_the_gain_lands` in
+  `seatsense_attribution`, and whether the fare ladder changed.
 - **The model quotes a 2025 cabin factor** - it invented it. Send it to
   `ticket_data_blind_spot`.
-- **Someone asks whether this is real** - the operator is fictional and the data
-  synthetic, generated to be internally consistent. The constraint, the blind
-  spot and the pricing mechanism are real.
+- **Someone asks whether this is real** - the operator is fictional and the
+  data synthetic, generated to be internally consistent. The constraint, the
+  blind spot, the Azuma seat maps and the EMSRb model (Weatherford &
+  Belobaba, 2002) are real.

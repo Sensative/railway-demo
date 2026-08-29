@@ -9,21 +9,22 @@
     "fictional": true,
     "disclaimer": "Northbank Rail is a fictional train operating company. All figures in this dataset are synthetic and generated for demonstration purposes.",
     "yggioTenant": "northbank-rail-prod",
-    "product": "Seat-reserved commuter and regional services. Every ticket carries a specific seat; there is no standing-permitted product.",
+    "product": "Seat-reserved intercity and commuter services operated with Hitachi Azuma trains. Every ticket carries a specific seat; there is no standing-permitted product.",
     "seatsense": {
       "product": "Sensative SeatSense",
       "deviceModel": "sensative-seatsense-v2",
       "measures": "Per-seat occupancy - whether a seat is physically occupied by a person, reported continuously per coach.",
       "fleetGoLive": "2026-01-01",
-      "businessCase": "The operator signed off on the rollout against a projected +0.75% of total revenue, from demand-based pricing on measured occupancy alone. No overselling, no reselling of no-show seats, no fare-basket increase.",
+      "businessCase": "The operator signed off on the rollout against a projected +0.75% of total revenue, from recalibrating the revenue-management demand forecasts on measured occupancy. No overselling, no reselling of no-show seats, no change to the fare ladder.",
       "pilot": {
         "window": "2025-10-01 .. 2025-12-19",
-        "scope": "3 units on the Anglia Metro (NBR1), 24 coaches instrumented",
+        "scope": "3 Azuma 5-car units on the Anglia Metro (NBR1), 15 coaches instrumented",
         "findings": [
           "Departures that had sold every seat and closed sales departed with an average of 10.4% of those seats empty.",
           "Median 47 paid-for seats travelling empty per sold-out peak departure; worst observed 71.",
           "Ticket data overstated the people on board peak departures by 9-12%.",
-          "Two departures the ticket system ranked as equally sold out differed by 5 points of actual occupancy - the no-show rate is a property of who buys that particular train."
+          "Two departures the ticket system ranked as equally sold out differed by 5 points of actual occupancy - the no-show rate is a property of who buys that particular train.",
+          "Re-run against the pilot's occupancy record, the RM system's demand forecasts for the instrumented departures were off by 22-28%. The Weatherford-Belobaba paper prices that error at 1-2% of revenue on constrained departures."
         ]
       }
     }
@@ -50,50 +51,69 @@
         "Shenfield",
         "London Liverpool Street"
       ],
-      "profile": "Seat-reserved inner-suburban commuter",
+      "profile": "Seat-reserved outer-suburban commuter, Azuma 5-car fleet",
       "fleet": {
-        "units": 24,
-        "unit_type": "4-car, 240 seats",
-        "coaches": 96,
-        "seats_per_coach": 60
+        "units": "24 x Azuma 5-car",
+        "unit_types": [
+          {
+            "type": "AZ5",
+            "label": "Azuma 5-car",
+            "units": 24,
+            "coaches_per_unit": 5,
+            "seats_per_unit": 302,
+            "seats_standard": 254,
+            "seats_first": 48
+          }
+        ],
+        "coaches": 120
       },
       "formations": {
         "peak_core": {
-          "units": 2,
-          "coaches": 8,
-          "seats": 480
+          "formation": "2 x Azuma 5-car",
+          "coaches": 10,
+          "seats": 604,
+          "seats_standard": 508,
+          "seats_first": 96
         },
         "peak_shoulder": {
-          "units": 2,
-          "coaches": 8,
-          "seats": 480
+          "formation": "2 x Azuma 5-car",
+          "coaches": 10,
+          "seats": 604,
+          "seats_standard": 508,
+          "seats_first": 96
         },
         "evening_peak": {
-          "units": 2,
-          "coaches": 8,
-          "seats": 480
+          "formation": "2 x Azuma 5-car",
+          "coaches": 10,
+          "seats": 604,
+          "seats_standard": 508,
+          "seats_first": 96
         },
         "offpeak": {
-          "units": 1,
-          "coaches": 4,
-          "seats": 240
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "early_late": {
-          "units": 1,
-          "coaches": 4,
-          "seats": 240
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         }
       },
-      "longest_formation_seats": 480,
-      "shortest_formation_seats": 240,
+      "longest_formation_seats": 604,
+      "shortest_formation_seats": 302,
       "daily_departures": 20,
-      "peak_fare_gbp": 24.6,
-      "demand_index_pct_of_longest_formation": {
-        "peak_core": 104.5,
-        "peak_shoulder": 58,
-        "offpeak": 28,
-        "evening_peak": 101.8,
-        "early_late": 19
+      "anytime_standard_fare_gbp": 39.8,
+      "demand_factor": {
+        "peak_core": 1.08,
+        "peak_shoulder": 0.66,
+        "offpeak": 0.55,
+        "evening_peak": 1.05,
+        "early_late": 0.38
       }
     },
     {
@@ -111,50 +131,78 @@
         "Stevenage",
         "London King's Cross"
       ],
-      "profile": "Seat-reserved long-distance commuter",
+      "profile": "Seat-reserved long-distance commuter, Azuma 9-car and 5-car fleet",
       "fleet": {
-        "units": 25,
-        "unit_type": "4-car, 224 seats",
-        "coaches": 100,
-        "seats_per_coach": 56
+        "units": "12 x Azuma 9-car, 8 x Azuma 5-car",
+        "unit_types": [
+          {
+            "type": "AZ9",
+            "label": "Azuma 9-car",
+            "units": 12,
+            "coaches_per_unit": 9,
+            "seats_per_unit": 593,
+            "seats_standard": 490,
+            "seats_first": 103
+          },
+          {
+            "type": "AZ5",
+            "label": "Azuma 5-car",
+            "units": 8,
+            "coaches_per_unit": 5,
+            "seats_per_unit": 302,
+            "seats_standard": 254,
+            "seats_first": 48
+          }
+        ],
+        "coaches": 148
       },
       "formations": {
         "peak_core": {
-          "units": 3,
-          "coaches": 12,
-          "seats": 672
+          "formation": "1 x Azuma 9-car",
+          "coaches": 9,
+          "seats": 593,
+          "seats_standard": 490,
+          "seats_first": 103
         },
         "peak_shoulder": {
-          "units": 2,
-          "coaches": 8,
-          "seats": 448
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "evening_peak": {
-          "units": 3,
-          "coaches": 12,
-          "seats": 672
+          "formation": "1 x Azuma 9-car",
+          "coaches": 9,
+          "seats": 593,
+          "seats_standard": 490,
+          "seats_first": 103
         },
         "offpeak": {
-          "units": 1,
-          "coaches": 4,
-          "seats": 224
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "early_late": {
-          "units": 1,
-          "coaches": 4,
-          "seats": 224
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         }
       },
-      "longest_formation_seats": 672,
-      "shortest_formation_seats": 224,
+      "longest_formation_seats": 593,
+      "shortest_formation_seats": 302,
       "daily_departures": 20,
-      "peak_fare_gbp": 41.2,
-      "demand_index_pct_of_longest_formation": {
-        "peak_core": 105.5,
-        "peak_shoulder": 36,
-        "offpeak": 18,
-        "evening_peak": 102.5,
-        "early_late": 13
+      "anytime_standard_fare_gbp": 64.4,
+      "demand_factor": {
+        "peak_core": 1.1,
+        "peak_shoulder": 0.78,
+        "offpeak": 0.36,
+        "evening_peak": 1.06,
+        "early_late": 0.27
       }
     },
     {
@@ -170,50 +218,69 @@
         "Church Fenton",
         "York"
       ],
-      "profile": "Seat-reserved regional",
+      "profile": "Seat-reserved regional, Azuma 5-car fleet",
       "fleet": {
-        "units": 15,
-        "unit_type": "3-car, 204 seats",
-        "coaches": 45,
-        "seats_per_coach": 68
+        "units": "15 x Azuma 5-car",
+        "unit_types": [
+          {
+            "type": "AZ5",
+            "label": "Azuma 5-car",
+            "units": 15,
+            "coaches_per_unit": 5,
+            "seats_per_unit": 302,
+            "seats_standard": 254,
+            "seats_first": 48
+          }
+        ],
+        "coaches": 75
       },
       "formations": {
         "peak_core": {
-          "units": 2,
-          "coaches": 6,
-          "seats": 408
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "peak_shoulder": {
-          "units": 1,
-          "coaches": 3,
-          "seats": 204
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "evening_peak": {
-          "units": 2,
-          "coaches": 6,
-          "seats": 408
+          "formation": "2 x Azuma 5-car",
+          "coaches": 10,
+          "seats": 604,
+          "seats_standard": 508,
+          "seats_first": 96
         },
         "offpeak": {
-          "units": 1,
-          "coaches": 3,
-          "seats": 204
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         },
         "early_late": {
-          "units": 1,
-          "coaches": 3,
-          "seats": 204
+          "formation": "1 x Azuma 5-car",
+          "coaches": 5,
+          "seats": 302,
+          "seats_standard": 254,
+          "seats_first": 48
         }
       },
-      "longest_formation_seats": 408,
-      "shortest_formation_seats": 204,
+      "longest_formation_seats": 604,
+      "shortest_formation_seats": 302,
       "daily_departures": 18,
-      "peak_fare_gbp": 11.4,
-      "demand_index_pct_of_longest_formation": {
-        "peak_core": 100.8,
-        "peak_shoulder": 26,
-        "offpeak": 24,
-        "evening_peak": 95,
-        "early_late": 17
+      "anytime_standard_fare_gbp": 15.4,
+      "demand_factor": {
+        "peak_core": 1.06,
+        "peak_shoulder": 0.52,
+        "offpeak": 0.48,
+        "evening_peak": 0.85,
+        "early_late": 0.34
       }
     }
   ],
@@ -221,27 +288,32 @@
     {
       "demand_class": "peak_core",
       "label": "Morning peak core",
-      "description": "The 07:00-08:30 arrivals. More people want these than there are seats."
+      "description": "The 07:00-08:30 arrivals. More people want these than there are seats.",
+      "demand_profile": "business"
     },
     {
       "demand_class": "peak_shoulder",
       "label": "Peak shoulder",
-      "description": "The departures either side of the crush. Where the priced-off demand goes."
+      "description": "The departures either side of the crush.",
+      "demand_profile": "shoulder"
     },
     {
       "demand_class": "offpeak",
       "label": "Off-peak",
-      "description": "Midday and late evening leisure travel."
+      "description": "Midday and late evening leisure travel.",
+      "demand_profile": "leisure"
     },
     {
       "demand_class": "evening_peak",
       "label": "Evening peak",
-      "description": "The 16:30-18:00 exodus out of the city. Also demand-constrained."
+      "description": "The 16:30-18:00 exodus out of the city. Also demand-constrained.",
+      "demand_profile": "business"
     },
     {
       "demand_class": "early_late",
       "label": "Early / late",
-      "description": "First and last departures of the day."
+      "description": "First and last departures of the day.",
+      "demand_profile": "leisure"
     }
   ],
   "sales_policy": {
@@ -249,12 +321,12 @@
     "tickets_per_seat": 1,
     "sales_cap_pct_of_seats": 100,
     "overselling": "not permitted",
-    "basis": "A seat reservation is a contractual right to that seat, and denied boarding triggers passenger-rights obligations. European operators therefore sell at most one ticket per seat per departure, unlike airlines, which deliberately overbook and price the denied-boarding risk into their yield model.",
+    "basis": "A seat reservation is a contractual right to that seat, and denied boarding triggers passenger-rights obligations. European operators therefore sell at most one ticket per seat per departure, unlike airlines, which deliberately overbook and price the denied-boarding risk into their yield model. The seat-allocation model is the airline one; the overbooking is not.",
     "consequences": [
       "A departure sold to 100% cannot take another passenger. In 2025 the morning peak did exactly that and refused the rest - revenue that never happened.",
       "A seat sold to someone who does not travel departs empty and the revenue is not recoverable: the seat is still theirs, and overselling to cover it is not an option.",
-      "Ticket data knows precisely how many seats are unsold. What it cannot know is how many of the sold seats will actually be sat in - so it cannot rank departures by how full they really are.",
-      "That ranking is what pricing decisions are made on, which is why measuring it is worth money even though the empty seats themselves are not."
+      "Ticket data knows precisely how many seats are unsold. What it cannot know is how many of the sold seats will actually be sat in - so demand forecasts calibrated on ticket data are calibrated on ghosts.",
+      "Those forecasts are what the booking limits are computed from, which is why measuring occupancy is worth money even though the empty seats themselves are not."
     ],
     "what_seatsense_does_not_do": [
       "It does not let the operator oversell. That is a policy and passenger-rights question, not a data question.",
@@ -262,9 +334,27 @@
       "It does not reduce the no-show rate. People who have paid still fail to travel at roughly the same rate in 2026 as in 2025."
     ]
   },
+  "revenue_management": {
+    "method": "EMSRb",
+    "reference": "LR Weatherford and PP Belobaba, \"Revenue impacts of fare input and demand forecast accuracy in airline yield management\", Journal of the Operational Research Society 53 (2002) 1-11.",
+    "booking_periods": 15,
+    "principle": "It must always be possible to travel on the departure you want. It may cost more.",
+    "how_the_principle_is_kept": "EMSRb protects seats for the highest fare class, so a walk-up Anytime passenger finds a seat on the departure they want even when the cheap classes closed weeks earlier. The promise is availability at the top of the fare ladder, not at the bottom.",
+    "forecast_error": {
+      "2025": {
+        "label": "~25% mean absolute error, biased upward with the no-show rate",
+        "why": "Forecasts calibrated on ticket data. A no-show books revenue and looks like a passenger, so the busier a departure looked, the more demand the model expected next time."
+      },
+      "2026": {
+        "label": "~12.5% mean absolute error, unbiased",
+        "why": "Forecasts recalibrated on measured occupancy per departure - SeatSense sees who actually travels, per seat, every day."
+      }
+    },
+    "fares": "The fare ladder. Every class fare is identical in 2025 and 2026 - the gain comes from allocating seats to classes correctly, not from charging more."
+  },
   "ticket_data": {
     "what_2025_had": [
-      "Tickets sold and unsold per departure, exactly - one ticket per seat leaves no ambiguity about availability.",
+      "Tickets sold and unsold per departure and booking class, exactly - one ticket per seat leaves no ambiguity about availability.",
       "Revenue per departure, which is the same whether the ticket holder travels or not.",
       "Whether sales were closed on a departure, and how much demand arrived afterwards.",
       "Gateline entries and exits at staffed stations - a station total, not a seat.",
@@ -273,8 +363,8 @@
     "what_2025_could_not_have": [
       "How many of the sold seats were actually sat in - a no-show is invisible to ticket data.",
       "Therefore the cabin factor of any departure, on any day.",
-      "Therefore which of two equally sold-out departures was genuinely full and which was not.",
-      "Therefore whether a fare move on a given departure was safe or self-defeating."
+      "Therefore demand forecasts free of ghost passengers: the RM system was calibrated on sales, and sales count people who never travel.",
+      "Therefore booking limits computed from the true demand - the input the Weatherford-Belobaba paper shows matters most."
     ],
     "reported_metric_2025": "assumed_load_factor_pct = tickets sold / seats. Overstates the people on board by the no-show rate.",
     "loadSurveyDates2025": [
@@ -292,16 +382,16 @@
   "business_case": {
     "target_total_revenue_uplift_pct": 0.75,
     "source": "The operator's own projection, signed off before rollout.",
-    "mechanism": "Demand-based pricing on measured occupancy. No overselling, no reselling of no-show seats, no increase to the fare basket.",
+    "mechanism": "Recalibrating the RM demand forecasts on measured occupancy - the Weatherford-Belobaba forecast-accuracy effect. No overselling, no reselling of no-show seats, no change to the fare ladder.",
     "assumed_market_growth_pct": 1.8,
-    "market_growth_note": "Underlying market growth is the counterfactual: what revenue would have done in 2026 without SeatSense-informed pricing. It is generated into the 2026 demand at this rate, so netting it off isolates the pricing effect. Change the parameter to test how sensitive the attribution is."
+    "market_growth_note": "Underlying market growth is the counterfactual: what revenue would have done in 2026 without SeatSense-recalibrated forecasts. It is generated into the 2026 demand at this rate, so netting it off isolates the forecast-quality effect. Change the parameter to test how sensitive the attribution is."
   },
   "data_dictionary": {
     "both_years": {
-      "tickets_sold": "Tickets sold for the departure, never more than the seats there are. A sale, not a person in a seat.",
+      "tickets_sold": "Tickets sold for the departure across all booking classes, never more than the seats there are. A sale, not a person in a seat.",
       "revenue_gbp": "Ticket revenue for the departure. Identical whether the ticket holder travels or not - which is why ticket data cannot see a no-show.",
-      "sales_closed": "True if demand exceeded the 100%-of-seats cap and sales were stopped.",
-      "demand_turned_away": "Passengers who wanted this departure after sales closed. Not absorbed by overselling, because overselling is not permitted."
+      "sales_closed": "True if the Standard cabin sold every seat and was refusing requests. (First is a separate small pool; a full First cabin alone does not close the train.)",
+      "demand_turned_away": "Anytime Standard requests refused because no Standard seat was left - walk-up passengers who could not travel at any price. Not absorbed by overselling, because overselling is not permitted. A request refused because its cheap class closed while dearer seats remained is not counted here: that passenger was priced, not refused, and the top of the ladder was still open."
     },
     "2025_only": {
       "manual_load_survey": "Passengers counted by hand on board, on the four survey days only. The single 2025 field that saw actual people.",
@@ -311,12 +401,12 @@
       "boarded": "People SeatSense saw on board. Tickets sold minus no-shows.",
       "seats_occupied": "Seats SeatSense measured as physically occupied - the cabin factor numerator. Equal to boarded, since every ticket carries a seat and there is no standing product.",
       "ghost_seats": "Seats paid for that travelled empty. Not recoverable: the seat still belongs to its buyer and overselling to cover it is not permitted.",
-      "cf_tickets_sold": "Counterfactual: seats this departure would have sold on 2025's pricing rules, with the same market growth applied.",
-      "cf_revenue_gbp": "Counterfactual revenue on the same basis. Observed minus counterfactual is the pricing effect, and that is the SeatSense business case."
+      "cf_tickets_sold": "Counterfactual: what the same day's booking requests would have produced under 2025's forecast quality - the same EMSRb controls fed the old forecasts.",
+      "cf_revenue_gbp": "Counterfactual revenue on the same basis. Observed minus counterfactual is the forecast-quality effect, and that is the SeatSense business case."
     }
   },
   "generator": {
-    "version": "2.0.0",
-    "generated_at": "2026-08-28"
+    "version": "3.0.0",
+    "generated_at": "2026-08-29"
   }
 }
