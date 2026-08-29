@@ -1,0 +1,322 @@
+{
+  "operator": {
+    "id": "northbank-rail",
+    "name": "Northbank Rail",
+    "legalName": "Northbank Rail Operations Ltd",
+    "country": "United Kingdom",
+    "headquarters": "London, UK",
+    "currency": "GBP",
+    "fictional": true,
+    "disclaimer": "Northbank Rail is a fictional train operating company. All figures in this dataset are synthetic and generated for demonstration purposes.",
+    "yggioTenant": "northbank-rail-prod",
+    "product": "Seat-reserved commuter and regional services. Every ticket carries a specific seat; there is no standing-permitted product.",
+    "seatsense": {
+      "product": "Sensative SeatSense",
+      "deviceModel": "sensative-seatsense-v2",
+      "measures": "Per-seat occupancy - whether a seat is physically occupied by a person, reported continuously per coach.",
+      "fleetGoLive": "2026-01-01",
+      "businessCase": "The operator signed off on the rollout against a projected +0.75% of total revenue, from demand-based pricing on measured occupancy alone. No overselling, no reselling of no-show seats, no fare-basket increase.",
+      "pilot": {
+        "window": "2025-10-01 .. 2025-12-19",
+        "scope": "3 units on the Anglia Metro (NBR1), 24 coaches instrumented",
+        "findings": [
+          "Departures that had sold every seat and closed sales departed with an average of 10.4% of those seats empty.",
+          "Median 47 paid-for seats travelling empty per sold-out peak departure; worst observed 71.",
+          "Ticket data overstated the people on board peak departures by 9-12%.",
+          "Two departures the ticket system ranked as equally sold out differed by 5 points of actual occupancy - the no-show rate is a property of who buys that particular train."
+        ]
+      }
+    }
+  },
+  "coverage": {
+    "baselineYear": 2025,
+    "seatsenseYear": 2026,
+    "start": "2025-01-01",
+    "end": "2026-08-31",
+    "seatsenseGoLive": "2026-01-01"
+  },
+  "routes": [
+    {
+      "route_id": "NBR1",
+      "name": "Anglia Metro",
+      "origin": "Colchester",
+      "destination": "London Liverpool Street",
+      "calling_points": [
+        "Colchester",
+        "Marks Tey",
+        "Kelvedon",
+        "Witham",
+        "Chelmsford",
+        "Shenfield",
+        "London Liverpool Street"
+      ],
+      "profile": "Seat-reserved inner-suburban commuter",
+      "fleet": {
+        "units": 24,
+        "unit_type": "4-car, 240 seats",
+        "coaches": 96,
+        "seats_per_coach": 60
+      },
+      "formations": {
+        "peak_core": {
+          "units": 2,
+          "coaches": 8,
+          "seats": 480
+        },
+        "peak_shoulder": {
+          "units": 2,
+          "coaches": 8,
+          "seats": 480
+        },
+        "evening_peak": {
+          "units": 2,
+          "coaches": 8,
+          "seats": 480
+        },
+        "offpeak": {
+          "units": 1,
+          "coaches": 4,
+          "seats": 240
+        },
+        "early_late": {
+          "units": 1,
+          "coaches": 4,
+          "seats": 240
+        }
+      },
+      "longest_formation_seats": 480,
+      "shortest_formation_seats": 240,
+      "daily_departures": 20,
+      "peak_fare_gbp": 24.6,
+      "demand_index_pct_of_longest_formation": {
+        "peak_core": 104.5,
+        "peak_shoulder": 58,
+        "offpeak": 28,
+        "evening_peak": 101.8,
+        "early_late": 19
+      }
+    },
+    {
+      "route_id": "NBR2",
+      "name": "Great Northern Line",
+      "origin": "Peterborough",
+      "destination": "London King's Cross",
+      "calling_points": [
+        "Peterborough",
+        "Huntingdon",
+        "St Neots",
+        "Sandy",
+        "Biggleswade",
+        "Hitchin",
+        "Stevenage",
+        "London King's Cross"
+      ],
+      "profile": "Seat-reserved long-distance commuter",
+      "fleet": {
+        "units": 25,
+        "unit_type": "4-car, 224 seats",
+        "coaches": 100,
+        "seats_per_coach": 56
+      },
+      "formations": {
+        "peak_core": {
+          "units": 3,
+          "coaches": 12,
+          "seats": 672
+        },
+        "peak_shoulder": {
+          "units": 2,
+          "coaches": 8,
+          "seats": 448
+        },
+        "evening_peak": {
+          "units": 3,
+          "coaches": 12,
+          "seats": 672
+        },
+        "offpeak": {
+          "units": 1,
+          "coaches": 4,
+          "seats": 224
+        },
+        "early_late": {
+          "units": 1,
+          "coaches": 4,
+          "seats": 224
+        }
+      },
+      "longest_formation_seats": 672,
+      "shortest_formation_seats": 224,
+      "daily_departures": 20,
+      "peak_fare_gbp": 41.2,
+      "demand_index_pct_of_longest_formation": {
+        "peak_core": 105.5,
+        "peak_shoulder": 36,
+        "offpeak": 18,
+        "evening_peak": 102.5,
+        "early_late": 13
+      }
+    },
+    {
+      "route_id": "NBR3",
+      "name": "Pennine Shuttle",
+      "origin": "Huddersfield",
+      "destination": "York",
+      "calling_points": [
+        "Huddersfield",
+        "Dewsbury",
+        "Leeds",
+        "Garforth",
+        "Church Fenton",
+        "York"
+      ],
+      "profile": "Seat-reserved regional",
+      "fleet": {
+        "units": 15,
+        "unit_type": "3-car, 204 seats",
+        "coaches": 45,
+        "seats_per_coach": 68
+      },
+      "formations": {
+        "peak_core": {
+          "units": 2,
+          "coaches": 6,
+          "seats": 408
+        },
+        "peak_shoulder": {
+          "units": 1,
+          "coaches": 3,
+          "seats": 204
+        },
+        "evening_peak": {
+          "units": 2,
+          "coaches": 6,
+          "seats": 408
+        },
+        "offpeak": {
+          "units": 1,
+          "coaches": 3,
+          "seats": 204
+        },
+        "early_late": {
+          "units": 1,
+          "coaches": 3,
+          "seats": 204
+        }
+      },
+      "longest_formation_seats": 408,
+      "shortest_formation_seats": 204,
+      "daily_departures": 18,
+      "peak_fare_gbp": 11.4,
+      "demand_index_pct_of_longest_formation": {
+        "peak_core": 100.8,
+        "peak_shoulder": 26,
+        "offpeak": 24,
+        "evening_peak": 95,
+        "early_late": 17
+      }
+    }
+  ],
+  "demand_classes": [
+    {
+      "demand_class": "peak_core",
+      "label": "Morning peak core",
+      "description": "The 07:00-08:30 arrivals. More people want these than there are seats."
+    },
+    {
+      "demand_class": "peak_shoulder",
+      "label": "Peak shoulder",
+      "description": "The departures either side of the crush. Where the priced-off demand goes."
+    },
+    {
+      "demand_class": "offpeak",
+      "label": "Off-peak",
+      "description": "Midday and late evening leisure travel."
+    },
+    {
+      "demand_class": "evening_peak",
+      "label": "Evening peak",
+      "description": "The 16:30-18:00 exodus out of the city. Also demand-constrained."
+    },
+    {
+      "demand_class": "early_late",
+      "label": "Early / late",
+      "description": "First and last departures of the day."
+    }
+  ],
+  "sales_policy": {
+    "reservation": "compulsory - every ticket carries a specific seat",
+    "tickets_per_seat": 1,
+    "sales_cap_pct_of_seats": 100,
+    "overselling": "not permitted",
+    "basis": "A seat reservation is a contractual right to that seat, and denied boarding triggers passenger-rights obligations. European operators therefore sell at most one ticket per seat per departure, unlike airlines, which deliberately overbook and price the denied-boarding risk into their yield model.",
+    "consequences": [
+      "A departure sold to 100% cannot take another passenger. In 2025 the morning peak did exactly that and refused the rest - revenue that never happened.",
+      "A seat sold to someone who does not travel departs empty and the revenue is not recoverable: the seat is still theirs, and overselling to cover it is not an option.",
+      "Ticket data knows precisely how many seats are unsold. What it cannot know is how many of the sold seats will actually be sat in - so it cannot rank departures by how full they really are.",
+      "That ranking is what pricing decisions are made on, which is why measuring it is worth money even though the empty seats themselves are not."
+    ],
+    "what_seatsense_does_not_do": [
+      "It does not let the operator oversell. That is a policy and passenger-rights question, not a data question.",
+      "It does not let the operator resell a no-show seat mid-journey: the reservation still belongs to its buyer for the whole journey.",
+      "It does not reduce the no-show rate. People who have paid still fail to travel at roughly the same rate in 2026 as in 2025."
+    ]
+  },
+  "ticket_data": {
+    "what_2025_had": [
+      "Tickets sold and unsold per departure, exactly - one ticket per seat leaves no ambiguity about availability.",
+      "Revenue per departure, which is the same whether the ticket holder travels or not.",
+      "Whether sales were closed on a departure, and how much demand arrived afterwards.",
+      "Gateline entries and exits at staffed stations - a station total, not a seat.",
+      "Manual load surveys: a counter with a clicker on a handful of days a year."
+    ],
+    "what_2025_could_not_have": [
+      "How many of the sold seats were actually sat in - a no-show is invisible to ticket data.",
+      "Therefore the cabin factor of any departure, on any day.",
+      "Therefore which of two equally sold-out departures was genuinely full and which was not.",
+      "Therefore whether a fare move on a given departure was safe or self-defeating."
+    ],
+    "reported_metric_2025": "assumed_load_factor_pct = tickets sold / seats. Overstates the people on board by the no-show rate.",
+    "loadSurveyDates2025": [
+      "2025-02-12",
+      "2025-05-14",
+      "2025-09-17",
+      "2025-11-12"
+    ],
+    "loadSurveyMethod": "Manual count of passengers on board at the busiest point of the journey, morning up services only, plus or minus a few percent counting error. Four days out of 365.",
+    "pilotNoShowRange": [
+      0.09,
+      0.12
+    ]
+  },
+  "business_case": {
+    "target_total_revenue_uplift_pct": 0.75,
+    "source": "The operator's own projection, signed off before rollout.",
+    "mechanism": "Demand-based pricing on measured occupancy. No overselling, no reselling of no-show seats, no increase to the fare basket.",
+    "assumed_market_growth_pct": 1.8,
+    "market_growth_note": "Underlying market growth is the counterfactual: what revenue would have done in 2026 without SeatSense-informed pricing. It is generated into the 2026 demand at this rate, so netting it off isolates the pricing effect. Change the parameter to test how sensitive the attribution is."
+  },
+  "data_dictionary": {
+    "both_years": {
+      "tickets_sold": "Tickets sold for the departure, never more than the seats there are. A sale, not a person in a seat.",
+      "revenue_gbp": "Ticket revenue for the departure. Identical whether the ticket holder travels or not - which is why ticket data cannot see a no-show.",
+      "sales_closed": "True if demand exceeded the 100%-of-seats cap and sales were stopped.",
+      "demand_turned_away": "Passengers who wanted this departure after sales closed. Not absorbed by overselling, because overselling is not permitted."
+    },
+    "2025_only": {
+      "manual_load_survey": "Passengers counted by hand on board, on the four survey days only. The single 2025 field that saw actual people.",
+      "note": "There is no occupancy field for 2025 because no such measurement existed. tickets_sold / seats is an assumed load factor and overstates the people on board by the no-show rate."
+    },
+    "2026_only": {
+      "boarded": "People SeatSense saw on board. Tickets sold minus no-shows.",
+      "seats_occupied": "Seats SeatSense measured as physically occupied - the cabin factor numerator. Equal to boarded, since every ticket carries a seat and there is no standing product.",
+      "ghost_seats": "Seats paid for that travelled empty. Not recoverable: the seat still belongs to its buyer and overselling to cover it is not permitted.",
+      "cf_tickets_sold": "Counterfactual: seats this departure would have sold on 2025's pricing rules, with the same market growth applied.",
+      "cf_revenue_gbp": "Counterfactual revenue on the same basis. Observed minus counterfactual is the pricing effect, and that is the SeatSense business case."
+    }
+  },
+  "generator": {
+    "version": "2.0.0",
+    "generated_at": "2026-08-28"
+  }
+}
