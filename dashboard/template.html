@@ -1,0 +1,982 @@
+<title>Northbank Seat Usage</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Condensed:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --plane:        #e9ecee;
+  --surface:      #fbfcfc;
+  --surface-2:    #f2f4f5;
+  --ink:          #0f1417;
+  --ink-2:        #4d585f;
+  --ink-muted:    #838d94;
+  --hairline:     #dce1e4;
+  --rule:         #c4ccd1;
+  --accent:       #2a78d6;
+  --accent-soft:  rgba(42,120,214,0.12);
+  --series-sold:  #eb6834;
+  --series-occ:   #2a78d6;
+  --good:         #0ca30c;
+  --warning:      #fab219;
+  --serious:      #ec835a;
+  --critical:     #d03b3b;
+  --good-text:    #006300;
+  --seq-1: #cde2fb; --seq-2: #9ec5f4; --seq-3: #6da7ec;
+  --seq-4: #3987e5; --seq-5: #256abf; --seq-6: #184f95; --seq-7: #0d366b;
+  --seq-ink-1: #0f1417; --seq-ink-2: #0f1417; --seq-ink-3: #0f1417; --seq-ink-4: #0f1417;
+  --seq-ink-5: #ffffff; --seq-ink-6: #ffffff; --seq-ink-7: #ffffff;
+  --seat-empty:   #d4dade;
+  --shadow:       0 1px 2px rgba(15,20,23,0.06), 0 8px 24px rgba(15,20,23,0.05);
+  --focus:        #2a78d6;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cond: "IBM Plex Sans Condensed", "IBM Plex Sans", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --plane:       #0b0f11;
+    --surface:     #161b1e;
+    --surface-2:   #1e2529;
+    --ink:         #f0f4f5;
+    --ink-2:       #a8b3b9;
+    --ink-muted:   #77828a;
+    --hairline:    #262e33;
+    --rule:        #384249;
+    --accent:      #3987e5;
+    --accent-soft: rgba(57,135,229,0.18);
+    --series-sold: #d95926;
+    --series-occ:  #3987e5;
+    --good-text:   #0ca30c;
+    --seq-1: #0d366b; --seq-2: #184f95; --seq-3: #256abf;
+    --seq-4: #2a78d6; --seq-5: #3987e5; --seq-6: #6da7ec; --seq-7: #9ec5f4;
+    --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
+    --seq-ink-5: #0b0f11; --seq-ink-6: #0b0f11; --seq-ink-7: #0b0f11;
+    --seat-empty:  #333c42;
+    --shadow:      0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+    --focus:       #6da7ec;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --plane:       #0b0f11;
+  --surface:     #161b1e;
+  --surface-2:   #1e2529;
+  --ink:         #f0f4f5;
+  --ink-2:       #a8b3b9;
+  --ink-muted:   #77828a;
+  --hairline:    #262e33;
+  --rule:        #384249;
+  --accent:      #3987e5;
+  --accent-soft: rgba(57,135,229,0.18);
+  --series-sold: #d95926;
+  --series-occ:  #3987e5;
+  --good-text:   #0ca30c;
+  --seq-1: #0d366b; --seq-2: #184f95; --seq-3: #256abf;
+  --seq-4: #2a78d6; --seq-5: #3987e5; --seq-6: #6da7ec; --seq-7: #9ec5f4;
+  --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
+  --seq-ink-5: #0b0f11; --seq-ink-6: #0b0f11; --seq-ink-7: #0b0f11;
+  --seat-empty:  #333c42;
+  --shadow:      0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
+  --focus:       #6da7ec;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  background: var(--plane);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; border-radius: 3px; }
+h1, h2, h3 { font-family: var(--cond); margin: 0; text-wrap: balance; letter-spacing: -0.005em; }
+.num { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); }
+
+/* ---------- masthead ---------- */
+.masthead {
+  background: var(--surface);
+  border-bottom: 1px solid var(--hairline);
+  padding: 14px clamp(16px, 3vw, 28px);
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px;
+  position: sticky; top: 0; z-index: 30;
+}
+.masthead h1 { font-size: 20px; font-weight: 700; }
+.masthead .sub { color: var(--ink-2); font-size: 13px; }
+.masthead .tenant {
+  font-family: var(--mono); font-size: 11px; color: var(--ink-muted);
+  margin-left: auto; text-align: right; line-height: 1.35;
+}
+
+/* ---------- shell ---------- */
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 296px) minmax(0, 1fr);
+  gap: 18px;
+  padding: 18px clamp(12px, 3vw, 28px) 56px;
+  align-items: start;
+  max-width: 1680px; margin: 0 auto;
+}
+@media (max-width: 940px) { .shell { grid-template-columns: minmax(0, 1fr); } }
+
+.rail { position: sticky; top: 66px; display: flex; flex-direction: column; gap: 14px; }
+@media (max-width: 940px) { .rail { position: static; } }
+
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--hairline);
+  border-radius: 8px;
+  box-shadow: var(--shadow);
+}
+.panel > header {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 8px 12px; padding: 12px 14px; border-bottom: 1px solid var(--hairline);
+}
+.panel > header h2 { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.09em; color: var(--ink-2); }
+.panel > header .hint { font-size: 11px; color: var(--ink-muted); }
+.panel .body { padding: 14px; }
+
+/* ---------- controls ---------- */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font-family: var(--cond); font-size: 13px; font-weight: 600;
+  padding: 5px 11px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-2);
+  transition: background .12s, color .12s, border-color .12s;
+}
+.chip:hover { background: var(--surface-2); color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+:root[data-theme="dark"] .chip[aria-pressed="true"],
+:root:not([data-theme="light"]) .chip[aria-pressed="true"] { color: #0b0f11; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .chip[aria-pressed="true"] { color: #fff; } }
+
+.datebar { display: flex; align-items: stretch; gap: 6px; margin-top: 12px; }
+.datebar input[type="date"] {
+  flex: 1; min-width: 0; font-family: var(--mono); font-size: 13px;
+  padding: 6px 8px; border-radius: 6px; border: 1px solid var(--rule);
+  background: var(--surface-2); color: var(--ink);
+}
+.stepbtn {
+  width: 32px; border: 1px solid var(--rule); background: var(--surface-2);
+  color: var(--ink-2); border-radius: 6px; cursor: pointer; font-size: 15px; line-height: 1;
+}
+.stepbtn:hover:not(:disabled) { background: var(--accent-soft); color: var(--accent); border-color: var(--accent); }
+.stepbtn:disabled { opacity: .4; cursor: not-allowed; }
+.daynote { margin-top: 8px; font-size: 11.5px; color: var(--ink-muted); display: flex; gap: 8px; align-items: center; }
+
+/* ---------- departure list ---------- */
+.deplist { max-height: min(52vh, 520px); overflow-y: auto; }
+@media (max-width: 940px) { .deplist { max-height: 320px; } }
+.dep {
+  display: grid; grid-template-columns: 46px minmax(0,1fr) 46px;
+  align-items: center; gap: 9px;
+  width: 100%; text-align: left; cursor: pointer;
+  padding: 8px 14px; border: 0; border-bottom: 1px solid var(--hairline);
+  background: transparent; color: inherit; font: inherit;
+}
+.dep:last-child { border-bottom: 0; }
+.dep:hover { background: var(--surface-2); }
+.dep[aria-current="true"] { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.dep .t { font-family: var(--cond); font-weight: 700; font-size: 15px; font-variant-numeric: tabular-nums; }
+.dep > * { min-width: 0; }
+.dep .dcol { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dep .d { font-size: 12px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.dep .m { font-family: var(--mono); font-size: 10.5px; color: var(--ink-muted); }
+.dep .bar { height: 4px; border-radius: 2px; background: var(--seat-empty); overflow: hidden; }
+.dep .bar > i { display: block; height: 100%; background: var(--series-occ); border-radius: 2px; }
+.dep .pct { font-size: 12px; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- identity ---------- */
+.identity { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 8px 22px; padding: 16px; }
+.identity .time { font-family: var(--cond); font-size: 40px; font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; }
+.identity .od { font-family: var(--cond); font-size: 19px; font-weight: 600; line-height: 1.2; }
+.identity .meta { font-size: 12.5px; color: var(--ink-2); }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.tag {
+  font-size: 11px; letter-spacing: 0.04em; text-transform: uppercase;
+  font-weight: 600; padding: 3px 8px; border-radius: 4px;
+  background: var(--surface-2); color: var(--ink-2); border: 1px solid var(--hairline);
+}
+.tag.hot { background: rgba(208,59,59,0.12); color: var(--critical); border-color: rgba(208,59,59,0.3); }
+
+/* ---------- stat tiles ---------- */
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr)); gap: 1px; background: var(--hairline); border-top: 1px solid var(--hairline); }
+.tile { background: var(--surface); padding: 12px 14px 13px; }
+.tile .k { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-muted); font-weight: 600; }
+.tile .v { font-family: var(--cond); font-size: 27px; font-weight: 700; line-height: 1.15; margin-top: 2px; font-variant-numeric: tabular-nums; }
+.tile .s { font-size: 11.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.tile.accent .v { color: var(--accent); }
+.tile.warn .v { color: var(--serious); }
+.tile.crit .v { color: var(--critical); }
+.tile.ok .v { color: var(--good-text); }
+
+/* ---------- formation ---------- */
+.formation { display: flex; flex-wrap: wrap; gap: 16px; padding: 14px; }
+.unit { display: flex; flex-direction: column; gap: 6px; }
+.unit .ulabel { font-family: var(--mono); font-size: 11px; color: var(--ink-muted); }
+.cars { display: flex; gap: 4px; align-items: flex-end; }
+.car {
+  position: relative; cursor: pointer; border: 0; padding: 0; font: inherit; color: inherit;
+  background: transparent; display: flex; flex-direction: column; gap: 3px; align-items: stretch;
+}
+.car .box {
+  width: 62px; height: 62px; border-radius: 5px;
+  border: 1px solid var(--rule);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px;
+  transition: transform .12s, box-shadow .12s;
+}
+.car:hover .box { transform: translateY(-2px); }
+.car[aria-pressed="true"] .box { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+.car .letter { font-family: var(--cond); font-size: 19px; font-weight: 700; line-height: 1; }
+.car .occ { font-size: 11px; font-variant-numeric: tabular-nums; line-height: 1.1; }
+.car .cap { font-size: 10.5px; color: var(--ink-muted); font-variant-numeric: tabular-nums; text-align: center; }
+.car .first { position: absolute; top: 3px; right: 5px; font-size: 9px; font-weight: 700; letter-spacing: .04em; opacity: .75; }
+.coupler { width: 12px; height: 2px; background: var(--rule); align-self: center; margin-top: 14px; }
+
+.ramp { display: flex; align-items: center; gap: 7px; padding: 0 14px 14px; font-size: 11px; color: var(--ink-muted); }
+.ramp .steps { display: flex; }
+.ramp .steps i { width: 20px; height: 9px; display: block; }
+.ramp .steps i:first-child { border-radius: 2px 0 0 2px; }
+.ramp .steps i:last-child { border-radius: 0 2px 2px 0; }
+
+/* ---------- seat grid ---------- */
+.seatwrap { padding: 14px; display: grid; grid-template-columns: minmax(0,1fr) minmax(0, 236px); gap: 18px; }
+@media (max-width: 720px) { .seatwrap { grid-template-columns: minmax(0,1fr); } }
+.seatgrid { display: flex; gap: 3px; overflow-x: auto; padding-bottom: 6px; align-items: flex-start; }
+.seatcol { display: flex; flex-direction: column; gap: 3px; }
+.seatcol .aisle { height: 9px; }
+.seat { width: 15px; height: 15px; border-radius: 3px; background: var(--seat-empty); }
+.seat.on { background: var(--series-occ); }
+.seat.first { border: 1.5px solid var(--seq-7); }
+.seat.first.on { background: var(--seq-6); border-color: var(--seq-7); }
+.caveat {
+  font-size: 11.5px; color: var(--ink-2); background: var(--surface-2);
+  border-left: 3px solid var(--warning); border-radius: 0 5px 5px 0;
+  padding: 8px 11px; margin-top: 12px;
+}
+.node { font-size: 12px; }
+.node dl { display: grid; grid-template-columns: auto 1fr; gap: 4px 12px; margin: 0; }
+.node dt { color: var(--ink-muted); }
+.node dd { margin: 0; font-family: var(--mono); font-size: 11.5px; text-align: right; }
+
+/* ---------- tables ---------- */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 12.5px; }
+th, td { padding: 7px 10px; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--hairline); }
+th:first-child, td:first-child, th.l, td.l { text-align: left; }
+thead th {
+  position: sticky; top: 0; background: var(--surface); z-index: 2;
+  font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.06em;
+  color: var(--ink-muted); font-weight: 600; border-bottom: 1px solid var(--rule);
+}
+thead th.sortable { cursor: pointer; user-select: none; }
+thead th.sortable:hover { color: var(--ink); }
+thead th[aria-sort]:not([aria-sort="none"]) { color: var(--accent); }
+tbody td { font-variant-numeric: tabular-nums; }
+tbody tr.click { cursor: pointer; }
+tbody tr.click:hover { background: var(--surface-2); }
+tbody tr[aria-current="true"] { background: var(--accent-soft); }
+tbody tr:last-child td { border-bottom: 0; }
+td .swatch { display: inline-block; width: 9px; height: 9px; border-radius: 2px; margin-right: 6px; vertical-align: baseline; }
+.flag { font-weight: 600; }
+.flag.crit { color: var(--critical); }
+.flag.warn { color: var(--serious); }
+
+/* ---------- chart ---------- */
+.seg { display: inline-flex; flex: 0 0 auto; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+.segb {
+  font: inherit; font-size: 11.5px; font-weight: 600; cursor: pointer;
+  padding: 4px 10px; border: 0; background: transparent; color: var(--ink-2); white-space: nowrap;
+}
+.segb + .segb { border-left: 1px solid var(--rule); }
+.segb:hover { background: var(--surface-2); color: var(--ink); }
+.segb[aria-pressed="true"] { background: var(--accent); color: #fff; }
+:root[data-theme="dark"] .segb[aria-pressed="true"],
+:root:not([data-theme="light"]) .segb[aria-pressed="true"] { color: #0b0f11; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .segb[aria-pressed="true"] { color: #fff; } }
+.hgroup { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin-left: auto; }
+.chartbox { padding: 6px 14px 14px; position: relative; }
+.chart { width: 100%; display: block; touch-action: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 14px; padding: 10px 14px 0; font-size: 12px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.legend i { width: 12px; height: 3px; border-radius: 2px; display: block; }
+.legend i.band { height: 10px; opacity: .55; }
+.tip {
+  position: absolute; pointer-events: none; z-index: 12; min-width: 150px;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px;
+  box-shadow: var(--shadow); padding: 8px 10px; font-size: 12px;
+  opacity: 0; transition: opacity .1s;
+}
+.tip.on { opacity: 1; }
+.tip .th { font-family: var(--cond); font-weight: 700; font-size: 13px; margin-bottom: 4px; }
+.tip dl { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; margin: 0; }
+.tip dt { color: var(--ink-2); display: flex; align-items: center; gap: 5px; }
+.tip dd { margin: 0; font-variant-numeric: tabular-nums; font-weight: 500; }
+.tip i { width: 9px; height: 3px; border-radius: 2px; display: block; }
+
+.footnote {
+  padding: 14px clamp(12px, 3vw, 28px) 0; max-width: 76ch;
+  font-size: 12px; color: var(--ink-muted); line-height: 1.6;
+}
+.footnote strong { color: var(--ink-2); font-weight: 600; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="masthead">
+  <h1>Seat usage by route, train and coach</h1>
+  <span class="sub">Northbank Rail &middot; SeatSense measured occupancy</span>
+  <span class="tenant" id="tenant"></span>
+</div>
+
+<div class="shell">
+  <div class="rail">
+    <section class="panel">
+      <header><h2>Route</h2></header>
+      <div class="body">
+        <div class="chips" id="routechips" role="group" aria-label="Route"></div>
+        <div class="datebar">
+          <button class="stepbtn" id="prevday" type="button" aria-label="Previous day">&#8249;</button>
+          <input type="date" id="date" aria-label="Date">
+          <button class="stepbtn" id="nextday" type="button" aria-label="Next day">&#8250;</button>
+        </div>
+        <div class="daynote" id="daynote"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <header><h2>Departures</h2><span class="hint" id="depcount"></span></header>
+      <div class="deplist" id="deplist" role="listbox" aria-label="Departures"></div>
+    </section>
+  </div>
+
+  <div class="main">
+    <section class="panel" style="margin-bottom:14px">
+      <div class="identity" id="identity"></div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2>Formation &mdash; occupancy per coach</h2>
+        <span class="hint">Select a coach for its seat detail</span>
+      </header>
+      <div class="formation" id="formation"></div>
+      <div class="ramp">
+        <span>Coach occupancy</span>
+        <span class="steps" id="rampsteps"></span>
+        <span>0% &rarr; 100% of that coach&rsquo;s seats</span>
+      </div>
+      <div class="tablewrap">
+        <table id="coachtable">
+          <caption class="vh">Seats, measured occupancy and empty seats for every coach in the formation</caption>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-bottom:14px">
+      <header><h2 id="seathead">Coach detail</h2><span class="hint" id="seathint"></span></header>
+      <div class="seatwrap">
+        <div>
+          <div class="seatgrid" id="seatgrid"></div>
+          <div class="caveat" id="caveat"></div>
+        </div>
+        <div class="node" id="node"></div>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="trendhead">Sold versus occupied, day by day</h2>
+        <span class="hgroup">
+          <span class="hint">Click to jump to a date</span>
+          <span class="seg" id="dayfilter" role="group" aria-label="Days shown in the plot">
+            <button class="segb" type="button" data-v="wd">Weekdays</button>
+            <button class="segb" type="button" data-v="all">All days</button>
+          </span>
+        </span>
+      </header>
+      <div class="legend" id="legend"></div>
+      <div class="chartbox">
+        <svg class="chart" id="chart" role="img" aria-labelledby="trendhead"></svg>
+        <div class="tip" id="tip" role="status"></div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <header><h2 id="routehead">All departures</h2><span class="hint">Click a row to open that train</span></header>
+      <div class="tablewrap" style="max-height:520px; overflow-y:auto">
+        <table id="routetable">
+          <caption class="vh">Every departure on the selected date with tickets sold and measured occupancy</caption>
+        </table>
+      </div>
+    </section>
+  </div>
+</div>
+
+<p class="footnote" id="footnote"></p>
+
+<script>
+const D = "__DATA__";
+
+/* ---------- exact ports of the tenant's own arithmetic ---------- */
+function hash(str) {
+  let h = 2166136261 >>> 0;
+  for (let i = 0; i < str.length; i++) h = Math.imul(h ^ str.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+const r1 = (x) => Math.round(x * 10) / 10;
+const SVC = Object.fromEntries(D.services.map((s) => [s.id, s]));
+const ROUTE = Object.fromEntries(D.routes.map((r) => [r.id, r]));
+const DATE_IX = Object.fromEntries(D.dates.map((d, i) => [d, i]));
+
+/** Which units worked the diagram - deterministic from service + date. */
+function formationUnits(svc, date) {
+  const [lo, hi] = svc.range;
+  const units = [];
+  for (let k = 0; units.length < svc.units && k < 200; k++) {
+    const n = lo + (hash(svc.id + date + 'unit' + k) % (hi - lo + 1));
+    const id = svc.route + '-U' + String(n).padStart(3, '0');
+    if (!units.includes(id)) units.push(id);
+  }
+  return units;
+}
+
+/** Per-coach occupancy: reserved seats fill the train, no-shows do not spread evenly. */
+function snapshot(serviceId, date) {
+  const svc = SVC[serviceId];
+  const i = DATE_IX[date];
+  const d = D.daily[serviceId];
+  if (!svc || i === undefined || d.sold[i] === null) return null;
+
+  const units = formationUnits(svc, date);
+  const slots = svc.coachSeats.map((c) => ({
+    unit: units[c[0] - 1], coach: c[1],
+    seats: c[2] + c[3], std: c[2], first: c[3],
+  }));
+  const weights = slots.map((s, k) =>
+    (1.1 - 0.03 * k + (hash(s.unit + s.coach + date) % 100) / 2500) * s.seats);
+  const wsum = weights.reduce((a, b) => a + b, 0);
+  const occ = d.occ[i];
+  const alloc = slots.map((s, k) => Math.min(s.seats, Math.round((occ * weights[k]) / wsum)));
+  let remainder = occ - alloc.reduce((a, b) => a + b, 0);
+  for (let guard = 0; remainder !== 0 && guard < svc.seats; guard++) {
+    let moved = false;
+    for (let k = 0; k < alloc.length && remainder !== 0; k++) {
+      const step = Math.sign(remainder);
+      const next = alloc[k] + step;
+      if (next >= 0 && next <= slots[k].seats) { alloc[k] = next; remainder -= step; moved = true; }
+    }
+    if (!moved) break;
+  }
+  const coaches = slots.map((s, k) => ({
+    unit_id: s.unit, coach: s.coach,
+    device_id: ('iot-' + s.unit + '-' + s.coach).toLowerCase(),
+    seats: s.seats, std: s.std, first: s.first,
+    seats_occupied: alloc[k], seats_empty: s.seats - alloc[k],
+    occupancy_pct: r1((alloc[k] / s.seats) * 100),
+  }));
+  const sold = d.sold[i];
+  const fare = d.rev[i] / sold;
+  return {
+    svc, date, dayType: D.dayType[i], units, coaches,
+    sold, occupied: occ, ghost: d.ghost[i], revenue: d.rev[i],
+    away: d.away[i], closed: !!d.closed[i],
+    assumed: r1((sold / svc.seats) * 100),
+    cabin: r1((occ / svc.seats) * 100),
+    fare, ghostValue: d.ghost[i] * fare,
+    cfRev: d.cfRev[i], cfSold: d.cfSold[i],
+  };
+}
+
+/* ---------- formatting ---------- */
+const nf = new Intl.NumberFormat('en-GB');
+const gbp0 = new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 });
+const pct = (x) => x.toFixed(1) + '%';
+const longDate = (iso) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB',
+  { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+const shortDate = (iso) => new Date(iso + 'T12:00:00Z').toLocaleDateString('en-GB',
+  { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' });
+const DAY_LABEL = { weekday: 'Weekday', saturday: 'Saturday', sunday: 'Sunday', bank_holiday: 'Bank holiday' };
+const SEQ = ['--seq-1','--seq-2','--seq-3','--seq-4','--seq-5','--seq-6','--seq-7'];
+const seqStep = (p) => Math.min(SEQ.length, Math.max(1, Math.floor((p / 100) * SEQ.length) + 1));
+const seqVar = (p) => '--seq-' + seqStep(p);
+/** The ramp inverts between themes, so the label ink inverts with it. */
+const inkOn = (p) => 'var(--seq-ink-' + seqStep(p) + ')';
+
+/* ---------- state ---------- */
+const OPENING = { service: 'NBR1-0741', date: '2026-06-16' };
+const state = {
+  route: SVC[OPENING.service] ? SVC[OPENING.service].route : D.routes[0].id,
+  service: SVC[OPENING.service] ? OPENING.service : D.services[0].id,
+  date: DATE_IX[OPENING.date] !== undefined
+    ? OPENING.date
+    : D.dates.find((d, i) => D.dayType[i] === 'weekday') || D.dates[0],
+  coach: 0,
+  weekdaysOnly: true,
+  sort: { key: 'time', dir: 1 },
+};
+
+function servicesFor(route) {
+  return D.services
+    .filter((s) => route === 'ALL' || s.route === route)
+    .sort((a, b) => (a.time === b.time ? a.id.localeCompare(b.id) : a.time.localeCompare(b.time)));
+}
+
+function readHash() {
+  const p = new URLSearchParams(location.hash.slice(1));
+  const s = p.get('s'), dt = p.get('d'), c = p.get('c');
+  if (s && SVC[s]) { state.service = s; state.route = SVC[s].route; }
+  if (dt && DATE_IX[dt] !== undefined) state.date = dt;
+  if (c !== null && !isNaN(+c)) state.coach = +c;
+}
+function writeHash() {
+  const p = new URLSearchParams({ s: state.service, d: state.date, c: String(state.coach) });
+  history.replaceState(null, '', '#' + p.toString());
+  try { localStorage.setItem('nbr-seat-view', p.toString()); } catch (e) { /* private mode */ }
+}
+function restore() {
+  try {
+    const saved = localStorage.getItem('nbr-seat-view');
+    if (saved && !location.hash) location.hash = saved;
+  } catch (e) { /* private mode */ }
+  readHash();
+  if (!state.service || SVC[state.service].route !== state.route) {
+    state.service = servicesFor(state.route)[0].id;
+  }
+}
+
+/* ---------- render: rail ---------- */
+function renderChips() {
+  const el = document.getElementById('routechips');
+  const opts = [{ id: 'ALL', name: 'All routes' }].concat(D.routes);
+  el.innerHTML = opts.map((r) =>
+    `<button class="chip" type="button" data-route="${r.id}" aria-pressed="${state.route === r.id}">` +
+    `${r.id === 'ALL' ? 'All routes' : r.id + ' ' + r.name}</button>`).join('');
+  el.querySelectorAll('.chip').forEach((b) => b.addEventListener('click', () => {
+    state.route = b.dataset.route;
+    const list = servicesFor(state.route);
+    if (!list.some((s) => s.id === state.service)) { state.service = list[0].id; state.coach = 0; }
+    renderAll();
+  }));
+}
+
+function renderDate() {
+  const input = document.getElementById('date');
+  input.min = D.coverage.from; input.max = D.coverage.to; input.value = state.date;
+  const i = DATE_IX[state.date];
+  document.getElementById('prevday').disabled = i === 0;
+  document.getElementById('nextday').disabled = i === D.dates.length - 1;
+  document.getElementById('daynote').innerHTML =
+    `<span>${longDate(state.date)}</span><span class="tag">${DAY_LABEL[D.dayType[i]] || D.dayType[i]}</span>`;
+}
+
+function renderDepList() {
+  const list = servicesFor(state.route);
+  document.getElementById('depcount').textContent = list.length + ' on ' + shortDate(state.date);
+  document.getElementById('deplist').innerHTML = list.map((s) => {
+    const d = D.daily[s.id]; const i = DATE_IX[state.date];
+    const occ = d.occ[i], p = occ === null ? 0 : (occ / s.seats) * 100;
+    return `<button class="dep" type="button" role="option" data-svc="${s.id}" aria-current="${state.service === s.id}"` +
+      ` aria-selected="${state.service === s.id}">` +
+      `<span class="t">${s.time}</span>` +
+      `<span class="dcol"><span class="d">${s.to}</span>` +
+      `<span class="m">${s.id} &middot; ${s.coaches}c</span>` +
+      `<span class="bar"><i style="width:${p.toFixed(1)}%"></i></span></span>` +
+      `<span class="pct">${occ === null ? '&mdash;' : p.toFixed(0) + '%'}</span></button>`;
+  }).join('');
+  document.getElementById('deplist').querySelectorAll('.dep').forEach((b) =>
+    b.addEventListener('click', () => { state.service = b.dataset.svc; state.coach = 0; renderAll(); }));
+  const cur = document.getElementById('deplist').querySelector('[aria-current="true"]');
+  if (cur) cur.scrollIntoView({ block: 'nearest' });
+}
+
+/* ---------- render: identity + tiles ---------- */
+function renderIdentity(sn) {
+  const s = sn.svc;
+  document.getElementById('identity').innerHTML =
+    `<span class="time num">${s.time}</span>` +
+    `<span><span class="od">${s.from} &rarr; ${s.to}</span><br>` +
+    `<span class="meta">${s.id} &middot; ${ROUTE[s.route].name} &middot; ${s.formation}, ` +
+    `${s.coaches} coaches, ${nf.format(s.seats)} seats ` +
+    `(${nf.format(s.seatsStd)} Standard + ${nf.format(s.seatsFirst)} First)</span></span>` +
+    `<span class="tags">` +
+      `<span class="tag">${D.demandClassLabels[s.dc]}</span>` +
+      `<span class="tag">${sn.units.join(' + ')}</span>` +
+      (sn.closed ? '<span class="tag hot">Standard sold out</span>' : '') +
+    `</span>`;
+}
+
+function renderTiles(sn) {
+  const s = sn.svc;
+  const t = [
+    { k: 'Seats on the day', v: nf.format(s.seats), s: s.formation },
+    { k: 'Tickets sold', v: nf.format(sn.sold), s: nf.format(s.seats - sn.sold) + ' unsold' },
+    { k: 'Seats occupied', v: nf.format(sn.occupied), s: 'measured by ' + s.coaches + ' nodes', cls: 'accent' },
+    { k: 'Cabin factor', v: pct(sn.cabin), s: 'ticket system said ' + pct(sn.assumed), cls: 'accent' },
+    { k: 'Ghost seats', v: nf.format(sn.ghost), s: gbp0.format(sn.ghostValue) + ' paid, travelled empty', cls: 'warn' },
+    { k: 'Walk-ups refused', v: nf.format(sn.away), s: sn.away > 0 ? 'no Standard seat left' : 'none turned away',
+      cls: sn.away > 0 ? 'crit' : 'ok' },
+    { k: 'Revenue', v: gbp0.format(sn.revenue), s: gbp0.format(sn.fare) + ' average fare' },
+  ];
+  document.getElementById('tiles').innerHTML = t.map((x) =>
+    `<div class="tile ${x.cls || ''}"><div class="k">${x.k}</div>` +
+    `<div class="v">${x.v}</div><div class="s">${x.s}</div></div>`).join('');
+}
+
+/* ---------- render: formation ---------- */
+function renderFormation(sn) {
+  const byUnit = new Map();
+  sn.coaches.forEach((c, ix) => {
+    if (!byUnit.has(c.unit_id)) byUnit.set(c.unit_id, []);
+    byUnit.get(c.unit_id).push({ ...c, ix });
+  });
+  let html = '';
+  let firstUnit = true;
+  for (const [unit, cs] of byUnit) {
+    if (!firstUnit) html += '<div class="coupler"></div>';
+    firstUnit = false;
+    html += `<div class="unit"><span class="ulabel">${unit} &middot; ${cs.length} coaches</span><div class="cars">` +
+      cs.map((c) =>
+        `<button class="car" type="button" data-ix="${c.ix}" aria-pressed="${state.coach === c.ix}"` +
+        ` title="${unit} coach ${c.coach}: ${c.seats_occupied} of ${c.seats} seats occupied">` +
+        `<span class="box" style="background:var(${seqVar(c.occupancy_pct)});color:${inkOn(c.occupancy_pct)}">` +
+        (c.first > 0 ? '<span class="first">1st</span>' : '') +
+        `<span class="letter">${c.coach}</span>` +
+        `<span class="occ">${c.occupancy_pct.toFixed(0)}%</span></span>` +
+        `<span class="cap">${c.seats_occupied}/${c.seats}</span></button>`).join('') +
+      '</div></div>';
+  }
+  document.getElementById('formation').innerHTML = html;
+  document.getElementById('formation').querySelectorAll('.car').forEach((b) =>
+    b.addEventListener('click', () => { state.coach = +b.dataset.ix; renderCoach(sn); writeHash(); }));
+  document.getElementById('rampsteps').innerHTML =
+    SEQ.map((v) => `<i style="background:var(${v})"></i>`).join('');
+
+  const rows = sn.coaches.map((c, ix) =>
+    `<tr class="click" data-ix="${ix}" aria-current="${state.coach === ix}">` +
+    `<td class="l mono">${c.unit_id}</td><td class="l"><b>${c.coach}</b></td>` +
+    `<td class="l mono" style="color:var(--ink-muted)">${c.device_id}</td>` +
+    `<td>${c.seats}</td><td>${c.std}</td><td>${c.first}</td>` +
+    `<td>${c.seats_occupied}</td><td>${c.seats_empty}</td>` +
+    `<td><span class="swatch" style="background:var(${seqVar(c.occupancy_pct)})"></span>${c.occupancy_pct.toFixed(1)}%</td></tr>`).join('');
+  document.getElementById('coachtable').innerHTML =
+    '<thead><tr><th class="l">Unit</th><th class="l">Coach</th><th class="l">SeatSense node</th>' +
+    '<th>Seats</th><th>Std</th><th>1st</th><th>Occupied</th><th>Empty</th><th>Occupancy</th></tr></thead>' +
+    `<tbody>${rows}</tbody>`;
+  document.getElementById('coachtable').querySelectorAll('tbody tr').forEach((tr) =>
+    tr.addEventListener('click', () => { state.coach = +tr.dataset.ix; renderCoach(sn); writeHash();
+      renderFormation(sn); }));
+}
+
+/* ---------- render: seat grid ---------- */
+/** Deterministic arrangement of the measured count. Positions are illustrative. */
+function seatPattern(key, seats, occupied) {
+  const idx = Array.from({ length: seats }, (_, i) => i);
+  let s = hash(key) || 1;
+  const rnd = () => { s = (Math.imul(s, 1664525) + 1013904223) >>> 0; return s / 4294967296; };
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(rnd() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  const on = new Set(idx.slice(0, occupied));
+  return Array.from({ length: seats }, (_, i) => on.has(i));
+}
+
+function renderCoach(sn) {
+  const c = sn.coaches[Math.min(state.coach, sn.coaches.length - 1)];
+  document.getElementById('seathead').textContent = `Coach ${c.coach} \u2014 ${c.unit_id}`;
+  document.getElementById('seathint').textContent =
+    `${c.seats_occupied} of ${c.seats} seats occupied \u00b7 ${c.seats_empty} empty`;
+
+  const on = seatPattern(c.device_id + sn.date, c.seats, c.seats_occupied);
+  // 2 + aisle + 2 across the coach; First seats sit at the far end of the coach.
+  const cols = Math.ceil(c.seats / 4);
+  let html = '';
+  for (let col = 0; col < cols; col++) {
+    html += '<div class="seatcol">';
+    for (let row = 0; row < 4; row++) {
+      const n = col * 4 + row;
+      if (row === 2) html += '<span class="aisle"></span>';
+      if (n >= c.seats) { html += '<span class="seat" style="visibility:hidden"></span>'; continue; }
+      const isFirst = n >= c.seats - c.first;
+      html += `<span class="seat${on[n] ? ' on' : ''}${isFirst ? ' first' : ''}"></span>`;
+    }
+    html += '</div>';
+  }
+  document.getElementById('seatgrid').innerHTML = html;
+  document.getElementById('caveat').innerHTML =
+    `<strong>${c.seats_occupied} occupied, ${c.seats_empty} empty</strong> is measured. ` +
+    `Which seats those are is not: a SeatSense node reports occupancy for its coach, ` +
+    `so the positions above illustrate the count and are not identified seats. ` +
+    (c.first > 0 ? `The outlined block is this coach&rsquo;s ${c.first} First seats. ` : '') +
+    `Standard and First are separate pools.`;
+
+  const dev = D.devices[c.device_id];
+  document.getElementById('node').innerHTML =
+    `<h3 style="font-size:12px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink-2);margin-bottom:8px">` +
+    `Node</h3><dl>` +
+    `<dt>Device</dt><dd>${c.device_id}</dd>` +
+    `<dt>Unit</dt><dd>${c.unit_id}</dd>` +
+    `<dt>Coach</dt><dd>${c.coach}</dd>` +
+    `<dt>Seats watched</dt><dd>${c.seats}</dd>` +
+    (dev ? `<dt>Status</dt><dd style="color:var(--good-text)">${dev.s}</dd>` +
+      `<dt>Battery</dt><dd>${dev.b}%</dd><dt>Signal</dt><dd>${dev.r} dBm</dd>` +
+      `<dt>Firmware</dt><dd>${dev.fw}</dd>` : '') +
+    `</dl>`;
+}
+
+/* ---------- render: trend chart ---------- */
+let chartPoints = [];
+function renderChart(sn) {
+  const svc = sn.svc, d = D.daily[svc.id];
+  const svg = document.getElementById('chart');
+  const W = svg.clientWidth || 900, H = 260;
+  const m = { t: 12, r: 14, b: 26, l: 38 };
+  const iw = W - m.l - m.r, ih = H - m.t - m.b;
+  // A weekend drop on every seventh point buries the sold-vs-occupied gap, so
+  // the plot defaults to weekdays - unless the day being examined is not one.
+  const selIsWeekday = D.dayType[DATE_IX[sn.date]] === 'weekday';
+  const weekdaysOnly = state.weekdaysOnly && selIsWeekday;
+  const pts = [];
+  D.dates.forEach((date, i) => {
+    if (d.sold[i] === null) return;
+    if (weekdaysOnly && D.dayType[i] !== 'weekday') return;
+    pts.push({ i, date,
+      sold: (d.sold[i] / svc.seats) * 100,
+      occ: (d.occ[i] / svc.seats) * 100,
+      soldN: d.sold[i], occN: d.occ[i], ghost: d.ghost[i], away: d.away[i], rev: d.rev[i] });
+  });
+  const n = pts.length;
+  const x = (k) => m.l + (n === 1 ? iw / 2 : (k / (n - 1)) * iw);
+  const y = (v) => m.t + ih - (v / 100) * ih;
+  chartPoints = pts.map((p, k) => ({ ...p, px: x(k) }));
+
+  const line = (key) => pts.map((p, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(p[key]).toFixed(1)).join(' ');
+  const band = pts.map((p, k) => (k ? 'L' : 'M') + x(k).toFixed(1) + ' ' + y(p.sold).toFixed(1)).join(' ') +
+    ' ' + pts.map((p, k) => 'L' + x(n - 1 - k).toFixed(1) + ' ' + y(pts[n - 1 - k].occ).toFixed(1)).join(' ') + ' Z';
+
+  let grid = '', ticks = '';
+  for (let v = 0; v <= 100; v += 25) {
+    grid += `<line x1="${m.l}" x2="${W - m.r}" y1="${y(v)}" y2="${y(v)}" stroke="var(--hairline)" stroke-width="1"/>`;
+    ticks += `<text x="${m.l - 8}" y="${y(v) + 4}" text-anchor="end" fill="var(--ink-muted)" font-size="10.5"` +
+      ` font-family="var(--mono)">${v}</text>`;
+  }
+  let months = '';
+  let lastM = '';
+  pts.forEach((p, k) => {
+    const mo = p.date.slice(0, 7);
+    if (mo !== lastM) {
+      lastM = mo;
+      months += `<text x="${x(k)}" y="${H - 6}" fill="var(--ink-muted)" font-size="10.5" text-anchor="middle">` +
+        new Date(p.date + 'T12:00:00Z').toLocaleDateString('en-GB', { month: 'short', timeZone: 'UTC' }) + '</text>';
+    }
+  });
+
+  const selK = pts.findIndex((p) => p.date === sn.date);
+  const marker = selK < 0 ? '' :
+    `<line x1="${x(selK)}" x2="${x(selK)}" y1="${m.t}" y2="${m.t + ih}" stroke="var(--accent)" stroke-width="1"` +
+    ` stroke-dasharray="3 3"/>` +
+    `<circle cx="${x(selK)}" cy="${y(pts[selK].occ)}" r="5" fill="var(--series-occ)" stroke="var(--surface)" stroke-width="2"/>` +
+    `<circle cx="${x(selK)}" cy="${y(pts[selK].sold)}" r="5" fill="var(--series-sold)" stroke="var(--surface)" stroke-width="2"/>`;
+
+  const closedMarks = pts.map((p, k) => p.away > 0
+    ? `<rect x="${(x(k) - 1.2).toFixed(1)}" y="${m.t}" width="2.4" height="5" fill="var(--critical)"/>` : '').join('');
+
+  svg.setAttribute('viewBox', `0 0 ${W} ${H}`);
+  svg.setAttribute('height', H);
+  svg.innerHTML = grid + ticks + months +
+    `<path d="${band}" fill="var(--series-occ)" opacity="0.13"/>` +
+    `<path d="${line('sold')}" fill="none" stroke="var(--series-sold)" stroke-width="2" stroke-linejoin="round"/>` +
+    `<path d="${line('occ')}" fill="none" stroke="var(--series-occ)" stroke-width="2" stroke-linejoin="round"/>` +
+    closedMarks + marker +
+    `<line x1="${m.l}" x2="${W - m.r}" y1="${m.t + ih}" y2="${m.t + ih}" stroke="var(--rule)" stroke-width="1"/>` +
+    `<g id="hover"></g>`;
+
+  document.getElementById('legend').innerHTML =
+    `<span><i style="background:var(--series-sold)"></i>Tickets sold, % of seats</span>` +
+    `<span><i style="background:var(--series-occ)"></i>Seats occupied, % of seats (cabin factor)</span>` +
+    `<span><i class="band" style="background:var(--series-occ)"></i>Ghost seats &mdash; paid for, travelled empty</span>` +
+    `<span><i style="background:var(--critical);height:8px;width:3px"></i>Walk-ups refused</span>`;
+  document.getElementById('trendhead').textContent =
+    `${svc.id} ${svc.time} \u2014 sold versus occupied, ` +
+    `${weekdaysOnly ? 'weekdays' : 'all days'} from ` +
+    `${shortDate(D.coverage.from)} to ${shortDate(D.coverage.to)}`;
+  document.querySelectorAll('#dayfilter .segb').forEach((b) => {
+    b.setAttribute('aria-pressed', String((b.dataset.v === 'wd') === weekdaysOnly));
+    b.disabled = !selIsWeekday;
+    b.title = selIsWeekday ? '' : 'Showing all days: ' + shortDate(sn.date) + ' is not a weekday';
+  });
+}
+
+function bindChart() {
+  const svg = document.getElementById('chart');
+  const tip = document.getElementById('tip');
+  const nearest = (ev) => {
+    const r = svg.getBoundingClientRect();
+    const px = ((ev.clientX - r.left) / r.width) * (svg.viewBox.baseVal.width || r.width);
+    let best = null, bd = Infinity;
+    for (const p of chartPoints) { const dd = Math.abs(p.px - px); if (dd < bd) { bd = dd; best = p; } }
+    return best;
+  };
+  const move = (ev) => {
+    const p = nearest(ev);
+    if (!p) return;
+    const g = svg.querySelector('#hover');
+    const vb = svg.viewBox.baseVal;
+    g.innerHTML = `<line x1="${p.px}" x2="${p.px}" y1="12" y2="${vb.height - 26}" stroke="var(--rule)" stroke-width="1"/>`;
+    tip.classList.add('on');
+    tip.innerHTML = `<div class="th">${shortDate(p.date)}</div><dl>` +
+      `<dt><i style="background:var(--series-sold)"></i>Sold</dt><dd>${nf.format(p.soldN)}</dd>` +
+      `<dt><i style="background:var(--series-occ)"></i>Occupied</dt><dd>${nf.format(p.occN)}</dd>` +
+      `<dt>Ghost seats</dt><dd>${nf.format(p.ghost)}</dd>` +
+      `<dt>Walk-ups refused</dt><dd>${nf.format(p.away)}</dd>` +
+      `<dt>Revenue</dt><dd>${gbp0.format(p.rev)}</dd></dl>`;
+    const r = svg.getBoundingClientRect();
+    const box = svg.parentElement.getBoundingClientRect();
+    const left = r.left - box.left + (p.px / vb.width) * r.width;
+    tip.style.left = Math.max(4, Math.min(left + 14, box.width - tip.offsetWidth - 4)) + 'px';
+    tip.style.top = '14px';
+  };
+  svg.addEventListener('pointermove', move);
+  svg.addEventListener('pointerleave', () => {
+    tip.classList.remove('on');
+    const g = svg.querySelector('#hover'); if (g) g.innerHTML = '';
+  });
+  svg.addEventListener('click', (ev) => {
+    const p = nearest(ev);
+    if (p) { state.date = p.date; renderAll(); }
+  });
+}
+
+/* ---------- render: route table ---------- */
+const COLS = [
+  { key: 'time', label: 'Dep', l: true, get: (r) => r.svc.time, cell: (r) => `<b>${r.svc.time}</b>` },
+  { key: 'id', label: 'Service', l: true, get: (r) => r.svc.id, cell: (r) => `<span class="mono">${r.svc.id}</span>` },
+  { key: 'route', label: 'Route', l: true, get: (r) => r.svc.route, cell: (r) => r.svc.route },
+  { key: 'to', label: 'To', l: true, get: (r) => r.svc.to, cell: (r) => r.svc.to },
+  { key: 'dc', label: 'Demand', l: true, get: (r) => r.svc.dc, cell: (r) => D.demandClassLabels[r.svc.dc] },
+  { key: 'coaches', label: 'Coaches', get: (r) => r.svc.coaches, cell: (r) => r.svc.coaches },
+  { key: 'seats', label: 'Seats', get: (r) => r.svc.seats, cell: (r) => nf.format(r.svc.seats) },
+  { key: 'sold', label: 'Sold', get: (r) => r.sold, cell: (r) => nf.format(r.sold) },
+  { key: 'occupied', label: 'Occupied', get: (r) => r.occupied, cell: (r) => nf.format(r.occupied) },
+  { key: 'cabin', label: 'Cabin factor', get: (r) => r.cabin,
+    cell: (r) => `<span class="swatch" style="background:var(${seqVar(r.cabin)})"></span>${r.cabin.toFixed(1)}%` },
+  { key: 'ghost', label: 'Ghosts', get: (r) => r.ghost, cell: (r) => nf.format(r.ghost) },
+  { key: 'away', label: 'Refused', get: (r) => r.away,
+    cell: (r) => r.away > 0 ? `<span class="flag crit">${nf.format(r.away)}</span>` : '0' },
+  { key: 'revenue', label: 'Revenue', get: (r) => r.revenue, cell: (r) => gbp0.format(r.revenue) },
+];
+
+function renderRouteTable() {
+  const list = servicesFor(state.route);
+  const rows = list.map((s) => snapshot(s.id, state.date)).filter(Boolean);
+  const col = COLS.find((c) => c.key === state.sort.key) || COLS[0];
+  rows.sort((a, b) => {
+    const av = col.get(a), bv = col.get(b);
+    const c = typeof av === 'string' ? av.localeCompare(bv) : av - bv;
+    return c * state.sort.dir;
+  });
+  const head = COLS.map((c) =>
+    `<th class="sortable${c.l ? ' l' : ''}" data-key="${c.key}"` +
+    ` aria-sort="${state.sort.key === c.key ? (state.sort.dir === 1 ? 'ascending' : 'descending') : 'none'}">` +
+    `${c.label}${state.sort.key === c.key ? (state.sort.dir === 1 ? ' \u2191' : ' \u2193') : ''}</th>`).join('');
+  const body = rows.map((r) =>
+    `<tr class="click" data-svc="${r.svc.id}" aria-current="${state.service === r.svc.id}">` +
+    COLS.map((c) => `<td${c.l ? ' class="l"' : ''}>${c.cell(r)}</td>`).join('') + '</tr>').join('');
+  document.getElementById('routetable').innerHTML =
+    `<thead><tr>${head}</tr></thead><tbody>${body}</tbody>`;
+
+  const tot = rows.reduce((a, r) => ({
+    seats: a.seats + r.svc.seats, sold: a.sold + r.sold, occ: a.occ + r.occupied,
+    ghost: a.ghost + r.ghost, away: a.away + r.away, rev: a.rev + r.revenue,
+  }), { seats: 0, sold: 0, occ: 0, ghost: 0, away: 0, rev: 0 });
+  document.getElementById('routehead').textContent =
+    `${state.route === 'ALL' ? 'All routes' : state.route + ' ' + ROUTE[state.route].name}` +
+    ` \u2014 ${rows.length} departures on ${shortDate(state.date)}: ` +
+    `${nf.format(tot.occ)} of ${nf.format(tot.seats)} seats occupied ` +
+    `(${((tot.occ / tot.seats) * 100).toFixed(1)}%), ${nf.format(tot.ghost)} ghost seats, ` +
+    `${nf.format(tot.away)} walk-ups refused`;
+
+  document.getElementById('routetable').querySelectorAll('thead th').forEach((th) =>
+    th.addEventListener('click', () => {
+      const k = th.dataset.key;
+      state.sort = { key: k, dir: state.sort.key === k ? -state.sort.dir : 1 };
+      renderRouteTable();
+    }));
+  document.getElementById('routetable').querySelectorAll('tbody tr').forEach((tr) =>
+    tr.addEventListener('click', () => { state.service = tr.dataset.svc; state.coach = 0; renderAll(); }));
+}
+
+/* ---------- orchestration ---------- */
+function renderAll() {
+  const sn = snapshot(state.service, state.date);
+  renderChips();
+  renderDate();
+  renderDepList();
+  if (!sn) {
+    document.getElementById('identity').innerHTML =
+      `<span class="od">No data for ${SVC[state.service].id} on ${longDate(state.date)}.</span>`;
+    document.getElementById('tiles').innerHTML = '';
+    return;
+  }
+  if (state.coach >= sn.coaches.length) state.coach = 0;
+  renderIdentity(sn);
+  renderTiles(sn);
+  renderFormation(sn);
+  renderCoach(sn);
+  renderChart(sn);
+  renderRouteTable();
+  writeHash();
+}
+
+document.querySelectorAll('#dayfilter .segb').forEach((b) =>
+  b.addEventListener('click', () => {
+    state.weekdaysOnly = b.dataset.v === 'wd';
+    const sn = snapshot(state.service, state.date);
+    if (sn) renderChart(sn);
+  }));
+document.getElementById('date').addEventListener('change', (e) => {
+  if (DATE_IX[e.target.value] !== undefined) { state.date = e.target.value; renderAll(); }
+  else e.target.value = state.date;
+});
+document.getElementById('prevday').addEventListener('click', () => {
+  const i = DATE_IX[state.date]; if (i > 0) { state.date = D.dates[i - 1]; renderAll(); }
+});
+document.getElementById('nextday').addEventListener('click', () => {
+  const i = DATE_IX[state.date]; if (i < D.dates.length - 1) { state.date = D.dates[i + 1]; renderAll(); }
+});
+document.addEventListener('keydown', (e) => {
+  if (e.target.matches('input, select, textarea')) return;
+  const i = DATE_IX[state.date];
+  if (e.key === 'ArrowLeft' && i > 0) { state.date = D.dates[i - 1]; renderAll(); }
+  if (e.key === 'ArrowRight' && i < D.dates.length - 1) { state.date = D.dates[i + 1]; renderAll(); }
+});
+let rt;
+addEventListener('resize', () => {
+  clearTimeout(rt);
+  rt = setTimeout(() => { const sn = snapshot(state.service, state.date); if (sn) renderChart(sn); }, 150);
+});
+
+document.getElementById('tenant').innerHTML =
+  `yggio tenant ${D.tenant}<br>${D.coverage.from} &rarr; ${D.coverage.to} &middot; ` +
+  `${nf.format(Object.keys(D.devices).length)} nodes`;
+document.getElementById('footnote').innerHTML =
+  `<strong>What is measured, and what is not.</strong> SeatSense went live ${D.goLive} and reports ` +
+  `occupancy per coach, one node per coach &mdash; so coach totals are measured and individual seat ` +
+  `positions are not. Before that the operator had ticket sales only, which cannot tell a passenger ` +
+  `from a no-show, so there is no 2025 occupancy figure to compare against and this dashboard covers ` +
+  `${D.coverage.from} to ${D.coverage.to} only. Cabin factor is measured occupancy over seats; the ` +
+  `ticket system&rsquo;s own figure counts every no-show as a passenger on board. Ghost seats are paid ` +
+  `for and travelled empty &mdash; a measurement, not recoverable inventory: the seat still belongs to ` +
+  `its buyer and Northbank Rail may not oversell. Walk-ups refused are Anytime Standard requests turned ` +
+  `away with no Standard seat left. Northbank Rail is fictional and this data synthetic.`;
+
+restore();
+renderAll();
+bindChart();
+</script>

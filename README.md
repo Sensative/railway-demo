@@ -379,10 +379,45 @@ day, twice over (Standard and First cabins are separate pools):
 | `src/mcp-server.mjs` | The Yggio tenant as an MCP server over stdio. Zero dependencies. |
 | `src/yggio-api.mjs` | The same data as a Yggio-shaped REST API, for showing on a screen. |
 | `src/selftest.mjs` | Pre-flight check. Drives the MCP server the way Claude does and calls every tool. |
+| `dashboard/template.html` | The seat-usage dashboard's source: markup, styles and behaviour, with `"__DATA__"` as the data placeholder. Edit this, not `index.html`. |
+| `src/build-dashboard.mjs` | Inlines the 2026 data into the template and writes `dashboard/index.html`. Re-run it after editing either. |
+| `dashboard/index.html` | The built dashboard - one self-contained file, no server and no network beyond its webfont. |
 | `.mcp.json` | Wires the MCP server into Claude Code when it starts in this directory. |
 | `CLAUDE.md` | Tells Claude how to behave during the demo, including what not to claim. |
 | `DEMO-SCRIPT.md` | The stage script: questions, expected answers, talking points, recovery. |
 | `data/*.json` | Generated data, committed so the demo needs no build step. `operator.json` carries the policies, the RM setup, the business case and a data dictionary of which fields exist in which year, and why. |
+
+## The seat-usage dashboard
+
+`dashboard/index.html` is a self-contained page for the exact question a visitor
+asks after the headline: *show me this train.* Pick a route, a departure and a
+date, and it gives that departure's seats, tickets sold, measured occupancy,
+cabin factor, ghost seats, walk-ups refused and revenue, then breaks the
+occupancy down over every coach in the formation - by unit, coach letter and
+SeatSense node, with that node's battery, signal and firmware. Selecting a coach
+draws its seats. The plot underneath runs the whole window day by day, sold
+against occupied, with the gap between the two lines being the ghost seats.
+
+Open it by double-clicking the file, or serve the directory
+(`npx serve dashboard`). It needs no MCP server and no build step; the data is
+already inside it.
+
+**The one thing to be careful about on the floor.** SeatSense reports occupancy
+*per coach* - one node per coach - so a coach's occupied and empty counts are
+measured, and *which* seats those are is not. The seat map draws the measured
+count in a deterministic arrangement, and the caption under it says so. The
+dashboard covers 2026 only: 2025 has ticket sales and no occupancy at all, so
+there is no 2025 cabin factor to put beside it.
+
+Rebuild after changing the data or the template:
+
+```bash
+node src/build-dashboard.mjs
+```
+
+The per-coach split is the same code as `seatsenseSnapshot` in `src/dataset.mjs`,
+so the page and the `seatsense_snapshot` tool always agree - if you change one,
+change the other.
 
 ## The 14 tools
 
