@@ -26,6 +26,8 @@
   --seq-4: #3987e5; --seq-5: #256abf; --seq-6: #184f95; --seq-7: #0d366b;
   --seq-ink-1: #0f1417; --seq-ink-2: #0f1417; --seq-ink-3: #0f1417; --seq-ink-4: #0f1417;
   --seq-ink-5: #ffffff; --seq-ink-6: #ffffff; --seq-ink-7: #ffffff;
+  --route-NBR1: #2a78d6; --route-NBR2: #eb6834; --route-NBR3: #7b61c9;
+  --land: #dfe5e8; --land-edge: #cbd3d8; --sea: #eef2f4;
   --seat-empty:   #d4dade;
   --shadow:       0 1px 2px rgba(15,20,23,0.06), 0 8px 24px rgba(15,20,23,0.05);
   --focus:        #2a78d6;
@@ -53,7 +55,11 @@
     --seq-4: #2a78d6; --seq-5: #3987e5; --seq-6: #6da7ec; --seq-7: #9ec5f4;
     --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
     --seq-ink-5: #0b0f11; --seq-ink-6: #0b0f11; --seq-ink-7: #0b0f11;
-    --seat-empty:  #333c42;
+    --route-NBR1: #3987e5; --route-NBR2: #d95926; --route-NBR3: #8f74d8;
+    --land: #232c31; --land-edge: #2f3a40; --sea: #12181b;
+    --route-NBR1: #3987e5; --route-NBR2: #d95926; --route-NBR3: #8f74d8;
+  --land: #232c31; --land-edge: #2f3a40; --sea: #12181b;
+  --seat-empty:  #333c42;
     --shadow:      0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
     --focus:       #6da7ec;
   }
@@ -77,6 +83,8 @@
   --seq-4: #2a78d6; --seq-5: #3987e5; --seq-6: #6da7ec; --seq-7: #9ec5f4;
   --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
   --seq-ink-5: #0b0f11; --seq-ink-6: #0b0f11; --seq-ink-7: #0b0f11;
+  --route-NBR1: #3987e5; --route-NBR2: #d95926; --route-NBR3: #8f74d8;
+  --land: #232c31; --land-edge: #2f3a40; --sea: #12181b;
   --seat-empty:  #333c42;
   --shadow:      0 1px 2px rgba(0,0,0,0.4), 0 8px 24px rgba(0,0,0,0.3);
   --focus:       #6da7ec;
@@ -363,6 +371,36 @@ select#dcsel {
 .down { color: var(--series-sold); }
 .note { font-size: 11.5px; color: var(--ink-2); background: var(--surface-2);
   border-left: 3px solid var(--rule); border-radius: 0 5px 5px 0; padding: 8px 11px; margin: 12px 14px 14px; }
+.mapgrid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,260px); gap: 0; }
+@media (max-width: 860px) { .mapgrid { grid-template-columns: minmax(0,1fr); } }
+.mapwrap { position: relative; background: var(--sea); border-right: 1px solid var(--hairline); }
+@media (max-width: 860px) { .mapwrap { border-right: 0; border-bottom: 1px solid var(--hairline); } }
+#map { width: 100%; display: block; }
+#map .land { fill: var(--land); stroke: var(--land-edge); stroke-width: 1.2; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; }
+#map .line { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; cursor: pointer;
+  vector-effect: non-scaling-stroke; }
+#map .line.dim { opacity: 0.28; }
+#map .halo { fill: none; stroke: var(--sea); stroke-width: 6.5; stroke-linecap: round; stroke-linejoin: round;
+  vector-effect: non-scaling-stroke; }
+#map .stnmark { cursor: pointer; }
+#map .stnmark circle { stroke: var(--sea); stroke-width: 1.6; }
+#map .stnmark.term circle { stroke-width: 2.2; }
+#map .stnlabel { font-family: var(--cond); font-size: 11px; font-weight: 600; fill: var(--ink); paint-order: stroke;
+  stroke: var(--sea); stroke-width: 3.5; stroke-linejoin: round; pointer-events: none; }
+#map .dim { opacity: 0.28; }
+.mapside { padding: 14px; display: flex; flex-direction: column; gap: 12px; }
+.routecard {
+  text-align: left; font: inherit; color: inherit; cursor: pointer;
+  background: transparent; border: 1px solid var(--hairline); border-radius: 7px; padding: 10px 12px;
+  border-left-width: 4px;
+}
+.routecard:hover { background: var(--surface-2); }
+.routecard[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--accent); }
+.routecard .rn { font-family: var(--cond); font-weight: 700; font-size: 14px; }
+.routecard .rs { font-size: 11.5px; color: var(--ink-2); }
+.routecard .rv { font-size: 12px; color: var(--ink-2); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.readout { font-family: var(--mono); font-size: 11.5px; color: var(--ink-2); padding: 0 14px 12px; min-height: 1.4em; }
 .footnote {
   padding: 14px clamp(12px, 3vw, 28px) 0; max-width: 76ch;
   font-size: 12px; color: var(--ink-muted); line-height: 1.6;
@@ -380,6 +418,7 @@ select#dcsel {
       <button class="segb" type="button" data-view="train" aria-pressed="true">Train</button>
       <button class="segb" type="button" data-view="rank" aria-pressed="false">Sold vs full</button>
       <button class="segb" type="button" data-view="actions" aria-pressed="false">Actions</button>
+      <button class="segb" type="button" data-view="map" aria-pressed="false">Map</button>
       <button class="segb" type="button" data-view="case" aria-pressed="false">Business case</button>
     </span>
     <span class="tenant" id="tenant"></span>
@@ -505,6 +544,30 @@ select#dcsel {
         </table>
       </div>
       <div class="note" id="actnote"></div>
+    </section>
+   </div>
+
+   <div id="view-map" hidden>
+    <section class="panel" style="margin-bottom:14px">
+      <header>
+        <h2 id="maphead">Where the network runs</h2>
+        <span class="hgroup">
+          <span class="hint">Click a line to select that route</span>
+          <span class="seg" id="mapzoom" role="group" aria-label="Map extent">
+            <button class="segb" type="button" data-z="gb">Great Britain</button>
+            <button class="segb" type="button" data-z="network">Network</button>
+            <button class="segb" type="button" data-z="route">Route</button>
+          </span>
+        </span>
+      </header>
+      <div class="mapgrid">
+        <div class="mapwrap">
+          <svg id="map" role="img" aria-labelledby="maphead" preserveAspectRatio="xMidYMid meet"></svg>
+        </div>
+        <div class="mapside" id="mapside"></div>
+      </div>
+      <div class="readout" id="mapreadout"></div>
+      <div class="note" id="mapnote"></div>
     </section>
    </div>
 
@@ -669,6 +732,7 @@ const state = {
   coach: 0,
   weekdaysOnly: true,
   view: 'train',
+  mapZoom: 'network',
   dc: 'peak_core',
   action: 'all',
   sort: { key: 'time', dir: 1 },
@@ -1394,10 +1458,175 @@ function renderActions() {
     `booking limits and rolling stock.`;
 }
 
+
+/* ---------- render: the network on a map ---------- */
+/**
+ * Web Mercator into a fixed world space; framing is done entirely by the
+ * viewBox, so zooming never re-projects anything.
+ */
+const WORLD = 4096;
+function proj(lon, lat) {
+  const x = ((lon + 180) / 360) * WORLD;
+  const sn = Math.sin((lat * Math.PI) / 180);
+  const y = (0.5 - Math.log((1 + sn) / (1 - sn)) / (4 * Math.PI)) * WORLD;
+  return [x, y];
+}
+function frame(points, padFrac) {
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const [lon, lat] of points) {
+    const [x, y] = proj(lon, lat);
+    x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y);
+  }
+  const w = Math.max(x1 - x0, 0.001), h = Math.max(y1 - y0, 0.001);
+  const pad = Math.max(w, h) * padFrac;
+  return [x0 - pad, y0 - pad, w + pad * 2, h + pad * 2];
+}
+const GB_BOX = [[-8.2, 49.9], [1.9, 58.7]];
+function extentFor(kind) {
+  if (kind === 'gb') return frame(GB_BOX, 0.02);
+  // 'route' frames the selected route; with no single route selected it falls
+  // back to the whole network, which is what 'network' asks for anyway.
+  const one = kind === 'route' ? ROUTE[state.route] : null;
+  const routes = one ? [one] : D.routes;
+  const pts = routes.flatMap((r) => r.stations.map((st) => [st.lon, st.lat]));
+  return frame(pts, 0.22);
+}
+
+/** Counter-scale the station marks so they stay constant on screen. */
+function rescaleMarks() {
+  const svg = document.getElementById('map');
+  const vb = svg.viewBox.baseVal;
+  const w = svg.clientWidth, h = svg.clientHeight;
+  if (!vb.width || !w || !h) return;
+  const scale = Math.min(w / vb.width, h / vb.height);   // preserveAspectRatio="meet"
+  const k = (1 / scale).toFixed(4);
+  svg.querySelectorAll('.stnmark').forEach((g) =>
+    g.setAttribute('transform', `translate(${g.dataset.x} ${g.dataset.y}) scale(${k})`));
+}
+
+let mapTween = null;
+function setExtent(box, animate) {
+  const svg = document.getElementById('map');
+  const now = (svg.getAttribute('viewBox') || box.join(' ')).split(' ').map(Number);
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (mapTween) cancelAnimationFrame(mapTween);
+  if (!animate || reduce || now.length !== 4) {
+    svg.setAttribute('viewBox', box.join(' '));
+    rescaleMarks();
+    return;
+  }
+  const t0 = performance.now(), dur = 420;
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / dur);
+    const e = k < 0.5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2;
+    svg.setAttribute('viewBox', now.map((v, i) => v + (box[i] - v) * e).join(' '));
+    rescaleMarks();
+    if (k < 1) mapTween = requestAnimationFrame(step);
+  };
+  mapTween = requestAnimationFrame(step);
+}
+
+function renderMap(animate) {
+  const svg = document.getElementById('map');
+  const W = svg.clientWidth || 900;
+  svg.setAttribute('height', Math.round(Math.min(620, Math.max(360, W * 0.72))));
+
+  const land = D.coast.map((ring) =>
+    '<path class="land" d="' +
+    ring.map(([lon, lat], i) => (i ? 'L' : 'M') + proj(lon, lat).map((v) => v.toFixed(1)).join(' ')).join(' ') +
+    ' Z"/>').join('');
+
+  let lines = '', stations = '';
+  for (const r of D.routes) {
+    const dim = state.route !== 'ALL' && state.route !== r.id ? ' dim' : '';
+    const d = r.stations.map((st, i) => (i ? 'L' : 'M') + proj(st.lon, st.lat).map((v) => v.toFixed(1)).join(' ')).join(' ');
+    lines += `<path class="halo${dim}" d="${d}"/>` +
+      `<path class="line${dim}" data-route="${r.id}" stroke="var(--route-${r.id})" d="${d}">` +
+      `<title>${r.id} ${r.name}</title></path>`;
+    // Marks sit in a group that is scaled by the inverse of the map scale, so a
+    // dot stays a dot at every zoom instead of swelling to cover the route.
+    r.stations.forEach((st, i) => {
+      const [x, y] = proj(st.lon, st.lat);
+      const term = i === 0 || i === r.stations.length - 1;
+      const toLondon = /London/.test(st.name);
+      // The two London termini are 5 km apart, so their labels collide at any
+      // extent wide enough to show both. Stagger them by route.
+      const dy = toLondon ? [-3, 15, 0][D.routes.findIndex((q) => q.id === r.id)] || 0 : 4;
+      stations += `<g class="stnmark${term ? ' term' : ''}${dim}" data-route="${r.id}"` +
+        ` data-stn="${st.name}" data-pos="${st.lat.toFixed(4)}, ${st.lon.toFixed(4)}"` +
+        ` data-x="${x.toFixed(2)}" data-y="${y.toFixed(2)}">` +
+        `<circle r="${term ? 5 : 3.2}" fill="var(--route-${r.id})"/>` +
+        (term ? `<text class="stnlabel" x="${toLondon ? -9 : 9}" y="${dy}"` +
+          ` text-anchor="${toLondon ? 'end' : 'start'}">${st.name}</text>` : '') +
+        `<title>${st.name}</title></g>`;
+    });
+  }
+  svg.innerHTML = `<g>${land}</g><g>${lines}</g><g id="marks">${stations}</g>`;
+  setExtent(extentFor(state.mapZoom), animate);
+
+  svg.onclick = (ev) => {
+    const t = ev.target.closest('[data-route]');
+    if (!t) return;
+    state.route = t.dataset.route;
+    const list = servicesFor(state.route);
+    if (!list.some((x) => x.id === state.service)) { state.service = list[0].id; state.coach = 0; }
+    renderAll();
+    renderMap(true);
+  };
+  const readout = document.getElementById('mapreadout');
+  const idle = `${D.routes.length} routes, ${D.routes.reduce((a, r) => a + r.stations.length, 0)} stations` +
+    ` \u00b7 real positions, drawn from ${D.coastSource.split('(')[0].trim()}`;
+  readout.textContent = idle;
+  svg.onmouseover = (ev) => {
+    const t = ev.target.closest('[data-stn]');
+    if (t) readout.textContent = `${t.dataset.stn} \u00b7 ${t.dataset.pos} \u00b7 ${t.dataset.route}`;
+  };
+  svg.onmouseleave = () => { readout.textContent = idle; };
+
+  // Per-route figures for the selected date - the only numbers the map can
+  // honestly carry, since nothing in the data attaches to a station yet.
+  const cards = D.routes.map((r) => {
+    const rows = D.services.filter((x) => x.route === r.id)
+      .map((x) => snapshot(x.id, state.date)).filter(Boolean);
+    const seats = rows.reduce((a, x) => a + x.svc.seats, 0);
+    const occ = rows.reduce((a, x) => a + x.occupied, 0);
+    const away = rows.reduce((a, x) => a + x.away, 0);
+    return `<button class="routecard" type="button" data-route="${r.id}"` +
+      ` aria-pressed="${state.route === r.id}" style="border-left-color:var(--route-${r.id})">` +
+      `<div class="rn">${r.id} ${r.name}</div>` +
+      `<div class="rs">${r.from} \u2014 ${r.to} \u00b7 ${r.stations.length} stops</div>` +
+      `<div class="rv">${rows.length} departures \u00b7 ${nf.format(occ)} of ${nf.format(seats)} seats` +
+      ` (${((occ / seats) * 100).toFixed(1)}%)${away > 0 ? ` \u00b7 ${nf.format(away)} refused` : ''}</div></button>`;
+  }).join('');
+  document.getElementById('mapside').innerHTML =
+    `<button class="routecard" type="button" data-route="ALL" aria-pressed="${state.route === 'ALL'}">` +
+    `<div class="rn">All routes</div><div class="rs">the whole network on ${shortDate(state.date)}</div></button>` + cards;
+  document.getElementById('mapside').querySelectorAll('.routecard').forEach((b) =>
+    b.addEventListener('click', () => {
+      state.route = b.dataset.route;
+      const list = servicesFor(state.route);
+      if (!list.some((x) => x.id === state.service)) { state.service = list[0].id; state.coach = 0; }
+      renderAll();
+      renderMap(true);
+    }));
+
+  document.getElementById('maphead').textContent =
+    state.route === 'ALL' ? 'Where the network runs'
+      : `${state.route} ${ROUTE[state.route].name} \u2014 ${ROUTE[state.route].stops.join(' \u00b7 ')}`;
+  document.querySelectorAll('#mapzoom .segb').forEach((b) =>
+    b.setAttribute('aria-pressed', String(b.dataset.z === state.mapZoom)));
+  document.getElementById('mapnote').innerHTML =
+    `Real stations in their real positions, on three real corridors \u2014 the Great Eastern Main Line, the ` +
+    `Great Northern route and the Huddersfield\u2013York line. <b>The intermediate stations carry no data.</b> ` +
+    `Every journey in this model runs terminus to terminus, so nobody boards or alights at Chelmsford or ` +
+    `Stevenage and the load along a line is flat by construction. Giving each booking an origin and a ` +
+    `destination stop is what would turn these dots into places, and give the line a shape.`;
+}
+
 /* ---------- views ---------- */
 function setView(v) {
   state.view = v;
-  for (const name of ['train', 'rank', 'actions', 'case']) {
+  for (const name of ['train', 'rank', 'actions', 'case', 'map']) {
     document.getElementById('view-' + name).hidden = name !== v;
   }
   document.querySelectorAll('#viewnav .segb').forEach((b) =>
@@ -1408,6 +1637,7 @@ function setView(v) {
   if (v === 'train' && sn) renderChart(sn);
   if (v === 'rank') renderRank();
   if (v === 'case' && sn) renderForecastEffect(sn);
+  if (v === 'map') renderMap(false);
 }
 
 /* ---------- orchestration ---------- */
@@ -1432,6 +1662,7 @@ function renderAll() {
   renderRouteTable();
   renderRank();
   renderActions();
+  if (state.view === 'map') renderMap(false);
   writeHash();
 }
 
@@ -1447,6 +1678,8 @@ document.querySelectorAll('#dayfilter .segb').forEach((b) =>
     const sn = snapshot(state.service, state.date);
     if (sn) renderChart(sn);
   }));
+document.querySelectorAll('#mapzoom .segb').forEach((b) =>
+  b.addEventListener('click', () => { state.mapZoom = b.dataset.z; renderMap(true); }));
 document.getElementById('date').addEventListener('change', (e) => {
   if (DATE_IX[e.target.value] !== undefined) { state.date = e.target.value; renderAll(); }
   else e.target.value = state.date;
@@ -1470,6 +1703,7 @@ addEventListener('resize', () => {
     const sn = snapshot(state.service, state.date);
     if (sn) { renderChart(sn); renderForecastEffect(sn); }
     renderRank();
+    if (state.view === 'map') renderMap(false);
   }, 150);
 });
 

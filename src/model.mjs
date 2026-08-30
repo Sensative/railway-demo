@@ -450,7 +450,15 @@ export const ROUTES = [
     name: 'Anglia Metro',
     origin: 'Colchester',
     destination: 'London Liverpool Street',
-    calling: ['Colchester', 'Marks Tey', 'Kelvedon', 'Witham', 'Chelmsford', 'Shenfield', 'London Liverpool Street'],
+    stops: [
+      { name: 'Colchester', lat: 51.9017, lon: 0.8931 },
+      { name: 'Marks Tey', lat: 51.86, lon: 0.777 },
+      { name: 'Kelvedon', lat: 51.838, lon: 0.705 },
+      { name: 'Witham', lat: 51.802, lon: 0.639 },
+      { name: 'Chelmsford', lat: 51.736, lon: 0.468 },
+      { name: 'Shenfield', lat: 51.631, lon: 0.33 },
+      { name: 'London Liverpool Street', lat: 51.518, lon: -0.081 },
+    ],
     profile: 'Seat-reserved outer-suburban commuter, Azuma 5-car fleet',
     fleet: [{ type: 'AZ5', units: 24 }],
     /** Peak trains run two 5-car units coupled (10 coaches, 604 seats). */
@@ -492,7 +500,16 @@ export const ROUTES = [
     name: 'Great Northern Line',
     origin: 'Peterborough',
     destination: "London King's Cross",
-    calling: ['Peterborough', 'Huntingdon', 'St Neots', 'Sandy', 'Biggleswade', 'Hitchin', 'Stevenage', "London King's Cross"],
+    stops: [
+      { name: 'Peterborough', lat: 52.5745, lon: -0.25 },
+      { name: 'Huntingdon', lat: 52.33, lon: -0.187 },
+      { name: 'St Neots', lat: 52.228, lon: -0.256 },
+      { name: 'Sandy', lat: 52.13, lon: -0.296 },
+      { name: 'Biggleswade', lat: 52.087, lon: -0.266 },
+      { name: 'Hitchin', lat: 51.954, lon: -0.265 },
+      { name: 'Stevenage', lat: 51.902, lon: -0.208 },
+      { name: "London King's Cross", lat: 51.5308, lon: -0.1238 },
+    ],
     profile: 'Seat-reserved long-distance commuter, Azuma 9-car and 5-car fleet',
     fleet: [{ type: 'AZ9', units: 12 }, { type: 'AZ5', units: 8 }],
     /** Nine coaches at the peak, five off-peak - the widest swing on the network. */
@@ -533,7 +550,14 @@ export const ROUTES = [
     name: 'Pennine Shuttle',
     origin: 'Huddersfield',
     destination: 'York',
-    calling: ['Huddersfield', 'Dewsbury', 'Leeds', 'Garforth', 'Church Fenton', 'York'],
+    stops: [
+      { name: 'Huddersfield', lat: 53.6485, lon: -1.7845 },
+      { name: 'Dewsbury', lat: 53.692, lon: -1.633 },
+      { name: 'Leeds', lat: 53.7955, lon: -1.548 },
+      { name: 'Garforth', lat: 53.796, lon: -1.383 },
+      { name: 'Church Fenton', lat: 53.834, lon: -1.2 },
+      { name: 'York', lat: 53.958, lon: -1.093 },
+    ],
     profile: 'Seat-reserved regional, Azuma 5-car fleet',
     fleet: [{ type: 'AZ5', units: 15 }],
     /**
@@ -574,6 +598,18 @@ export const ROUTES = [
 ];
 
 /** Month-of-year demand multipliers (1 = January). */
+/**
+ * Station coordinates for the calling points, so the network can be drawn on a
+ * map. Real stations in their real order on three real corridors: the Great
+ * Eastern Main Line, the Great Northern route, and the Huddersfield-York line.
+ * Positions are to about 0.01 degrees, which is roughly a kilometre - fine at
+ * national scale, not a survey.
+ *
+ * calling is derived from stops so the names and the coordinates cannot drift
+ * apart.
+ */
+for (const r of ROUTES) r.calling = r.stops.map((s) => s.name);
+
 export const SEASONALITY = [0.92, 0.96, 1.02, 0.98, 1.03, 1.05, 1.01, 0.9, 1.09, 1.08, 1.06, 0.94];
 
 /** Great Britain bank holidays that matter to a GB timetable. */

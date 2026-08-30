@@ -436,6 +436,7 @@ const files = [
       origin: r.origin,
       destination: r.destination,
       calling_points: r.calling,
+      stations: r.stops,
       profile: r.profile,
       fleet: {
         units: r.fleet.map((g) => `${g.units} x ${UNIT_TYPES[g.type].label}`).join(', '),

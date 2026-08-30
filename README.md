@@ -379,6 +379,7 @@ day, twice over (Standard and First cabins are separate pools):
 | `src/mcp-server.mjs` | The Yggio tenant as an MCP server over stdio. Zero dependencies. |
 | `src/yggio-api.mjs` | The same data as a Yggio-shaped REST API, for showing on a screen. |
 | `src/selftest.mjs` | Pre-flight check. Drives the MCP server the way Claude does and calls every tool. |
+| `dashboard/gb-outline.json` | The Great Britain coastline used by the map: Natural Earth 1:10m subunits, public domain, simplified to 1,702 points. Provenance and processing are recorded in the file. |
 | `dashboard/template.html` | The seat-usage dashboard's source: markup, styles and behaviour, with `"__DATA__"` as the data placeholder. Edit this, not `index.html`. |
 | `src/build-dashboard.mjs` | Inlines the 2026 data into the template and writes `dashboard/index.html`. Re-run it after editing either. |
 | `dashboard/index.html` | The built dashboard - one self-contained file, no server and no network beyond its webfont. |
@@ -412,6 +413,13 @@ screen that says why measuring is worth anything.
 lengthen-the-train, 9 recalibrate-the-forecast and 19 open-more-Advance, ranked
 capacity first. Only the recalibration rows carry indicative money, scaled from
 the paper; the capacity rows deliberately carry none.
+
+**Map** draws the network on Great Britain: three real corridors in their real
+positions, with the coastline from Natural Earth and the 21 stations at their
+real coordinates. Zoom between the whole country, the network, and one route;
+click a line or a station to select that route. It is honest about its own gap
+- the intermediate stations carry no data, because every journey in this model
+runs terminus to terminus, so the load along a line is flat by construction.
 
 **Business case** is quarantined on purpose, and is the only screen here that
 mentions 2025. It gives one departure's counterfactual - what the same booking
@@ -506,7 +514,13 @@ The knobs worth knowing, all in `src/model.mjs`:
 ## Honesty notes
 
 - Northbank Rail does not exist and every figure is synthetic. Station names
-  are real, and the trains and seat counts are real Azuma coach layouts, so
+  are real, and so are their coordinates - the three routes are the Great
+  Eastern Main Line, the Great Northern route and the Huddersfield-York line,
+  in the right order and the right places, so the map is honest geography even
+  though the operator is not. The rolling stock is the stretch: Azumas are
+  LNER's, so NBR2 is plausible, NBR3 is defensible (the Hitachi 802 family runs
+  TransPennine), and an Azuma into Liverpool Street on NBR1 is not a thing.
+  Station names and the trains and seat counts are real Azuma coach layouts, so
   the network reads as plausible to rail people.
 - The revenue-management model is not invented for the demo: it is the
   EMSRb setup of Weatherford & Belobaba (JORS 2002), including its

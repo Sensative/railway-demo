@@ -16,6 +16,7 @@ const services = read('data/services.json');
 const rows2026 = read('data/daily-2026.json');
 const devices = read('data/devices.json');
 const seatmaps = read('data/seatmaps.json');
+const outline = read('dashboard/gb-outline.json');
 
 const routes = meta.routes ?? meta.operator?.routes ?? null;
 if (!routes) throw new Error('routes not found in operator.json: ' + Object.keys(meta));
@@ -105,6 +106,7 @@ const routeOut = routes.map((r) => ({
   from: r.origin,
   to: r.destination,
   stops: r.calling_points,
+  stations: r.stations,
   fleet: r.fleet.units,
   coaches: r.fleet.coaches,
   departures: r.daily_departures,
@@ -134,6 +136,8 @@ const payload = {
   daily,
   devices: dev,
   seatmaps: seatOut,
+  coast: outline.rings,
+  coastSource: outline.source,
   seatFleet: seatmaps.fleet,
   seatNote: seatmaps.measurement_note,
   demandClassLabels: {
