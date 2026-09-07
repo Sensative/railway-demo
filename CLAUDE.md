@@ -139,6 +139,12 @@ units and was never rationed. Say that before someone finds it.
   ticket-machine searches that returned no availability. **SeatSense does not
   fix this** - it measures occupancy, not refused demand. Refusals fell 75.9 to
   50.0 because protection was restored, not because they became visible.
+- **Do not compare a single departure-day with a window average.** The Actions
+  and Sold-vs-full screens show each departure's *average* over the window's
+  weekdays; the Train view shows one date. NBR3-1714 averages 4 walk-ups
+  refused and refused **none** on 16 June - 78% of its weekdays refuse nobody.
+  15 of the 58 departures have that shape. If someone spots the discrepancy,
+  that is the explanation, not an error.
 - A **ghost seat** is a seat paid for that travelled empty. It is a
   measurement, not recoverable inventory. Say so when you use the term.
 - Be straight about the residuals: **31.6% of peak-core weekdays still sell
