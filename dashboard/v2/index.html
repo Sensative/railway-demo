@@ -154,8 +154,8 @@ h2 { font-size: 19px; line-height: 1.15; }
 .brand { font-size: 26px; font-weight: 700; letter-spacing: -0.06em; line-height: 1; white-space: nowrap; }
 .brand span { font-weight: 400; color: var(--lime); }
 .brand small { display: block; font-size: 9px; font-weight: 400; letter-spacing: 0.23em; margin-top: 5px; color: #cfe0cb; }
-.mtitle { font-size: 14px; color: #cfe0cb; letter-spacing: -0.01em; }
-.mtitle b { color: #fff; font-weight: 400; }
+.mtitle { font-size: 12.5px; line-height: 1.35; color: #b9cfb4; letter-spacing: -0.005em; }
+.mtitle b { display: block; color: #fff; font-weight: 400; font-size: 17px; letter-spacing: -0.03em; }
 .ver {
   font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
   border: 1px solid #ffffff55; border-radius: 100px; padding: 4px 11px; color: #fff;
@@ -194,27 +194,39 @@ h2 { font-size: 19px; line-height: 1.15; }
 
 /* ---------- shell: air instead of boxes ---------- */
 .shell {
-  display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  display: grid; grid-template-columns: minmax(0, 304px) minmax(0, 1fr);
   gap: clamp(20px, 3vw, 46px);
   padding: clamp(20px, 3vw, 38px) clamp(16px, 3.5vw, 40px) 80px;
   align-items: start; max-width: 1720px; margin: 0 auto;
 }
 @media (max-width: 960px) { .shell { grid-template-columns: minmax(0, 1fr); } }
-.rail { position: sticky; top: 82px; display: flex; flex-direction: column; gap: 26px; }
+.rail { position: sticky; top: 88px; display: flex; flex-direction: column; gap: 16px; }
 @media (max-width: 960px) { .rail { position: static; } }
 
-/* A panel is a hairline and a label, not a card. */
-.panel { background: transparent; border: 0; border-radius: 0; }
+/* Each block of data sits in its own panel, so the eye can tell them apart. */
+.card {
+  background: var(--surface); border: 1px solid var(--line); border-radius: 16px;
+  padding: clamp(15px, 1.7vw, 22px) clamp(16px, 2vw, 24px) clamp(16px, 1.9vw, 24px);
+  margin-bottom: 16px;
+  box-shadow: 0 1px 1px rgba(16,46,43,.035), 0 6px 20px rgba(16,46,43,.045);
+}
+:root[data-theme="dark"] .card,
+:root:not([data-theme="light"]) .card { box-shadow: 0 1px 2px rgba(0,0,0,.35); }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .card { box-shadow: 0 1px 1px rgba(16,46,43,.035), 0 6px 20px rgba(16,46,43,.045); }
+}
 .panel > header {
   display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
-  gap: 8px 16px; padding: 0 0 9px; margin-bottom: 14px; border-bottom: 1px solid var(--line);
+  gap: 8px 16px; padding: 0 0 10px; margin: 0 0 15px; border-bottom: 1px solid var(--line);
 }
 .panel > header .hint { font-size: 12px; color: var(--muted); letter-spacing: -0.005em; }
 .panel .body { padding: 0; }
-.sect { margin-bottom: clamp(30px, 3.4vw, 52px); }
-.sect > .lede {
-  font-size: 17px; line-height: 1.35; letter-spacing: -0.022em; color: var(--ink);
-  margin: -4px 0 16px; max-width: 46ch;
+.rail .card { padding: clamp(14px, 1.4vw, 18px) clamp(14px, 1.5vw, 18px); }
+.deplist { margin-inline: -6px; }
+.intro { margin: 6px 0 16px; }
+.intro > .lede {
+  font-size: 19px; line-height: 1.3; letter-spacing: -0.026em; color: var(--ink);
+  margin: 8px 0 0; max-width: 46ch;
 }
 .mark { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
 
@@ -252,7 +264,7 @@ h2 { font-size: 19px; line-height: 1.15; }
 .daynote { margin-top: 10px; font-size: 12px; color: var(--muted); display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
 
 /* ---------- identity + tiles ---------- */
-.identity { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 26px; padding: 0 0 20px; }
+.identity { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 26px; padding: 2px 0 18px; }
 .identity .time { font-size: 52px; font-weight: 300; letter-spacing: -0.055em; line-height: .95; font-variant-numeric: tabular-nums; }
 .identity .od { font-size: 24px; font-weight: 400; letter-spacing: -0.032em; line-height: 1.15; }
 .identity .meta { font-size: 12.5px; color: var(--muted); letter-spacing: -0.005em; }
@@ -263,8 +275,9 @@ h2 { font-size: 19px; line-height: 1.15; }
 }
 .tag.hot { background: var(--lime); color: #102e2b; }
 
-.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
-.tile { padding: 16px 20px 18px 0; border-bottom: 1px solid var(--line); }
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(142px, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.tile { background: var(--surface); padding: 14px 16px 16px; }
 .tile .v { font-size: 33px; font-weight: 300; letter-spacing: -0.045em; line-height: 1.05; margin-top: 7px; }
 .tile .s { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: -0.005em; }
 .tile.accent .v { color: var(--s-occ); }
@@ -327,9 +340,9 @@ th .est {
 /* ---------- tables ---------- */
 .tablewrap { overflow-x: auto; }
 table { border-collapse: collapse; width: 100%; font-size: 13px; }
-th, td { padding: 9px 12px 9px 0; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th, td { padding: 9px 10px 9px 0; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
 th:first-child, td:first-child, th.l, td.l { text-align: left; }
-thead th { position: sticky; top: 0; background: var(--paper); z-index: 2; line-height: 1.3; border-bottom: 1px solid var(--rule); }
+thead th { position: sticky; top: 0; background: var(--surface); z-index: 2; line-height: 1.3; border-bottom: 1px solid var(--rule); }
 thead th.sortable { cursor: pointer; user-select: none; }
 thead th.sortable:hover { color: var(--ink); }
 thead th[aria-sort]:not([aria-sort="none"]) { color: var(--ink); }
@@ -385,8 +398,9 @@ select#dcsel {
 .rule { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); margin-bottom: 16px; max-width: 78ch; }
 
 /* ---------- business case ---------- */
-.fx { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
-.fx .cell { padding: 16px 20px 18px 0; border-bottom: 1px solid var(--line); }
+.fx { display: grid; grid-template-columns: repeat(auto-fit, minmax(148px, 1fr));
+  gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.fx .cell { background: var(--surface); padding: 14px 16px 16px; }
 .fx .v { font-size: 28px; font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; margin-top: 7px; }
 .fx .s { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
 .up { color: var(--s-occ); }
@@ -397,7 +411,7 @@ select#dcsel {
 /* ---------- map ---------- */
 .mapgrid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,250px); gap: 24px; }
 @media (max-width: 900px) { .mapgrid { grid-template-columns: minmax(0,1fr); } }
-.mapwrap { position: relative; background: var(--sea); border-radius: 16px; overflow: hidden; }
+.mapwrap { position: relative; background: var(--sea); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 #map { width: 100%; display: block; }
 #map .land { fill: var(--land); stroke: var(--land-edge); stroke-width: 1.2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 #map .line { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; vector-effect: non-scaling-stroke; }
@@ -429,7 +443,7 @@ select#dcsel {
 
 <div class="masthead">
   <span class="brand">Seat<span>Sense</span><small>BY SENSATIVE</small></span>
-  <span class="mtitle"><b>Seat usage</b> by route, train and coach</span>
+  <span class="mtitle"><b>Northbank Rail</b><br>Seat usage by route, train and coach</span>
   <span class="ver">Version 2</span>
   <span class="seg" id="viewnav" role="group" aria-label="View">
     <button class="segb" type="button" data-view="train" aria-pressed="true">Train</button>
@@ -443,7 +457,7 @@ select#dcsel {
 
 <div class="shell">
   <div class="rail">
-    <section class="panel">
+    <section class="card panel">
       <header><h2>Route</h2></header>
       <div class="body">
         <div class="chips" id="routechips" role="group" aria-label="Route"></div>
@@ -455,7 +469,7 @@ select#dcsel {
         <div class="daynote" id="daynote"></div>
       </div>
     </section>
-    <section class="panel">
+    <section class="card panel">
       <header><h2>Departures</h2><span class="hint" id="depcount"></span></header>
       <div class="deplist" id="deplist" role="listbox" aria-label="Departures"></div>
     </section>
@@ -463,14 +477,16 @@ select#dcsel {
 
   <div class="main">
    <div id="view-train">
-    <section class="sect">
+    <section class="intro">
       <p class="eyebrow">&#167; 01 &nbsp;/&nbsp; See beyond reservations</p>
       <h1 class="lede">Your train. Now with the full picture.</h1>
+    </section>
+    <section class="card">
       <div class="identity" id="identity"></div>
       <div class="tiles" id="tiles"></div>
     </section>
 
-    <section class="sect panel">
+    <section class="card panel">
       <header>
         <h2>Space you can see</h2>
         <span class="hint">Select a coach for its seat detail</span>
@@ -487,7 +503,7 @@ select#dcsel {
       </div>
     </section>
 
-    <section class="sect panel">
+    <section class="card panel">
       <header><h2 id="seathead">Coach detail</h2><span class="hint" id="seathint"></span></header>
       <div class="seatwrap">
         <div>
@@ -499,7 +515,7 @@ select#dcsel {
       </div>
     </section>
 
-    <section class="sect panel">
+    <section class="card panel">
       <header>
         <h2 id="trendhead">Sold versus occupied</h2>
         <span class="hgroup">
@@ -517,7 +533,7 @@ select#dcsel {
       </div>
     </section>
 
-    <section class="sect panel">
+    <section class="card panel">
       <header><h2 id="routehead">All departures</h2><span class="hint">Click a row to open that train</span></header>
       <div class="tablewrap" style="max-height:520px; overflow-y:auto">
         <table id="routetable">
@@ -528,11 +544,11 @@ select#dcsel {
    </div>
 
    <div id="view-rank" hidden>
-    <section class="sect">
+    <section class="intro">
       <p class="eyebrow">&#167; 02 &nbsp;/&nbsp; A better read on demand</p>
       <h1 class="lede">Two lists. Different answers.</h1>
     </section>
-    <section class="sect panel">
+    <section class="card panel">
       <header>
         <h2 id="rankhead">Sold versus actually full</h2>
         <span class="hgroup">
@@ -549,11 +565,11 @@ select#dcsel {
    </div>
 
    <div id="view-actions" hidden>
-    <section class="sect">
+    <section class="intro">
       <p class="eyebrow">&#167; 03 &nbsp;/&nbsp; One insight. Many possibilities.</p>
       <h1 class="lede">Where it pays back.</h1>
     </section>
-    <section class="sect panel">
+    <section class="card panel">
       <header><h2 id="acthead">What to do next</h2><span class="hint" id="actwindow"></span></header>
       <div class="actgrid" id="actgrid"></div>
       <div class="rule" id="actrule"></div>
@@ -565,11 +581,11 @@ select#dcsel {
    </div>
 
    <div id="view-map" hidden>
-    <section class="sect">
+    <section class="intro">
       <p class="eyebrow">&#167; 04 &nbsp;/&nbsp; Built for real railways</p>
       <h1 class="lede">Three corridors. Real places.</h1>
     </section>
-    <section class="sect panel">
+    <section class="card panel">
       <header>
         <h2 id="maphead">Where the network runs</h2>
         <span class="hgroup">
@@ -591,11 +607,11 @@ select#dcsel {
    </div>
 
    <div id="view-case" hidden>
-    <section class="sect">
+    <section class="intro">
       <p class="eyebrow">&#167; 05 &nbsp;/&nbsp; Your data. Your next opportunity.</p>
       <h1 class="lede">Better forecasts. Better journeys.</h1>
     </section>
-    <section class="sect panel">
+    <section class="card panel">
       <header><h2 id="fxhead">What the recalibrated forecast earned</h2><span class="hint">The only year-on-year screen here</span></header>
       <div class="rule">
         This is the commercial case, not the seat record. Everything else here is what SeatSense
