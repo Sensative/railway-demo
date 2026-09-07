@@ -412,17 +412,30 @@ select#dcsel {
 .mapgrid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,250px); gap: 24px; }
 @media (max-width: 900px) { .mapgrid { grid-template-columns: minmax(0,1fr); } }
 .mapwrap { position: relative; background: var(--sea); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
-#map { width: 100%; display: block; }
-#map .land { fill: var(--land); stroke: var(--land-edge); stroke-width: 1.2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-#map .line { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; vector-effect: non-scaling-stroke; }
-#map .line.dim { opacity: .26; }
-#map .halo { fill: none; stroke: var(--sea); stroke-width: 6.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
-#map .stnmark { cursor: pointer; }
-#map .stnmark circle { stroke: var(--sea); stroke-width: 1.6; }
-#map .stnmark.term circle { stroke-width: 2.2; }
-#map .stnlabel { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: -0.01em;
+.geomap { width: 100%; display: block; }
+/* The outline is three subunits, so stroking each one draws the England,
+   Scotland and Wales borders as well as the coast. Fill only. */
+.geomap .land { fill: var(--land); stroke: none; }
+.geomap .line { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; vector-effect: non-scaling-stroke; }
+.geomap .line.dim { opacity: .26; }
+.geomap .halo { fill: none; stroke: var(--sea); stroke-width: 6.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.geomap .stnmark { cursor: pointer; }
+/* A casing on every dot chops a short route's line into dashes, so only the
+   termini get one. */
+.geomap .stnmark circle { stroke: none; }
+.geomap .stnmark.term circle { stroke: var(--sea); stroke-width: 2.2; }
+.geomap .stnlabel { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: -0.01em;
   fill: var(--ink); paint-order: stroke; stroke: var(--sea); stroke-width: 3.5; stroke-linejoin: round; pointer-events: none; }
-#map .dim { opacity: .26; }
+.geomap .dim { opacity: .26; }
+.runwrap { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+@media (max-width: 900px) { .runwrap { grid-template-columns: minmax(0, 1fr); } }
+.runmap { cursor: pointer; }
+.runnote { margin-top: 14px; }
+.geomap .chev { stroke: var(--sea); stroke-width: 1.6; stroke-linejoin: round; }
+.stops { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 7px; font-size: 13px; color: var(--ink-2); }
+.stops .stop { letter-spacing: -0.012em; }
+.stops .stop.end { color: var(--ink); font-weight: 600; }
+.stops .sep { color: var(--muted); }
 .mapside { display: flex; flex-direction: column; gap: 10px; }
 .routecard {
   text-align: left; font: inherit; color: inherit; cursor: pointer; background: transparent;
@@ -484,6 +497,20 @@ select#dcsel {
     <section class="card">
       <div class="identity" id="identity"></div>
       <div class="tiles" id="tiles"></div>
+    </section>
+
+    <section class="card panel">
+      <header>
+        <h2>Where it runs</h2>
+        <span class="hint">Open the full map for the network</span>
+      </header>
+      <div class="runwrap">
+        <div class="mapwrap runmap"><svg id="trainmap" class="geomap" role="img" aria-label="Route of the selected departure" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div>
+          <div class="stops" id="trainstops"></div>
+          <div class="note runnote" id="trainmapnote"></div>
+        </div>
+      </div>
     </section>
 
     <section class="card panel">
@@ -598,7 +625,7 @@ select#dcsel {
         </span>
       </header>
       <div class="mapgrid">
-        <div class="mapwrap"><svg id="map" role="img" aria-labelledby="maphead" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="mapwrap"><svg id="map" class="geomap" role="img" aria-labelledby="maphead" preserveAspectRatio="xMidYMid meet"></svg></div>
         <div class="mapside" id="mapside"></div>
       </div>
       <div class="readout" id="mapreadout"></div>

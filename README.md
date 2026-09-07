@@ -417,6 +417,12 @@ against occupied, with the gap between the two lines being the ghost seats.
 
 Three more views sit behind the switcher in the masthead.
 
+Version 2's train view also carries a compact route map: the selected
+departure drawn in its direction of travel, with its calling order beside it
+and one arrowhead showing which way it goes. Clicking it opens the full Map
+view zoomed to that route. It encodes no load - there is no per-leg occupancy
+in the data - and says so underneath.
+
 **Sold vs full** ranks a demand class twice - once by tickets sold, once by
 measured occupancy - and draws the departures that change place between the two
 lists. In August's morning peak core, ticket sales spread the eight departures

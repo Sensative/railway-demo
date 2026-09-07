@@ -870,12 +870,10 @@ function renderActions() {
 }
 
 
-/* ---------- render: the network on a map ---------- */
-/**
- * Web Mercator into a fixed world space; framing is done entirely by the
- * viewBox, so zooming never re-projects anything.
- */
+
+/* ---------- shared map geometry ---------- */
 const WORLD = 4096;
+const ROUTE_MAP_MIN_SPAN = 58;   // world units; ~2.1 degrees of longitude
 function proj(lon, lat) {
   const x = ((lon + 180) / 360) * WORLD;
   const sn = Math.sin((lat * Math.PI) / 180);
@@ -892,6 +890,112 @@ function frame(points, padFrac) {
   const pad = Math.max(w, h) * padFrac;
   return [x0 - pad, y0 - pad, w + pad * 2, h + pad * 2];
 }
+/* ---------- render: where this departure runs ---------- */
+/**
+ * A compact route map for the selected train, in its direction of travel.
+ * Absent from Version 1, whose template does not host it, so this no-ops
+ * there rather than the two versions needing different engines.
+ *
+ * It shows geography and the calling order, and nothing about load: there is
+ * no per-leg occupancy in the data, so the line carries no value encoding.
+ */
+function renderRouteMap(sn) {
+  const svg = document.getElementById('trainmap');
+  if (!svg) return;
+  const route = ROUTE[sn.svc.route];
+  const stops = sn.svc.dir === 'up' ? route.stations : [...route.stations].slice().reverse();
+
+  const W = svg.clientWidth || 640;
+  const H = Math.round(Math.min(380, Math.max(250, W * 0.66)));
+  svg.setAttribute('height', H);
+  // A short route framed tightly shows no recognisable coast at all - just a
+  // green field meeting a blue one. Hold a floor on the extent so every route
+  // sits in enough of the country to be placed.
+  const box = fitBox(atLeast(frame(stops.map((st) => [st.lon, st.lat]), 0.3), ROUTE_MAP_MIN_SPAN), W, H);
+  svg.setAttribute('viewBox', box.join(' '));
+  // preserveAspectRatio="meet": marks are counter-scaled so they stay constant.
+  const k = 1 / Math.min(W / box[2], H / box[3]);
+
+  const land = D.coast.map((ring) =>
+    '<path class="land" d="' +
+    ring.map(([lon, lat], i) => (i ? 'L' : 'M') + proj(lon, lat).map((v) => v.toFixed(1)).join(' ')).join(' ') +
+    ' Z"/>').join('');
+
+  const pts = stops.map((st) => proj(st.lon, st.lat));
+  const rb = frame(stops.map((st) => [st.lon, st.lat]), 0);
+  const rc = [rb[0] + rb[2] / 2, rb[1] + rb[3] / 2];
+  const d = pts.map((q, i) => (i ? 'L' : 'M') + q.map((v) => v.toFixed(1)).join(' ')).join(' ');
+
+  // One arrowhead on the middle leg. Several smaller ones along the line read
+  // as a dashed line rather than as direction of travel.
+  const mid = Math.max(1, Math.floor(pts.length / 2));
+  const [ax0, ay0] = pts[mid - 1], [ax1, ay1] = pts[mid];
+  const chev =
+    `<g transform="translate(${((ax0 + ax1) / 2).toFixed(1)} ${((ay0 + ay1) / 2).toFixed(1)}) ` +
+    `rotate(${((Math.atan2(ay1 - ay0, ax1 - ax0) * 180) / Math.PI).toFixed(1)}) scale(${k.toFixed(4)})">` +
+    `<path class="chev" d="M -5 -6 L 7 0 L -5 6 Z" fill="var(--route-${sn.svc.route})"/></g>`;
+
+  let marks = '';
+  stops.forEach((st, i) => {
+    const [x, y] = pts[i];
+    const end = i === 0 || i === stops.length - 1;
+    const label = end ? st.name : '';
+    // Place a terminus label on the far side from the route's own centre, and
+    // above or below the line, so it never sits on top of the track.
+    const left = x > rc[0];
+    const dy = y < rc[1] ? -10 : 17;
+    marks += `<g class="stnmark${end ? ' term' : ''}" data-stn="${st.name}"` +
+      ` transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) scale(${k.toFixed(4)})">` +
+      `<circle r="${end ? 5 : 3}" fill="var(--route-${sn.svc.route})"/>` +
+      (label ? `<text class="stnlabel" x="${left ? -9 : 9}" y="${dy}"` +
+        ` text-anchor="${left ? 'end' : 'start'}">${label}</text>` : '') +
+      `<title>${st.name}${i === 0 ? ' (departs)' : i === stops.length - 1 ? ' (arrives)' : ''}</title></g>`;
+  });
+
+  svg.innerHTML = `<g>${land}</g>` +
+    `<path class="halo" d="${d}"/>` +
+    `<path class="line" stroke="var(--route-${sn.svc.route})" d="${d}"/>` +
+    chev + `<g>${marks}</g>`;
+
+  const list = document.getElementById('trainstops');
+  if (list) {
+    list.innerHTML = stops.map((st, i) => {
+      const end = i === 0 || i === stops.length - 1;
+      return `<span class="stop${end ? ' end' : ''}">${st.name}</span>`;
+    }).join('<span class="sep">&rsaquo;</span>');
+  }
+  svg.onclick = () => { state.mapZoom = 'route'; setView('map'); };
+  const cap = document.getElementById('trainmapnote');
+  if (cap) {
+    cap.innerHTML = `${stops.length} calling points, ${sn.svc.dir === 'up' ? 'towards the city' : 'outbound'}. ` +
+      `The line shows where this departure runs, not how full it is along the way: occupancy is one ` +
+      `figure for the whole journey, so nothing in the data attaches to an intermediate stop yet.`;
+  }
+}
+
+/* ---------- render: the network on a map ---------- */
+/**
+ * Web Mercator into a fixed world space; framing is done entirely by the
+ * viewBox, so zooming never re-projects anything.
+ */
+/** Grow a frame about its centre until neither side is below `min`. */
+function atLeast([x, y, w, h], min) {
+  const nw = Math.max(w, min), nh = Math.max(h, min);
+  return [x - (nw - w) / 2, y - (nh - h) / 2, nw, nh];
+}
+
+/**
+ * Grow a frame to the container's aspect ratio, keeping it centred. Without
+ * this, preserveAspectRatio="meet" leaves a tall thin route (NBR2 is nearly
+ * vertical) stranded in a narrow strip with empty space either side.
+ */
+function fitBox([x, y, w, h], W, H) {
+  const aspect = W / H;
+  if (w / h < aspect) { const nw = h * aspect; return [x - (nw - w) / 2, y, nw, h]; }
+  const nh = w / aspect;
+  return [x, y - (nh - h) / 2, w, nh];
+}
+
 const GB_BOX = [[-8.2, 49.9], [1.9, 58.7]];
 function extentFor(kind) {
   if (kind === 'gb') return frame(GB_BOX, 0.02);
@@ -973,7 +1077,7 @@ function renderMap(animate) {
     });
   }
   svg.innerHTML = `<g>${land}</g><g>${lines}</g><g id="marks">${stations}</g>`;
-  setExtent(extentFor(state.mapZoom), animate);
+  setExtent(fitBox(extentFor(state.mapZoom), W, svg.clientHeight || W * 0.72), animate);
 
   svg.onclick = (ev) => {
     const t = ev.target.closest('[data-route]');
@@ -1045,7 +1149,7 @@ function setView(v) {
   // A hidden container measures 0 wide, so anything drawn to a measured width
   // has to be drawn again once its view is actually on screen.
   const sn = snapshot(state.service, state.date);
-  if (v === 'train' && sn) renderChart(sn);
+  if (v === 'train' && sn) { renderChart(sn); renderRouteMap(sn); }
   if (v === 'rank') renderRank();
   if (v === 'case' && sn) renderForecastEffect(sn);
   if (v === 'map') renderMap(false);
@@ -1069,6 +1173,7 @@ function renderAll() {
   renderFormation(sn);
   renderCoach(sn);
   renderChart(sn);
+  renderRouteMap(sn);
   renderForecastEffect(sn);
   renderRouteTable();
   renderRank();
@@ -1112,7 +1217,7 @@ addEventListener('resize', () => {
   clearTimeout(rt);
   rt = setTimeout(() => {
     const sn = snapshot(state.service, state.date);
-    if (sn) { renderChart(sn); renderForecastEffect(sn); }
+    if (sn) { renderChart(sn); renderRouteMap(sn); renderForecastEffect(sn); }
     renderRank();
     if (state.view === 'map') renderMap(false);
   }, 150);
