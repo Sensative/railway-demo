@@ -1,0 +1,618 @@
+<title>SeatSense Seat Usage</title>
+<style>
+/* ==========================================================================
+   SeatSense - Version 2
+   Palette and type taken from the SeatSense site and print material: the
+   deep-green ink, the lime accent, light tightly-tracked display type, and
+   the wide-letterspaced micro-labels the magazine and case study both use.
+   The brand green is chrome; data needs more chroma than it has, so the
+   series hues are a validated set in the same family.
+   ========================================================================== */
+:root {
+  color-scheme: light;
+  --paper:      #f6f8f4;
+  --surface:    #ffffff;
+  --surface-2:  #eef2ea;
+  --ink:        #102e2b;
+  --ink-2:      #4a5b53;
+  --muted:      #65746c;
+  --line:       #dce3db;
+  --rule:       #c3cec3;
+  --green:      #244f44;
+  --lime:       #d7edb5;
+  --lime-deep:  #91b957;
+  --accent:     #244f44;
+  --accent-soft: #e7f0e2;
+
+  --s-occ:  #00875f;   /* measured occupancy - the hero series */
+  --s-ref:  #8b978f;   /* what the ticket system said - a reference, not a rival */
+  --r-NBR1: #00875f;
+  --r-NBR2: #c2601f;
+  --r-NBR3: #3f5f9e;
+
+  --seq-1: #e6f2ec; --seq-2: #c5e3d5; --seq-3: #9fd0ba; --seq-4: #74b99b;
+  --seq-5: #4a9f7c; --seq-6: #23845f; --seq-7: #0c5f45;
+  --seq-ink-1: #102e2b; --seq-ink-2: #102e2b; --seq-ink-3: #102e2b; --seq-ink-4: #102e2b;
+  --seq-ink-5: #ffffff; --seq-ink-6: #ffffff; --seq-ink-7: #ffffff;
+  --seat-empty: #dbe3da;
+
+  --good: #2f7d32; --warn: #a86a12; --bad: #a8341f;
+  --land: #dde7d8; --land-edge: #bccdb7; --sea: #eaf0f3;
+  --focus: #91b957;
+
+  --sans: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --mono: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper:      #08130f;
+    --surface:    #102e2b;
+    --surface-2:  #173934;
+    --ink:        #edf4e9;
+    --ink-2:      #a9bdb1;
+    --muted:      #8598 8c;
+    --muted:      #85988c;
+    --line:       #234740;
+    --rule:       #32574d;
+    --green:      #d7edb5;
+    --lime:       #d7edb5;
+    --lime-deep:  #b6d489;
+    --accent:     #d7edb5;
+    --accent-soft: #1b423b;
+    --s-occ: #129b72;
+    --s-ref: #7d8d84;
+    --r-NBR1: #129b72; --r-NBR2: #d0722f; --r-NBR3: #6a83c8;
+    --seq-1: #123c31; --seq-2: #17513f; --seq-3: #1c684e; --seq-4: #22805e;
+    --seq-5: #35996f; --seq-6: #5fb389; --seq-7: #92cca8;
+    --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
+    --seq-ink-5: #ffffff; --seq-ink-6: #08130f; --seq-ink-7: #08130f;
+    --seat-empty: #24443c;
+    --good: #7fc47f; --warn: #dfae5c; --bad: #e08a76;
+    --land: #17332c; --land-edge: #24463d; --sea: #0b1f1c;
+    --focus: #d7edb5;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper:      #08130f;
+  --surface:    #102e2b;
+  --surface-2:  #173934;
+  --ink:        #edf4e9;
+  --ink-2:      #a9bdb1;
+  --muted:      #85988c;
+  --line:       #234740;
+  --rule:       #32574d;
+  --green:      #d7edb5;
+  --lime:       #d7edb5;
+  --lime-deep:  #b6d489;
+  --accent:     #d7edb5;
+  --accent-soft: #1b423b;
+  --s-occ: #129b72;
+  --s-ref: #7d8d84;
+  --r-NBR1: #129b72; --r-NBR2: #d0722f; --r-NBR3: #6a83c8;
+  --seq-1: #123c31; --seq-2: #17513f; --seq-3: #1c684e; --seq-4: #22805e;
+  --seq-5: #35996f; --seq-6: #5fb389; --seq-7: #92cca8;
+  --seq-ink-1: #ffffff; --seq-ink-2: #ffffff; --seq-ink-3: #ffffff; --seq-ink-4: #ffffff;
+  --seq-ink-5: #ffffff; --seq-ink-6: #08130f; --seq-ink-7: #08130f;
+  --seat-empty: #24443c;
+  --good: #7fc47f; --warn: #dfae5c; --bad: #e08a76;
+  --land: #17332c; --land-edge: #24463d; --sea: #0b1f1c;
+  --focus: #d7edb5;
+}
+
+/* --- compatibility: the engine styles marks with the v1 token names --- */
+:root, :root[data-theme="dark"] {
+  --plane: var(--paper);
+  --hairline: var(--line);
+  --ink-muted: var(--muted);
+  --series-occ: var(--s-occ);
+  --series-sold: var(--s-ref);
+  --critical: var(--bad);
+  --serious: var(--warn);
+  --good-text: var(--good);
+  --route-NBR1: var(--r-NBR1);
+  --route-NBR2: var(--r-NBR2);
+  --route-NBR3: var(--r-NBR3);
+  --cond: var(--sans);
+  --shadow: none;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0; background: var(--paper); color: var(--ink);
+  font: 400 15px/1.55 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
+.num, tbody td, .v { font-variant-numeric: tabular-nums; }
+.mono { font-family: var(--mono); }
+
+/* Display type: light weight, tight tracking - the site's signature. */
+h1, h2, h3 { margin: 0; font-weight: 400; letter-spacing: -0.028em; text-wrap: balance; }
+h1 { font-size: 25px; line-height: 1.1; }
+h2 { font-size: 19px; line-height: 1.15; }
+
+/* Micro-labels: the wide letterspacing the magazine and case study run on. */
+.lbl, .panel > header h2, thead th, .tile .k, .fx .k, .eyebrow {
+  font-size: 10px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.2em; color: var(--muted);
+}
+.eyebrow { display: flex; align-items: center; gap: 10px; }
+.eyebrow::before { content: ''; width: 20px; height: 1px; background: currentColor; flex: none; }
+
+/* ---------- masthead ---------- */
+.masthead {
+  background: var(--green); color: #fff;
+  padding: 16px clamp(16px, 3.5vw, 40px);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px;
+  position: sticky; top: 0; z-index: 30;
+}
+:root[data-theme="dark"] .masthead,
+:root:not([data-theme="light"]) .masthead { background: #0b241f; }
+@media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) .masthead { background: var(--green); } }
+.brand { font-size: 26px; font-weight: 700; letter-spacing: -0.06em; line-height: 1; white-space: nowrap; }
+.brand span { font-weight: 400; color: var(--lime); }
+.brand small { display: block; font-size: 9px; font-weight: 400; letter-spacing: 0.23em; margin-top: 5px; color: #cfe0cb; }
+.mtitle { font-size: 14px; color: #cfe0cb; letter-spacing: -0.01em; }
+.mtitle b { color: #fff; font-weight: 400; }
+.ver {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase;
+  border: 1px solid #ffffff55; border-radius: 100px; padding: 4px 11px; color: #fff;
+}
+.tenant { margin-left: auto; font-family: var(--mono); font-size: 10px; color: #a8bfa4; text-align: right; line-height: 1.5; }
+
+/* ---------- pill controls, as the site uses them ---------- */
+.seg { display: inline-flex; flex: 0 0 auto; background: var(--surface-2); border-radius: 100px; padding: 3px; gap: 2px; }
+.segb {
+  font: inherit; font-size: 12px; font-weight: 600; cursor: pointer; white-space: nowrap;
+  padding: 6px 14px; border: 0; border-radius: 100px; background: transparent; color: var(--ink-2);
+  transition: background .18s, color .18s;
+}
+.segb:hover { color: var(--ink); }
+.segb[aria-pressed="true"] { background: var(--lime); color: #102e2b; }
+.segb:disabled { opacity: .45; cursor: not-allowed; }
+.masthead .seg { background: #ffffff1a; }
+.masthead .segb { color: #dbe8d7; }
+.masthead .segb:hover { color: #fff; }
+.masthead .segb[aria-pressed="true"] { background: var(--lime); color: #102e2b; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip {
+  font: inherit; font-size: 13px; font-weight: 500; letter-spacing: -0.01em;
+  padding: 7px 15px; border-radius: 100px; cursor: pointer;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink-2);
+  transition: background .18s, color .18s, border-color .18s;
+}
+.chip:hover { background: var(--surface-2); color: var(--ink); }
+.chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+:root[data-theme="dark"] .chip[aria-pressed="true"],
+:root:not([data-theme="light"]) .chip[aria-pressed="true"] { background: var(--lime); border-color: var(--lime); color: #102e2b; }
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) .chip[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: #fff; }
+}
+
+/* ---------- shell: air instead of boxes ---------- */
+.shell {
+  display: grid; grid-template-columns: minmax(0, 280px) minmax(0, 1fr);
+  gap: clamp(20px, 3vw, 46px);
+  padding: clamp(20px, 3vw, 38px) clamp(16px, 3.5vw, 40px) 80px;
+  align-items: start; max-width: 1720px; margin: 0 auto;
+}
+@media (max-width: 960px) { .shell { grid-template-columns: minmax(0, 1fr); } }
+.rail { position: sticky; top: 82px; display: flex; flex-direction: column; gap: 26px; }
+@media (max-width: 960px) { .rail { position: static; } }
+
+/* A panel is a hairline and a label, not a card. */
+.panel { background: transparent; border: 0; border-radius: 0; }
+.panel > header {
+  display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between;
+  gap: 8px 16px; padding: 0 0 9px; margin-bottom: 14px; border-bottom: 1px solid var(--line);
+}
+.panel > header .hint { font-size: 12px; color: var(--muted); letter-spacing: -0.005em; }
+.panel .body { padding: 0; }
+.sect { margin-bottom: clamp(30px, 3.4vw, 52px); }
+.sect > .lede {
+  font-size: 17px; line-height: 1.35; letter-spacing: -0.022em; color: var(--ink);
+  margin: -4px 0 16px; max-width: 46ch;
+}
+.mark { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em; }
+
+/* ---------- departures ---------- */
+.deplist { max-height: min(50vh, 500px); overflow-y: auto; margin: 0 -8px; }
+@media (max-width: 960px) { .deplist { max-height: 300px; } }
+.dep {
+  display: grid; grid-template-columns: 44px minmax(0,1fr) 40px; align-items: center; gap: 10px;
+  width: 100%; text-align: left; cursor: pointer; font: inherit; color: inherit;
+  padding: 8px; border: 0; border-radius: 8px; background: transparent;
+}
+.dep > * { min-width: 0; }
+.dep + .dep { margin-top: 1px; }
+.dep:hover { background: var(--surface-2); }
+.dep[aria-current="true"] { background: var(--accent-soft); }
+.dep .t { font-size: 15px; font-weight: 500; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.dep .dcol { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.dep .d { font-size: 12.5px; color: var(--ink-2); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; letter-spacing: -0.01em; }
+.dep .m { font-family: var(--mono); font-size: 10px; color: var(--muted); }
+.dep .bar { height: 3px; border-radius: 100px; background: var(--seat-empty); overflow: hidden; }
+.dep .bar > i { display: block; height: 100%; background: var(--s-occ); border-radius: 100px; }
+.dep .pct { font-size: 12.5px; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+
+.datebar { display: flex; gap: 6px; margin-top: 14px; }
+.datebar input[type="date"] {
+  flex: 1; min-width: 0; font: inherit; font-size: 13px; padding: 8px 12px;
+  border-radius: 100px; border: 1px solid var(--rule); background: transparent; color: var(--ink);
+}
+.stepbtn {
+  width: 34px; border: 1px solid var(--rule); background: transparent; color: var(--ink-2);
+  border-radius: 100px; cursor: pointer; font-size: 15px; line-height: 1;
+}
+.stepbtn:hover:not(:disabled) { background: var(--surface-2); color: var(--ink); }
+.stepbtn:disabled { opacity: .35; cursor: not-allowed; }
+.daynote { margin-top: 10px; font-size: 12px; color: var(--muted); display: flex; gap: 9px; align-items: center; flex-wrap: wrap; }
+
+/* ---------- identity + tiles ---------- */
+.identity { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 10px 26px; padding: 0 0 20px; }
+.identity .time { font-size: 52px; font-weight: 300; letter-spacing: -0.055em; line-height: .95; font-variant-numeric: tabular-nums; }
+.identity .od { font-size: 24px; font-weight: 400; letter-spacing: -0.032em; line-height: 1.15; }
+.identity .meta { font-size: 12.5px; color: var(--muted); letter-spacing: -0.005em; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; margin-left: auto; }
+.tag {
+  font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+  padding: 5px 11px; border-radius: 100px; background: var(--surface-2); color: var(--ink-2);
+}
+.tag.hot { background: var(--lime); color: #102e2b; }
+
+.tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.tile { padding: 16px 20px 18px 0; border-bottom: 1px solid var(--line); }
+.tile .v { font-size: 33px; font-weight: 300; letter-spacing: -0.045em; line-height: 1.05; margin-top: 7px; }
+.tile .s { font-size: 12px; color: var(--muted); margin-top: 4px; letter-spacing: -0.005em; }
+.tile.accent .v { color: var(--s-occ); }
+.tile.warn .v { color: var(--warn); }
+.tile.crit .v { color: var(--bad); }
+.tile.ok .v { color: var(--good); }
+.tile .k .est {
+  display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 100px;
+  background: var(--surface-2); color: var(--muted); font-size: 8.5px; letter-spacing: 0.14em; cursor: help;
+}
+th .est {
+  display: inline-block; margin-left: 5px; padding: 1px 5px; border-radius: 100px;
+  background: var(--surface-2); color: var(--muted); font-size: 8px; letter-spacing: 0.12em; cursor: help;
+}
+
+/* ---------- formation ---------- */
+.formation { display: flex; flex-wrap: wrap; gap: 20px; padding: 4px 0 18px; }
+.unit { display: flex; flex-direction: column; gap: 8px; }
+.unit .ulabel { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.05em; }
+.cars { display: flex; gap: 5px; align-items: flex-end; }
+.car { position: relative; cursor: pointer; border: 0; padding: 0; font: inherit; color: inherit;
+  background: transparent; display: flex; flex-direction: column; gap: 5px; }
+.car .box {
+  width: 66px; height: 66px; border-radius: 12px; border: 0;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+  transition: transform .18s, box-shadow .18s;
+}
+.car:hover .box { transform: translateY(-3px); }
+.car[aria-pressed="true"] .box { box-shadow: 0 0 0 2px var(--paper), 0 0 0 4px var(--lime-deep); }
+.car .letter { font-size: 20px; font-weight: 400; letter-spacing: -0.04em; line-height: 1; }
+.car .occ { font-size: 11px; font-variant-numeric: tabular-nums; }
+.car .cap { font-size: 10px; color: var(--muted); text-align: center; font-variant-numeric: tabular-nums; }
+.car .first { position: absolute; top: 5px; right: 7px; font-size: 8px; font-weight: 700; letter-spacing: .08em; opacity: .7; }
+.coupler { width: 14px; height: 2px; background: var(--rule); align-self: center; margin-top: 16px; }
+.ramp { display: flex; align-items: center; gap: 9px; padding: 0 0 20px; font-size: 11px; color: var(--muted); }
+.ramp .steps { display: flex; border-radius: 100px; overflow: hidden; }
+.ramp .steps i { width: 22px; height: 8px; display: block; }
+
+/* ---------- seats ---------- */
+.seatwrap { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,220px); gap: 26px; padding: 4px 0 0; }
+@media (max-width: 760px) { .seatwrap { grid-template-columns: minmax(0,1fr); } }
+.seatgrid { display: flex; gap: 3px; overflow-x: auto; padding-bottom: 8px; align-items: flex-start; }
+.seatcol { display: flex; flex-direction: column; gap: 3px; }
+.seatcol .aisle { height: 10px; }
+.seat { width: 16px; height: 16px; border-radius: 4px; background: var(--seat-empty); cursor: default; }
+.seat.on { background: var(--s-occ); }
+.seat.first { box-shadow: inset 0 0 0 1.5px var(--seq-7); }
+.seat.first.on { background: var(--seq-6); }
+.seat:hover { outline: 2px solid var(--lime-deep); outline-offset: 1px; }
+.seatreadout { margin-top: 10px; font-family: var(--mono); font-size: 11px; color: var(--ink-2); min-height: 1.4em; }
+.caveat {
+  font-size: 12.5px; line-height: 1.5; color: var(--ink-2); background: var(--surface-2);
+  border-radius: 10px; padding: 13px 16px; margin-top: 16px; max-width: 62ch;
+}
+.node { font-size: 12px; }
+.node dl { display: grid; grid-template-columns: auto 1fr; gap: 6px 14px; margin: 0; }
+.node dt { color: var(--muted); }
+.node dd { margin: 0; font-family: var(--mono); font-size: 11px; text-align: right; }
+
+/* ---------- tables ---------- */
+.tablewrap { overflow-x: auto; }
+table { border-collapse: collapse; width: 100%; font-size: 13px; }
+th, td { padding: 9px 12px 9px 0; text-align: right; white-space: nowrap; border-bottom: 1px solid var(--line); }
+th:first-child, td:first-child, th.l, td.l { text-align: left; }
+thead th { position: sticky; top: 0; background: var(--paper); z-index: 2; line-height: 1.3; border-bottom: 1px solid var(--rule); }
+thead th.sortable { cursor: pointer; user-select: none; }
+thead th.sortable:hover { color: var(--ink); }
+thead th[aria-sort]:not([aria-sort="none"]) { color: var(--ink); }
+tbody tr.click { cursor: pointer; }
+tbody tr.click:hover { background: var(--surface-2); }
+tbody tr[aria-current="true"] { background: var(--accent-soft); }
+tbody tr:last-child td { border-bottom: 0; }
+td .swatch { display: inline-block; width: 8px; height: 8px; border-radius: 100px; margin-right: 7px; }
+.flag { font-weight: 600; }
+.flag.crit { color: var(--bad); }
+.flag.warn { color: var(--warn); }
+.moved { font-weight: 600; }
+.moved.up { color: var(--s-occ); }
+.moved.down { color: var(--r-NBR2); }
+.moved.flat { color: var(--muted); font-weight: 400; }
+
+/* ---------- charts ---------- */
+.chartbox { position: relative; padding: 4px 0 0; }
+.chart, .slope { width: 100%; display: block; touch-action: none; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; padding: 0 0 12px; font-size: 12px; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 14px; height: 3px; border-radius: 100px; display: block; }
+.legend i.band { height: 10px; opacity: .5; }
+.tip {
+  position: absolute; pointer-events: none; z-index: 12; min-width: 155px; opacity: 0;
+  background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+  padding: 11px 13px; font-size: 12px; transition: opacity .12s;
+  box-shadow: 0 6px 24px rgba(16,46,43,.13);
+}
+.tip.on { opacity: 1; }
+.tip .th { font-size: 13px; font-weight: 500; letter-spacing: -0.02em; margin-bottom: 6px; }
+.tip dl { display: grid; grid-template-columns: 1fr auto; gap: 3px 14px; margin: 0; }
+.tip dt { color: var(--muted); display: flex; align-items: center; gap: 6px; }
+.tip dd { margin: 0; font-variant-numeric: tabular-nums; }
+.tip i { width: 10px; height: 3px; border-radius: 100px; display: block; }
+.hgroup { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-left: auto; }
+select#dcsel {
+  font: inherit; font-size: 12px; padding: 6px 12px; border-radius: 100px;
+  border: 1px solid var(--rule); background: transparent; color: var(--ink); cursor: pointer;
+}
+
+/* ---------- actions ---------- */
+.actgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-bottom: 18px; }
+.actsum {
+  background: transparent; border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px;
+  cursor: pointer; text-align: left; font: inherit; color: inherit; transition: background .18s, border-color .18s;
+}
+.actsum:hover { background: var(--surface-2); }
+.actsum[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--lime-deep); }
+.actsum .n { font-size: 34px; font-weight: 300; letter-spacing: -0.05em; line-height: 1; }
+.actsum .t { font-size: 13.5px; font-weight: 500; letter-spacing: -0.015em; margin-top: 8px; }
+.actsum .w { font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.rule { font-size: 12.5px; line-height: 1.5; color: var(--ink-2); margin-bottom: 16px; max-width: 78ch; }
+
+/* ---------- business case ---------- */
+.fx { display: grid; grid-template-columns: repeat(auto-fit, minmax(145px, 1fr)); gap: 0; border-top: 1px solid var(--line); }
+.fx .cell { padding: 16px 20px 18px 0; border-bottom: 1px solid var(--line); }
+.fx .v { font-size: 28px; font-weight: 300; letter-spacing: -0.04em; line-height: 1.05; margin-top: 7px; }
+.fx .s { font-size: 11.5px; color: var(--muted); margin-top: 4px; }
+.up { color: var(--s-occ); }
+.down { color: var(--r-NBR2); }
+.note { font-size: 12.5px; line-height: 1.55; color: var(--ink-2); background: var(--surface-2);
+  border-radius: 10px; padding: 14px 17px; margin: 16px 0 0; max-width: 82ch; }
+
+/* ---------- map ---------- */
+.mapgrid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,250px); gap: 24px; }
+@media (max-width: 900px) { .mapgrid { grid-template-columns: minmax(0,1fr); } }
+.mapwrap { position: relative; background: var(--sea); border-radius: 16px; overflow: hidden; }
+#map { width: 100%; display: block; }
+#map .land { fill: var(--land); stroke: var(--land-edge); stroke-width: 1.2; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+#map .line { fill: none; stroke-width: 3.2; stroke-linecap: round; stroke-linejoin: round; cursor: pointer; vector-effect: non-scaling-stroke; }
+#map .line.dim { opacity: .26; }
+#map .halo { fill: none; stroke: var(--sea); stroke-width: 6.5; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+#map .stnmark { cursor: pointer; }
+#map .stnmark circle { stroke: var(--sea); stroke-width: 1.6; }
+#map .stnmark.term circle { stroke-width: 2.2; }
+#map .stnlabel { font-family: var(--sans); font-size: 11px; font-weight: 600; letter-spacing: -0.01em;
+  fill: var(--ink); paint-order: stroke; stroke: var(--sea); stroke-width: 3.5; stroke-linejoin: round; pointer-events: none; }
+#map .dim { opacity: .26; }
+.mapside { display: flex; flex-direction: column; gap: 10px; }
+.routecard {
+  text-align: left; font: inherit; color: inherit; cursor: pointer; background: transparent;
+  border: 1px solid var(--line); border-radius: 14px; padding: 13px 15px; transition: background .18s, border-color .18s;
+}
+.routecard:hover { background: var(--surface-2); }
+.routecard[aria-pressed="true"] { background: var(--accent-soft); border-color: var(--lime-deep); }
+.routecard .rn { font-size: 14px; font-weight: 500; letter-spacing: -0.02em; }
+.routecard .rs { font-size: 11.5px; color: var(--muted); margin-top: 2px; }
+.routecard .rv { font-size: 12px; color: var(--ink-2); margin-top: 6px; font-variant-numeric: tabular-nums; }
+.readout { font-family: var(--mono); font-size: 11px; color: var(--muted); padding: 12px 0 0; min-height: 1.4em; }
+
+.footnote { padding: 8px clamp(16px, 3.5vw, 40px) 0; max-width: 84ch; font-size: 12px; line-height: 1.65; color: var(--muted); }
+.footnote strong, .footnote b { color: var(--ink-2); font-weight: 600; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+
+<div class="masthead">
+  <span class="brand">Seat<span>Sense</span><small>BY SENSATIVE</small></span>
+  <span class="mtitle"><b>Seat usage</b> by route, train and coach</span>
+  <span class="ver">Version 2</span>
+  <span class="seg" id="viewnav" role="group" aria-label="View">
+    <button class="segb" type="button" data-view="train" aria-pressed="true">Train</button>
+    <button class="segb" type="button" data-view="rank" aria-pressed="false">Sold vs full</button>
+    <button class="segb" type="button" data-view="actions" aria-pressed="false">Actions</button>
+    <button class="segb" type="button" data-view="map" aria-pressed="false">Map</button>
+    <button class="segb" type="button" data-view="case" aria-pressed="false">Business case</button>
+  </span>
+  <span class="tenant" id="tenant"></span>
+</div>
+
+<div class="shell">
+  <div class="rail">
+    <section class="panel">
+      <header><h2>Route</h2></header>
+      <div class="body">
+        <div class="chips" id="routechips" role="group" aria-label="Route"></div>
+        <div class="datebar">
+          <button class="stepbtn" id="prevday" type="button" aria-label="Previous day">&#8249;</button>
+          <input type="date" id="date" aria-label="Date">
+          <button class="stepbtn" id="nextday" type="button" aria-label="Next day">&#8250;</button>
+        </div>
+        <div class="daynote" id="daynote"></div>
+      </div>
+    </section>
+    <section class="panel">
+      <header><h2>Departures</h2><span class="hint" id="depcount"></span></header>
+      <div class="deplist" id="deplist" role="listbox" aria-label="Departures"></div>
+    </section>
+  </div>
+
+  <div class="main">
+   <div id="view-train">
+    <section class="sect">
+      <p class="eyebrow">&#167; 01 &nbsp;/&nbsp; See beyond reservations</p>
+      <h1 class="lede">Your train. Now with the full picture.</h1>
+      <div class="identity" id="identity"></div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+
+    <section class="sect panel">
+      <header>
+        <h2>Space you can see</h2>
+        <span class="hint">Select a coach for its seat detail</span>
+      </header>
+      <div class="formation" id="formation"></div>
+      <div class="ramp">
+        <span>Coach occupancy</span><span class="steps" id="rampsteps"></span>
+        <span>0&ndash;100% of that coach&rsquo;s seats</span>
+      </div>
+      <div class="tablewrap">
+        <table id="coachtable">
+          <caption class="vh">Seats, measured occupancy and empty seats for every coach</caption>
+        </table>
+      </div>
+    </section>
+
+    <section class="sect panel">
+      <header><h2 id="seathead">Coach detail</h2><span class="hint" id="seathint"></span></header>
+      <div class="seatwrap">
+        <div>
+          <div class="seatgrid" id="seatgrid"></div>
+          <div class="seatreadout" id="seatreadout"></div>
+          <div class="caveat" id="caveat"></div>
+        </div>
+        <div class="node" id="node"></div>
+      </div>
+    </section>
+
+    <section class="sect panel">
+      <header>
+        <h2 id="trendhead">Sold versus occupied</h2>
+        <span class="hgroup">
+          <span class="hint">Click to jump to a date</span>
+          <span class="seg" id="dayfilter" role="group" aria-label="Days shown in the plot">
+            <button class="segb" type="button" data-v="wd">Weekdays</button>
+            <button class="segb" type="button" data-v="all">All days</button>
+          </span>
+        </span>
+      </header>
+      <div class="legend" id="legend"></div>
+      <div class="chartbox">
+        <svg class="chart" id="chart" role="img" aria-labelledby="trendhead"></svg>
+        <div class="tip" id="tip" role="status"></div>
+      </div>
+    </section>
+
+    <section class="sect panel">
+      <header><h2 id="routehead">All departures</h2><span class="hint">Click a row to open that train</span></header>
+      <div class="tablewrap" style="max-height:520px; overflow-y:auto">
+        <table id="routetable">
+          <caption class="vh">Every departure on the selected date</caption>
+        </table>
+      </div>
+    </section>
+   </div>
+
+   <div id="view-rank" hidden>
+    <section class="sect">
+      <p class="eyebrow">&#167; 02 &nbsp;/&nbsp; A better read on demand</p>
+      <h1 class="lede">Two lists. Different answers.</h1>
+    </section>
+    <section class="sect panel">
+      <header>
+        <h2 id="rankhead">Sold versus actually full</h2>
+        <span class="hgroup">
+          <span class="hint">Click a departure to open it</span>
+          <select id="dcsel" aria-label="Demand class"></select>
+        </span>
+      </header>
+      <div class="rule" id="rankrule"></div>
+      <div class="chartbox"><svg class="slope" id="slope" role="img" aria-labelledby="rankhead"></svg></div>
+      <div class="tablewrap">
+        <table id="ranktable"><caption class="vh">Departures ranked two ways</caption></table>
+      </div>
+    </section>
+   </div>
+
+   <div id="view-actions" hidden>
+    <section class="sect">
+      <p class="eyebrow">&#167; 03 &nbsp;/&nbsp; One insight. Many possibilities.</p>
+      <h1 class="lede">Where it pays back.</h1>
+    </section>
+    <section class="sect panel">
+      <header><h2 id="acthead">What to do next</h2><span class="hint" id="actwindow"></span></header>
+      <div class="actgrid" id="actgrid"></div>
+      <div class="rule" id="actrule"></div>
+      <div class="tablewrap" style="max-height:620px; overflow-y:auto">
+        <table id="acttable"><caption class="vh">Departures with a recommended next action</caption></table>
+      </div>
+      <div class="note" id="actnote"></div>
+    </section>
+   </div>
+
+   <div id="view-map" hidden>
+    <section class="sect">
+      <p class="eyebrow">&#167; 04 &nbsp;/&nbsp; Built for real railways</p>
+      <h1 class="lede">Three corridors. Real places.</h1>
+    </section>
+    <section class="sect panel">
+      <header>
+        <h2 id="maphead">Where the network runs</h2>
+        <span class="hgroup">
+          <span class="hint">Click a line to select that route</span>
+          <span class="seg" id="mapzoom" role="group" aria-label="Map extent">
+            <button class="segb" type="button" data-z="gb">Great Britain</button>
+            <button class="segb" type="button" data-z="network">Network</button>
+            <button class="segb" type="button" data-z="route">Route</button>
+          </span>
+        </span>
+      </header>
+      <div class="mapgrid">
+        <div class="mapwrap"><svg id="map" role="img" aria-labelledby="maphead" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="mapside" id="mapside"></div>
+      </div>
+      <div class="readout" id="mapreadout"></div>
+      <div class="note" id="mapnote"></div>
+    </section>
+   </div>
+
+   <div id="view-case" hidden>
+    <section class="sect">
+      <p class="eyebrow">&#167; 05 &nbsp;/&nbsp; Your data. Your next opportunity.</p>
+      <h1 class="lede">Better forecasts. Better journeys.</h1>
+    </section>
+    <section class="sect panel">
+      <header><h2 id="fxhead">What the recalibrated forecast earned</h2><span class="hint">The only year-on-year screen here</span></header>
+      <div class="rule">
+        This is the commercial case, not the seat record. Everything else here is what SeatSense
+        measured in 2026 set against what the ticket system sold. This one screen asks a different
+        question &mdash; what the same booking requests would have earned under 2025-quality
+        forecasts &mdash; and it is the only place a 2025 number appears.
+      </div>
+      <div class="fx" id="fx"></div>
+      <div class="chartbox"><svg class="chart" id="fxchart" role="img" aria-labelledby="fxhead"></svg></div>
+      <div class="note" id="fxnote"></div>
+    </section>
+   </div>
+  </div>
+</div>
+
+<p class="footnote" id="footnote"></p>
+
+<script>
+__APP__
+</script>

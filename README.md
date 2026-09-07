@@ -380,9 +380,10 @@ day, twice over (Standard and First cabins are separate pools):
 | `src/yggio-api.mjs` | The same data as a Yggio-shaped REST API, for showing on a screen. |
 | `src/selftest.mjs` | Pre-flight check. Drives the MCP server the way Claude does and calls every tool. |
 | `dashboard/gb-outline.json` | The Great Britain coastline used by the map: Natural Earth 1:10m subunits, public domain, simplified to 1,702 points. Provenance and processing are recorded in the file. |
-| `dashboard/template.html` | The seat-usage dashboard's source: markup, styles and behaviour, with `"__DATA__"` as the data placeholder. Edit this, not `index.html`. |
-| `src/build-dashboard.mjs` | Inlines the 2026 data into the template and writes `dashboard/index.html`. Re-run it after editing either. |
-| `dashboard/index.html` | The built dashboard - one self-contained file, no server and no network beyond its webfont. |
+| `dashboard/app.js` | The dashboard engine, shared by both versions: the data ports, every renderer, all interaction. `"__DATA__"` is the data placeholder. |
+| `dashboard/v1/template.html`, `dashboard/v2/template.html` | Per-version chrome: styles, markup and copy, with `__APP__` where the engine goes. Edit these, not the built `index.html`. |
+| `src/build-dashboard.mjs` | Inlines the data into the engine and each version's template, writing `dashboard/v1/index.html` and `dashboard/v2/index.html`. Re-run after editing any of them. |
+| `dashboard/v1/index.html`, `dashboard/v2/index.html` | The built dashboards - one self-contained file each, no server and no network. |
 | `.mcp.json` | Wires the MCP server into Claude Code when it starts in this directory. |
 | `CLAUDE.md` | Tells Claude how to behave during the demo, including what not to claim. |
 | `DEMO-SCRIPT.md` | The stage script: questions, expected answers, talking points, recovery. |
@@ -391,7 +392,21 @@ day, twice over (Standard and First cabins are separate pools):
 
 ## The seat-usage dashboard
 
-`dashboard/index.html` is a self-contained page for the exact question a visitor
+There are two versions, built from one engine so their numbers and behaviour
+cannot drift apart. `dashboard/app.js` holds all the logic; each version
+supplies only its chrome, layout and copy.
+
+- **`dashboard/v1/index.html`** - the original. Neutral steel palette, IBM Plex,
+  dense operational panels.
+- **`dashboard/v2/index.html`** - the SeatSense one. Brand palette and voice
+  taken from the SeatSense site and print material: the deep green and lime,
+  light tightly-tracked display type, wide-letterspaced micro-labels, `§`
+  section marks, pill controls, and far less boxing. The brand green is chrome
+  only - it sits below the chroma floor for data, so the series hues are a
+  validated set in the same family, with measured occupancy in green and the
+  ticket figure as a grey reference rather than a rival series.
+
+Either is a self-contained page for the exact question a visitor
 asks after the headline: *show me this train.* Pick a route, a departure and a
 date, and it gives that departure's seats, tickets sold, measured occupancy,
 cabin factor, ghost seats, walk-ups refused and revenue, then breaks the
@@ -431,7 +446,7 @@ Summed over all 58 departures it comes to GBP 639,737, the same 0.816% the
 attribution tool reports. Everything outside this view is measured 2026 seat
 occupancy set against what the ticket system sold - no year comparison.
 
-Open it by double-clicking the file, or serve the directory
+Open either by double-clicking it, or serve the directory
 (`npx serve dashboard`). It needs no MCP server and no build step; the data is
 already inside it.
 

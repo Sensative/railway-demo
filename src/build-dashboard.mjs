@@ -149,10 +149,17 @@ const payload = {
   },
 };
 
-const tpl = readFileSync(join(root, 'dashboard/template.html'), 'utf8');
-const out = tpl.replace('"__DATA__"', JSON.stringify(payload));
-writeFileSync(join(root, 'dashboard/index.html'), out);
+// Both versions share one engine, so the numbers and behaviour cannot drift
+// apart between them; a version supplies only its chrome, layout and copy.
+const app = readFileSync(join(root, 'dashboard/app.js'), 'utf8')
+  .replace('"__DATA__"', JSON.stringify(payload));
+for (const v of ['v1', 'v2']) {
+  const tpl = readFileSync(join(root, `dashboard/${v}/template.html`), 'utf8');
+  const out = tpl.replace('__APP__', () => app);
+  writeFileSync(join(root, `dashboard/${v}/index.html`), out);
+  console.log(`dashboard/${v}/index.html - ${(out.length / 1e6).toFixed(2)} MB`);
+}
 console.log(
-  `dashboard/index.html written - ${svcOut.length} services, ${dates.length} days, ` +
-    `${Object.keys(dev).length} nodes, ${seatmaps.fleet.seats} seats, ${(out.length / 1e6).toFixed(2)} MB`,
+  `${svcOut.length} services, ${dates.length} days, ${Object.keys(dev).length} nodes, ` +
+    `${seatmaps.fleet.seats} seats`,
 );
