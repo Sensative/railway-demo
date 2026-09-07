@@ -419,9 +419,16 @@ Three more views sit behind the switcher in the masthead.
 
 Version 2's train view also carries a compact route map: the selected
 departure drawn in its direction of travel, with its calling order beside it
-and one arrowhead showing which way it goes. Clicking it opens the full Map
-view zoomed to that route. It encodes no load - there is no per-leg occupancy
-in the data - and says so underneath.
+and one arrowhead showing which way it goes. Clicking it, or the header's
+**View the full map**, opens the Map view zoomed to that route. It encodes no
+load - there is no per-leg occupancy in the data - and says so underneath.
+
+The panel folds away to just its header, and the choice is remembered between
+visits. Any section given `data-fold="<key>"` with a `.foldbtn` in its header
+gets the same behaviour; the state lives under `nbr-folded` in localStorage,
+and a browser that blocks storage simply forgets the choice rather than
+breaking. A folded panel measures zero wide, so the map is redrawn when it
+opens.
 
 **Sold vs full** ranks a demand class twice - once by tickets sold, once by
 measured occupancy - and draws the departures that change place between the two

@@ -1739,6 +1739,49 @@ function renderMap(animate) {
     `destination stop is what would turn these dots into places, and give the line a shape.`;
 }
 
+
+/* ---------- foldable panels, remembered between visits ---------- */
+const FOLD_KEY = 'nbr-folded';
+const readFolded = () => {
+  try { return JSON.parse(localStorage.getItem(FOLD_KEY) || '{}'); } catch (e) { return {}; }
+};
+const writeFolded = (map) => {
+  try { localStorage.setItem(FOLD_KEY, JSON.stringify(map)); } catch (e) { /* private mode */ }
+};
+
+/**
+ * Any section carrying data-fold folds to just its header, and the choice is
+ * remembered under that key. A folded panel measures zero wide, so anything
+ * drawn to a measured width has to be drawn again when it opens.
+ */
+function initFolds() {
+  const saved = readFolded();
+  for (const sect of document.querySelectorAll('[data-fold]')) {
+    const btn = sect.querySelector('.foldbtn');
+    if (!btn) continue;
+    const key = sect.dataset.fold;
+    const apply = (folded) => {
+      sect.dataset.folded = String(folded);
+      btn.setAttribute('aria-expanded', String(!folded));
+      btn.title = folded ? 'Show this panel' : 'Fold this panel away';
+    };
+    apply(saved[key] === true);
+    btn.addEventListener('click', () => {
+      const folded = sect.dataset.folded !== 'true';
+      apply(folded);
+      const now = readFolded();
+      now[key] = folded;
+      writeFolded(now);
+      if (!folded) {
+        const sn = snapshot(state.service, state.date);
+        if (sn) renderRouteMap(sn);
+      }
+    });
+  }
+  const open = document.getElementById('runopen');
+  if (open) open.addEventListener('click', () => { state.mapZoom = 'route'; setView('map'); });
+}
+
 /* ---------- views ---------- */
 function setView(v) {
   state.view = v;
@@ -1845,5 +1888,6 @@ document.getElementById('footnote').innerHTML =
 restore();
 renderAll();
 bindChart();
+initFolds();
 
 </script>
